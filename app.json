@@ -1,0 +1,40 @@
+{
+  "pages":[
+    "pages/opera/opera",
+    "pages/pending/pending",
+    "pages/order/order",
+    "pages/my/my"
+  ],
+  "window":{
+    "backgroundColor":"#f2f2f2",
+    "backgroundTextStyle":"light",
+    "navigationBarBackgroundColor": "#ff5000",
+    "navigationBarTitleText": "管理中心",
+    "navigationBarTextStyle":"white"
+  },
+  "tabBar": {
+    "backgroundColor": "#fff",
+    "selectedColor": "#ff7000",
+    "list": [{
+      "pagePath": "pages/pending/pending",
+      "text": "待处理",
+      "iconPath": "icons/tabs-pending.png",
+      "selectedIconPath": "icons/tabs-pending-active.png"
+    }, {
+      "pagePath": "pages/opera/opera",
+      "text": "操作面板",
+      "iconPath": "icons/tabs-opera.png",
+      "selectedIconPath": "icons/tabs-opera-active.png"
+    }, {
+      "pagePath": "pages/order/order",
+      "text": "订单列表",
+      "iconPath": "icons/tabs-order.png",
+      "selectedIconPath": "icons/tabs-order-active.png"
+    }, {
+      "pagePath": "pages/my/my",
+      "text": "个人中心",
+      "iconPath": "icons/tabs-my.png",
+      "selectedIconPath": "icons/tabs-my-active.png"
+    }]
+  }
+}

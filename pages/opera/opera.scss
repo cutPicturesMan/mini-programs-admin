@@ -1,0 +1,142 @@
+@charset "utf-8";
+@import '../../public/css/_mixin.scss';
+
+page{
+  background-color: #fff;
+}
+
+.ad-container{
+  height: 100rpx;
+  margin: 25rpx 22rpx 0;
+  display: flex;
+  align-items: center;
+  box-shadow: 0 0 4rpx rgba(0, 0, 0, .1);
+  .icon{
+    width: 46rpx;
+    height: 46rpx;
+    margin:0 40rpx;
+  }
+  .text{
+    font-size: 24rpx;
+    color: #444;
+    @include ellipsis();
+  }
+}
+
+.opera-panel{
+  .h-line{
+    width: 535rpx;
+    height: 2rpx;
+    display: block;
+  }
+  .circle{
+    $w: 220rpx;
+    width: $w;
+    height: $w;
+    border-radius: 50%;
+    background: linear-gradient(to right, #ff8f00 0%, #ff4900 100%);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    &.small{
+      $w: 200rpx;
+      width: $w;
+      height: $w;
+      .title{
+        line-height: 48rpx;
+        font-size: 24rpx;
+      }
+    }
+    &.big{
+      $w: 300rpx;
+      width: $w;
+      height: $w;
+      .icon{
+        //width: 140rpx;
+        //height: 140rpx;
+      }
+      .title{
+        line-height: 48rpx;
+        font-size: 36rpx;
+      }
+    }
+    &.biggest{
+      $w: 320rpx;
+      width: $w;
+      height: $w;
+      .icon{
+        font-size: 122rpx;
+        //width: 120rpx;
+        //height: 120rpx;
+      }
+      .title{
+        line-height: 48rpx;
+        font-size: 36rpx;
+      }
+    }
+    .icon{
+      font-size: 100rpx;
+      color: #fff;
+      //width: 100rpx;
+      //height: 100rpx;
+    }
+    .title{
+      line-height: 44rpx;
+      font-size: 28rpx;
+      color: #fff;
+    }
+  }
+  &.manage{
+    display: flex;
+    flex-wrap: wrap;
+    position: relative;
+    .v-line{
+      $h: 790rpx;
+      width: 2rpx;
+      height: $h;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      margin-top: -$h/2;
+      margin-left: -1rpx;
+      display: block;
+    }
+    .h-line{
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      margin-top: - 1rpx;
+      margin-left: - 535rpx/2;
+    }
+    .item{
+      width: 50%;
+      height: 495rpx;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+  // 业务员
+  &.agent{
+    .item{
+      padding: 47rpx 0;
+      display: flex;
+      justify-content: center;
+    }
+    .h-line {
+      margin: 0 auto;
+    }
+  }
+  // 仓管
+  &.store{
+    .item{
+      padding: 85rpx 0;
+      display: flex;
+      justify-content: center;
+    }
+    .h-line {
+      margin: 0 auto;
+    }
+  }
+}

@@ -1,0 +1,101 @@
+<view class="ad-container">
+  <image class="icon" src="../../icons/icon-horn.png"></image>
+  <view class="text">灵魂在刘德华业务员处下单成功</view>
+</view>
+<!--财务-->
+<view class="opera-panel manage">
+  <image class="v-line" src="../../icons/v-line.jpg"></image>
+  <image class="h-line" src="../../icons/h-line.jpg"></image>
+  <view class="item">
+    <view class="circle">
+      <view class="icon iconfont icon-icon"></view>
+      <view class="title">已收款</view>
+    </view>
+  </view>
+  <view class="item">
+    <view class="circle">
+      <view class="icon iconfont icon-shouqiankuan"></view>
+      <view class="title">未收款</view>
+    </view>
+  </view>
+  <view class="item">
+    <view class="circle">
+      <view class="icon iconfont icon-yijieshu"></view>
+      <view class="title">账期已结</view>
+    </view>
+  </view>
+  <view class="item">
+    <view class="circle">
+      <view class="icon iconfont icon-weijiechaoshenxian"></view>
+      <view class="title">账期未结算</view>
+    </view>
+  </view>
+</view>
+<!--经理-->
+<view class="opera-panel manage">
+  <image class="v-line" src="../../icons/v-line.jpg"></image>
+  <image class="h-line" src="../../icons/h-line.jpg"></image>
+  <view class="item">
+    <view class="circle">
+      <view class="icon iconfont icon-chuangjian"></view>
+      <view class="title">创建订单</view>
+    </view>
+  </view>
+  <view class="item">
+    <view class="circle">
+      <view class="icon iconfont icon-guanli1"></view>
+      <view class="title">业务员管理</view>
+    </view>
+  </view>
+  <view class="item">
+    <view class="circle">
+      <view class="icon iconfont icon-people"></view>
+      <view class="title">客户列表</view>
+    </view>
+  </view>
+  <view class="item">
+    <view class="circle">
+      <view class="icon iconfont icon-tubiaozhizuomoban"></view>
+      <view class="title">商品设置</view>
+    </view>
+  </view>
+</view>
+<!--业务员-->
+<view class="opera-panel agent">
+  <view class="item">
+    <view class="circle small">
+      <view class="icon iconfont icon-people"></view>
+      <view class="title">客户列表</view>
+    </view>
+  </view>
+  <image class="h-line" src="../../icons/h-line.jpg"></image>
+  <view class="item">
+    <view class="circle big">
+      <view class="icon iconfont icon-chuangjian"></view>
+      <view class="title">创建订单</view>
+    </view>
+  </view>
+  <image class="h-line" src="../../icons/h-line.jpg"></image>
+  <view class="item">
+    <view class="circle small">
+      <view class="icon iconfont icon-xinzengyonghu"></view>
+      <view class="title">新增客户</view>
+    </view>
+  </view>
+</view>
+<!--仓管-->
+<view class="opera-panel store">
+  <view class="item">
+    <view class="circle biggest">
+      <view class="icon iconfont icon-fahuo"></view>
+      <view class="title">发货处理</view>
+    </view>
+  </view>
+  <image class="h-line" src="../../icons/h-line.jpg"></image>
+  <view class="item">
+    <view class="circle biggest">
+      <view class="icon iconfont icon-kucun"></view>
+      <view class="title">商品库存</view>
+    </view>
+  </view>
+</view>
