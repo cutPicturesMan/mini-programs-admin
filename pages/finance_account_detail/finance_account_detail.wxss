@@ -1,0 +1,102 @@
+@charset "UTF-8";
+/*字体超出变省略号*/
+/* 实心三角形
+ * 参数有4个
+ * $tb : 上下边框宽
+ * $lr : 左右边框宽
+ * $direction : 三角形指向(top, right, bottom, left)
+ * $color : 三角形颜色
+ */
+.user-info {
+  height: 280rpx;
+  background-color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column; }
+  .user-info .img {
+    width: 130rpx;
+    height: 130rpx;
+    border: 1rpx solid #e5e5e5; }
+  .user-info .title {
+    margin-top: 25rpx;
+    font-size: 28rpx; }
+
+.line-cell {
+  line-height: 50rpx;
+  padding: 17rpx 0;
+  color: #444;
+  font-size: 24rpx;
+  display: flex; }
+  .line-cell.bb {
+    border-bottom: 1rpx solid #e5e5e5; }
+  .line-cell .cell-title {
+    margin-right: 30rpx; }
+  .line-cell .cell-content {
+    flex: 1;
+    min-height: 50rpx;
+    color: #999;
+    text-align: right;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center; }
+    .line-cell .cell-content .select {
+      width: 37rpx;
+      height: 37rpx; }
+
+.time-container {
+  font-size: 24rpx; }
+  .time-container .time {
+    line-height: 40rpx;
+    color: #fff;
+    padding: 0 15rpx;
+    margin: 0 20rpx;
+    border-radius: 5rpx;
+    background-color: #bebebe;
+    display: inline-block; }
+
+page {
+  padding-bottom: 80rpx; }
+
+.cart-account {
+  height: 80rpx;
+  line-height: 80rpx;
+  border-top: 1rpx solid #e5e5e5;
+  background-color: #fff;
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: flex; }
+  .cart-account .sel {
+    margin-left: 18rpx;
+    font-size: 28rpx;
+    display: flex;
+    align-items: center; }
+    .cart-account .sel image {
+      width: 40rpx;
+      height: 40rpx;
+      display: block; }
+  .cart-account .total {
+    flex: 1;
+    padding: 0 20rpx;
+    font-size: 26rpx; }
+  .cart-account .calc {
+    width: 190rpx;
+    font-size: 26rpx;
+    text-align: center;
+    color: #fff;
+    background-color: #e5e5e5; }
+    .cart-account .calc.active {
+      background: linear-gradient(to right, #ff9000 18%, #ff5000 78%); }
+
+.container {
+  background-color: #fff;
+  overflow-x: hidden; }
+
+.line-cell {
+  font-size: 28rpx;
+  padding: 20rpx;
+  background-color: #fff; }
+
+/*# sourceMappingURL=finance_account_detail.wxss.map */

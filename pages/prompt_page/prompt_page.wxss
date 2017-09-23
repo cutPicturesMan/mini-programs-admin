@@ -1,0 +1,32 @@
+@charset "UTF-8";
+/*字体超出变省略号*/
+/* 实心三角形
+ * 参数有4个
+ * $tb : 上下边框宽
+ * $lr : 左右边框宽
+ * $direction : 三角形指向(top, right, bottom, left)
+ * $color : 三角形颜色
+ */
+page {
+  background-color: #eee; }
+
+.container {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 96rpx;
+  left: 0;
+  flex-direction: column;
+  display: flex;
+  justify-content: center;
+  align-items: center; }
+  .container .icon {
+    width: 160rpx;
+    height: 144rpx; }
+  .container .text {
+    margin-top: 55rpx;
+    font-size: 32rpx;
+    color: #666;
+    text-align: center; }
+
+/*# sourceMappingURL=prompt_page.wxss.map */

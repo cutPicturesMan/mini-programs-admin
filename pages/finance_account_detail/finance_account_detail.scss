@@ -1,0 +1,16 @@
+@charset "utf-8";
+@import '../../public/css/_mixin.scss';
+@import '../../public/css/_user_info.scss';
+@import '../../public/css/_line_cell.scss';
+@import '../../public/css/_time.scss';
+@import '../../public/css/_cart_account.scss';
+
+.container{
+  background-color: #fff;
+  overflow-x:hidden;
+}
+.line-cell{
+  font-size: 28rpx;
+  padding: 20rpx;
+  background-color: #fff;
+}

@@ -5,6 +5,31 @@ page{
   background-color: #fff;
 }
 
+.add-customer{
+  background-color: rgba(0, 0, 0, .65);
+  position:fixed;
+  top:0;
+  right:0;
+  bottom:0;
+  left:0;
+  z-index:100;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .content{
+    image{
+      width: 575rpx;
+      height: 575rpx;
+    }
+    .title{
+      font-size: 60rpx;
+      font-weight: bold;
+      color: #fff;
+      margin-top:30rpx;
+    }
+  }
+}
+
 .ad-container{
   height: 100rpx;
   margin: 25rpx 22rpx 0;

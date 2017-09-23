@@ -1,0 +1,42 @@
+<!--经理订单-->
+<view>
+  <view class="time-container ptb25 tac">
+    <text class="time">2017/09/05 15:47</text>
+  </view>
+  <navigator url="/pages/store_order_detail/store_order_detail" class="order-item plr25">
+    <view class="order-figure bb-e5">
+      <image class="img" src="../../testimg/order-item.jpg"></image>
+      <view class="order-figcaption">
+        <view class="p">昵称：灵魂</view>
+        <view class="p">姓名：张学友</view>
+        <view class="p text-stable">电话：13516801753</view>
+      </view>
+    </view>
+    <view class="label-line small">
+      <view class="l">商品总价: <text class="text-energized">1,234.00</text></view>
+      <view class="r">业务员：刘德华</view>
+    </view>
+  </navigator>
+</view>
+<view>
+  <view class="time-container ptb25 tac">
+    <text class="time">2017/09/05 15:47</text>
+  </view>
+  <navigator url="/pages/store_order_detail/store_order_detail" class="order-item plr25">
+    <view class="order-figure bb-e5">
+      <image class="img" src="../../testimg/order-item.jpg"></image>
+      <view class="order-figcaption">
+        <view class="p">昵称：灵魂</view>
+        <view class="p">姓名：张学友</view>
+        <view class="p text-stable">电话：13516801753</view>
+      </view>
+    </view>
+    <view class="label-line small">
+      <view class="l">商品总价: <text class="text-energized">1,234.00</text></view>
+      <view class="r">业务员：刘德华</view>
+    </view>
+  </navigator>
+</view>
+
+
+

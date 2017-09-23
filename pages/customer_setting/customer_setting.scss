@@ -1,0 +1,38 @@
+@charset "utf-8";
+@import '../../public/css/_mixin.scss';
+@import '../../public/css/_user_info.scss';
+@import '../../public/css/_line_cell.scss';
+@import '../../public/css/_product_item.scss';
+
+page{
+  padding-bottom:100rpx;
+}
+
+.line-cell{
+  min-height: 100rpx;
+  font-size: 28rpx;
+  padding: 15rpx;
+  background-color: #fff;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  input{
+    height: 68rpx;
+    border: 2rpx solid #eee;
+    text-align: center;
+    display: inline-block;
+  }
+}
+
+.customer-discount{
+  input {
+    width: 140rpx;
+  }
+}
+
+.customer-pay{
+  background-color: #fff;
+  input {
+    width: 70rpx;
+  }
+}

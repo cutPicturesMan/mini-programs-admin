@@ -1,3 +1,5 @@
+// appid: wxc4e5ae5a69b4faff
+// appsecret: acceb78d9e0af3ac63ab15408e970566
 
 App({
   globalData: {

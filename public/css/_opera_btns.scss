@@ -1,19 +1,33 @@
 .opera-btns{
+  width: 280rpx;
+  height: 64rpx;
+  font-size: 32rpx;
+  border: 1rpx solid #e5e5e5;
+  border-radius: 10rpx;
   display: flex;
   align-items:center;
   .reduce-btn,
   .add-btn{
-    width: 54rpx;
-    height: 54rpx;
-  }
-  .count{
-    font-size: 32rpx;
-    font-weight: bold;
-    color: #000;
-    flex: 1;
-    text-align: center;
+    width: 62rpx;
+    height: 62rpx;
     display: flex;
     justify-content: center;
     align-items:center;
+    image{
+      width: 40rpx;
+      height: 40rpx;
+    }
+  }
+  .reduce-btn{
+    border-right: 1rpx solid #e5e5e5;
+  }
+  .add-btn{
+    border-left: 1rpx solid #e5e5e5;
+  }
+  .count{
+    color: #333;
+    font-weight: bold;
+    flex: 1;
+    text-align: center;
   }
 }

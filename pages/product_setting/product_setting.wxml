@@ -1,0 +1,37 @@
+<view class="product_section bb-e5 pl15">
+  <view class="product_item bb-e5">
+    <image class="image" src="../../testimg/order-item.jpg"></image>
+    <view class="item_detail">
+      <view class="title">宝马S1000R宝马S1000R宝马S1000R宝马S1000R宝马宝马S1000R宝马S1000R宝马S1000R宝马S1000R宝马宝马S1000R宝马S1000R宝马S1000R宝马S1000R宝马
+        S1000R宝马S1000R......</view>
+      <view class="info">
+        <view>颜色:红  蓝  粉</view>
+        <view class="c">
+          折扣: <text class="text-energized">9.5折</text>
+        </view>
+        <view>
+          价格: <text class="text-energized">178000</text>
+        </view>
+      </view>
+    </view>
+  </view>
+  <view class="product_sku bb-e5">
+    <view class="l">颜色:红</view>
+    <view class="c">
+      折扣：<input class="ipt discount text-energized" type="text" />
+    </view>
+    <view class="r tar">
+      价格：<input class="ipt discount text-energized" type="text" />
+    </view>
+  </view>
+  <view class="product_sku">
+    <view class="l">颜色:红</view>
+    <view class="c">
+      折扣：<input class="ipt discount text-energized" type="text" />
+    </view>
+    <view class="r tar">
+      价格：<input class="ipt discount text-energized" type="text" />
+    </view>
+  </view>
+</view>
+<view class="btn btn-fixed fixed-bottom btn-energized-linear">完  成</view>

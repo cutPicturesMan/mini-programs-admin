@@ -1,0 +1,15 @@
+@charset "utf-8";
+@import '../../public/css/_mixin.scss';
+@import '../../public/css/_line_cell.scss';
+@import '../../public/css/_opera_btns.scss';
+
+page{
+  background-color: #fff;
+  padding-bottom: 100rpx;
+}
+
+.line-cell{
+  display: flex;
+  align-items: center;
+  padding: 24rpx;
+}

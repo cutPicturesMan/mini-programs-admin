@@ -1,10 +1,17 @@
 let api = {
 
-  // 获取分类
-  category: '/category',
+  // 获取客户列表
+  customer: '/user/customer',
+  // 登录
+  login: '/wx/login',
+
+
+
+
+
+
   // 获取分类商品
   category_products: '/category/products/',
-
   // 获取某个商品
   product: '/product/',
   // 获取商品sku

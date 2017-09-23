@@ -1,0 +1,37 @@
+@charset "utf-8";
+@import '../../public/css/_mixin.scss';
+@import '../../public/css/_line_cell.scss';
+@import '../../public/css/_order_item.scss';
+@import '../../public/css/_product_item.scss';
+
+page{
+  padding-bottom:100rpx;
+}
+.product-section{
+  background-color: #fff;
+}
+.line-cell{
+  font-size: 28rpx;
+  padding: 20rpx;
+  background-color: #fff;
+}
+.approve-section{
+  position: relative;
+  &.active{
+    transform: rotate(180deg);
+  }
+  .line-cell{
+    padding-right: 88rpx;
+  }
+  .icon-arrow{
+    position: absolute;
+    top:0;
+    right:0;
+    bottom:0;
+    padding:20rpx;
+    image{
+      width: 48rpx;
+      height: 48rpx;
+    }
+  }
+}

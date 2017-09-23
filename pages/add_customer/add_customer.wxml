@@ -1,0 +1,37 @@
+<view class="user-info mt20">
+  <image class="img" src="../../testimg/order-item.jpg"></image>
+  <view class="title">昵称：灵魂</view>
+</view>
+<view class="line-cell bb-e5 mt18">
+  <view class="cell-title">公司名称：</view>
+  <view class="cell-content">
+    <input type="text" placeholder="请输入"/>
+  </view>
+</view>
+<view class="line-cell bb-e5">
+  <view class="cell-title">门店名称:</view>
+  <view class="cell-content">
+    <input type="text" placeholder="请输入"/>
+  </view>
+</view>
+<view class="line-cell bb-e5">
+  <view class="cell-title">联系人:</view>
+  <view class="cell-content">
+    <input type="text" placeholder="请输入"/>
+  </view>
+</view>
+<view class="line-cell bb-e5">
+  <view class="cell-title">电话:</view>
+  <view class="cell-content">
+    <input type="number" placeholder="请输入"/>
+  </view>
+</view>
+<view class="line-cell">
+  <view class="cell-title">地址:</view>
+  <view class="cell-content">
+    <input type="text" placeholder="请输入"/>
+  </view>
+</view>
+<view class="btn btn-fixed fixed-bottom btn-energized-linear">完  成</view>
+
+

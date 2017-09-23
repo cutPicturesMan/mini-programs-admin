@@ -1,0 +1,128 @@
+@charset "UTF-8";
+/*字体超出变省略号*/
+/* 实心三角形
+ * 参数有4个
+ * $tb : 上下边框宽
+ * $lr : 左右边框宽
+ * $direction : 三角形指向(top, right, bottom, left)
+ * $color : 三角形颜色
+ */
+page {
+  background-color: #fff; }
+
+.add-customer {
+  background-color: rgba(0, 0, 0, 0.65);
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 100;
+  display: flex;
+  justify-content: center;
+  align-items: center; }
+  .add-customer .content image {
+    width: 575rpx;
+    height: 575rpx; }
+  .add-customer .content .title {
+    font-size: 60rpx;
+    font-weight: bold;
+    color: #fff;
+    margin-top: 30rpx; }
+
+.ad-container {
+  height: 100rpx;
+  margin: 25rpx 22rpx 0;
+  display: flex;
+  align-items: center;
+  box-shadow: 0 0 4rpx rgba(0, 0, 0, 0.1); }
+  .ad-container .icon {
+    width: 46rpx;
+    height: 46rpx;
+    margin: 0 40rpx; }
+  .ad-container .text {
+    font-size: 24rpx;
+    color: #444;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis; }
+
+.opera-panel .h-line {
+  width: 535rpx;
+  height: 2rpx;
+  display: block; }
+.opera-panel .circle {
+  width: 220rpx;
+  height: 220rpx;
+  border-radius: 50%;
+  background: linear-gradient(to right, #ff8f00 0%, #ff4900 100%);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center; }
+  .opera-panel .circle.small {
+    width: 200rpx;
+    height: 200rpx; }
+    .opera-panel .circle.small .title {
+      line-height: 48rpx;
+      font-size: 24rpx; }
+  .opera-panel .circle.big {
+    width: 300rpx;
+    height: 300rpx; }
+    .opera-panel .circle.big .title {
+      line-height: 48rpx;
+      font-size: 36rpx; }
+  .opera-panel .circle.biggest {
+    width: 320rpx;
+    height: 320rpx; }
+    .opera-panel .circle.biggest .icon {
+      font-size: 122rpx; }
+    .opera-panel .circle.biggest .title {
+      line-height: 48rpx;
+      font-size: 36rpx; }
+  .opera-panel .circle .icon {
+    font-size: 100rpx;
+    color: #fff; }
+  .opera-panel .circle .title {
+    line-height: 44rpx;
+    font-size: 28rpx;
+    color: #fff; }
+.opera-panel.manage {
+  display: flex;
+  flex-wrap: wrap;
+  position: relative; }
+  .opera-panel.manage .v-line {
+    width: 2rpx;
+    height: 790rpx;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: -395rpx;
+    margin-left: -1rpx;
+    display: block; }
+  .opera-panel.manage .h-line {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: -1rpx;
+    margin-left: -267.5rpx; }
+  .opera-panel.manage .item {
+    width: 50%;
+    height: 495rpx;
+    display: flex;
+    justify-content: center;
+    align-items: center; }
+.opera-panel.agent .item {
+  padding: 47rpx 0;
+  display: flex;
+  justify-content: center; }
+.opera-panel.agent .h-line {
+  margin: 0 auto; }
+.opera-panel.store .item {
+  padding: 85rpx 0;
+  display: flex;
+  justify-content: center; }
+.opera-panel.store .h-line {
+  margin: 0 auto; }
+
+/*# sourceMappingURL=opera.wxss.map */

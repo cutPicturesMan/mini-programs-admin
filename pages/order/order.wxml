@@ -3,7 +3,7 @@
   <view class="time-container ptb25 tac">
     <text class="time">2017/09/05 15:47</text>
   </view>
-  <view class="order-item plr25">
+  <navigator class="order-item plr25" url="/pages/store_order_detail/store_order_detail">
     <view class="order-figure bb-e5">
       <image class="img" src="../../testimg/order-item.jpg"></image>
       <view class="order-figcaption">
@@ -16,7 +16,7 @@
       <view class="l">商品总价: <text class="text-energized">1,234.00</text></view>
       <view class="r">业务员：刘德华</view>
     </view>
-  </view>
+  </navigator>
 </view>
 
 

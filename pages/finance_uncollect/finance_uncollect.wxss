@@ -1,0 +1,33 @@
+@charset "UTF-8";
+/*字体超出变省略号*/
+/* 实心三角形
+ * 参数有4个
+ * $tb : 上下边框宽
+ * $lr : 左右边框宽
+ * $direction : 三角形指向(top, right, bottom, left)
+ * $color : 三角形颜色
+ */
+.collect-item {
+  padding: 20rpx;
+  background-color: #fff;
+  display: flex; }
+  .collect-item .img {
+    width: 130rpx;
+    height: 130rpx;
+    margin-right: 20rpx;
+    border: 1px solid #e8e8e8; }
+  .collect-item .item-main {
+    flex: 1; }
+    .collect-item .item-main .title {
+      font-size: 28rpx;
+      margin-bottom: 10rpx; }
+    .collect-item .item-main .info {
+      line-height: 32rpx;
+      font-size: 24rpx;
+      color: #999; }
+    .collect-item .item-main .line {
+      line-height: 42rpx;
+      font-size: 24rpx;
+      color: #999; }
+
+/*# sourceMappingURL=finance_uncollect.wxss.map */

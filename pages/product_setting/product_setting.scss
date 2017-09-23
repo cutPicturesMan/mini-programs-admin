@@ -1,0 +1,68 @@
+@charset "utf-8";
+@import '../../public/css/_mixin.scss';
+page{
+  padding-bottom: 100rpx;
+  background-color: #fff;
+}
+.product_item{
+  padding: 18rpx 0;
+  display: flex;
+  .image{
+    width: 100rpx;
+    height: 100rpx;
+  }
+  .item_detail{
+    padding:0 20rpx;
+    flex: 1;
+    .title{
+      line-height: 34rpx;
+      font-size: 24rpx;
+      margin-top: -6rpx;
+      @include ellipsis(2);
+    }
+    .info{
+      color: #666;
+      font-size: 20rpx;
+      margin-top: 20rpx;
+      display: flex;
+      .c{
+        flex: 1;
+        text-align: center;
+      }
+    }
+  }
+}
+
+.product_sku{
+  min-height: 86rpx;
+  font-size: 20rpx;
+  padding: 12rpx 0;
+  color: #666;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  .ipt{
+    height: 58rpx;
+    text-align: center;
+    border: 2rpx solid #d9d9d9;
+    display: inline-block;
+    &.discount{
+      width: 100rpx;
+    }
+  }
+  .l{
+
+  }
+  .c{
+    flex: 1;
+    justify-content: center;
+  }
+  .r{
+    padding-right:20rpx;
+  }
+  .c,
+  .r{
+    display: flex;
+    align-items: center;
+  }
+}

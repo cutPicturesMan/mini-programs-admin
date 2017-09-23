@@ -1,0 +1,21 @@
+<view class="pt20"></view>
+<view class="collect-item bb-e5">
+  <image class="img" src="../../testimg/order-item.jpg"></image>
+  <view class="item-main">
+    <view class="title">昵称：灵魂</view>
+    <view class="info">电磁炉X10  电饭煲X5  奶油X50  奶油X50  奶油X50
+      电磁炉X10  电饭煲X5  奶油X50  奶油X50  奶油X50</view>
+    <view class="line">时间：2017-7-24 11:44:50</view>
+    <view class="line">金额：21，000.00（以收款）</view>
+  </view>
+</view>
+<view class="collect-item bb-e5">
+  <image class="img" src="../../testimg/order-item.jpg"></image>
+  <view class="item-main">
+    <view class="title">昵称：灵魂</view>
+    <view class="info">电磁炉X10  电饭煲X5  奶油X50  奶油X50  奶油X50
+      电磁炉X10  电饭煲X5  奶油X50  奶油X50  奶油X50</view>
+    <view class="line">时间：2017-7-24 11:44:50</view>
+    <view class="line">金额：21，000.00（以收款）</view>
+  </view>
+</view>

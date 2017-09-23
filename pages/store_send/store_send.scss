@@ -1,0 +1,9 @@
+@charset "utf-8";
+@import '../../public/css/_mixin.scss';
+@import '../../public/css/_time.scss';
+@import '../../public/css/_order_item';
+
+.order-item{
+  margin:0 24rpx;
+  border-radius: 10rpx;
+}

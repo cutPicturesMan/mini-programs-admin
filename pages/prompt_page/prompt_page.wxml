@@ -1,0 +1,7 @@
+<view class="container">
+  <image class="icon" src="../../icons/opera-success.png"></image>
+  <view class="text">
+    销账成功 <text class="text-energized">3</text> 秒后返回操作面板
+  </view>
+</view>
+<view class="btn btn-fixed fixed-bottom btn-energized-linear">返回操作界面</view>

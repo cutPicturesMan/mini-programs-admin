@@ -1,0 +1,10 @@
+<view class="container">
+  <navigator view class="label-item bb-e5" url="/pages/finance_account_detail/finance_account_detail?type=0">
+    <image class="img" src="../../testimg/order-item.jpg"></image>
+    <view class="item-main">刘德华</view>
+  </navigator>
+  <navigator class="label-item bb-e5" url="/pages/finance_account_detail/finance_account_detail?type=1">
+    <image class="img" src="../../testimg/order-item.jpg"></image>
+    <view class="item-main">刘德华</view>
+  </navigator>
+</view>

@@ -1,0 +1,47 @@
+@charset "UTF-8";
+/*字体超出变省略号*/
+/* 实心三角形
+ * 参数有4个
+ * $tb : 上下边框宽
+ * $lr : 左右边框宽
+ * $direction : 三角形指向(top, right, bottom, left)
+ * $color : 三角形颜色
+ */
+.time-container {
+  font-size: 24rpx; }
+  .time-container .time {
+    line-height: 40rpx;
+    color: #fff;
+    padding: 0 15rpx;
+    margin: 0 20rpx;
+    border-radius: 5rpx;
+    background-color: #bebebe;
+    display: inline-block; }
+
+.order-item {
+  background-color: #fff; }
+  .order-item .order-figure {
+    padding: 25rpx 0 20rpx 0;
+    display: flex; }
+    .order-item .order-figure .img {
+      width: 130rpx;
+      height: 130rpx;
+      border: 1rpx solid #e8e8e8;
+      margin-right: 22rpx; }
+    .order-item .order-figure .order-figcaption {
+      flex: 1;
+      padding: 7rpx 0; }
+      .order-item .order-figure .order-figcaption .p {
+        line-height: 40rpx;
+        font-size: 28rpx; }
+  .order-item .input-price {
+    width: 140rpx; }
+  .order-item .label-line.small {
+    font-size: 24rpx;
+    padding: 12rpx 0; }
+
+.order-item {
+  margin: 0 24rpx;
+  border-radius: 10rpx; }
+
+/*# sourceMappingURL=store_send.wxss.map */

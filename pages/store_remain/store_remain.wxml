@@ -1,0 +1,48 @@
+<view class="line-cell bb-e5">
+  <view class="cell-title">电磁炉</view>
+  <view class="cell-content">
+    <view class="opera-btns">
+      <view class="reduce-btn" bindtap="reduce">
+        <image src="../../icons/icon-reduce.jpg"></image>
+      </view>
+      <input class="count" type="number" value="{{num}}" bindinput="inputNumber"/>
+      <view class="add-btn" bindtap="add">
+        <image src="../../icons/icon-add1.jpg"></image>
+      </view>
+    </view>
+  </view>
+</view>
+<view class="line-cell bb-e5">
+  <view class="cell-title">电磁炉</view>
+  <view class="cell-content">
+    <view class="opera-btns">
+      <view class="reduce-btn" bindtap="reduce">
+        <image src="../../icons/icon-reduce.jpg"></image>
+      </view>
+      <input class="count" type="number" value="{{num}}" bindinput="inputNumber"/>
+      <view class="add-btn" bindtap="add">
+        <image src="../../icons/icon-add1.jpg"></image>
+      </view>
+    </view>
+  </view>
+</view>
+<view class="line-cell bb-e5">
+  <view class="cell-title">电磁炉</view>
+  <view class="cell-content">
+    <view class="opera-btns">
+      <view class="reduce-btn" bindtap="reduce">
+        <image src="../../icons/icon-reduce.jpg"></image>
+      </view>
+      <input class="count" type="number" value="{{num}}" bindinput="inputNumber"/>
+      <view class="add-btn" bindtap="add">
+        <image src="../../icons/icon-add1.jpg"></image>
+      </view>
+    </view>
+  </view>
+</view>
+
+<view class="btn btn-fixed fixed-bottom btn-energized-linear">库存确认</view>
+
+
+
+

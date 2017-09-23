@@ -1,0 +1,51 @@
+@charset "UTF-8";
+/*字体超出变省略号*/
+/* 实心三角形
+ * 参数有4个
+ * $tb : 上下边框宽
+ * $lr : 左右边框宽
+ * $direction : 三角形指向(top, right, bottom, left)
+ * $color : 三角形颜色
+ */
+.label-item {
+  margin-left: 18rpx;
+  display: flex;
+  align-items: center;
+  position: relative;
+  transition: .7s; }
+  .label-item.active {
+    transform: translate(-180rpx, 0); }
+  .label-item .icon {
+    font-size: 24rpx;
+    color: #d9d9d9;
+    margin-right: 20rpx; }
+  .label-item .img {
+    width: 90rpx;
+    height: 90rpx;
+    border: 1rpx solid #e5e5e5;
+    margin: 12rpx 12rpx 12rpx 0; }
+  .label-item .item-main {
+    font-size: 28rpx;
+    flex: 1;
+    display: flex; }
+  .label-item .delete {
+    width: 180rpx;
+    background-color: #ff0000;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24rpx;
+    position: absolute;
+    top: 0;
+    right: -180rpx;
+    bottom: -1rpx; }
+
+page {
+  padding-bottom: 98rpx; }
+
+.container {
+  background-color: #fff;
+  overflow-x: hidden; }
+
+/*# sourceMappingURL=manage_choose_salesman.wxss.map */

@@ -1,0 +1,29 @@
+.collect-item{
+  padding: 20rpx;
+  background-color: #fff;
+  display: flex;
+  .img{
+    $w: 130rpx;
+    width: $w;
+    height: $w;
+    margin-right: 20rpx;
+    border: 1px solid #e8e8e8;
+  }
+  .item-main{
+    flex: 1;
+    .title{
+      font-size: 28rpx;
+      margin-bottom: 10rpx;
+    }
+    .info{
+      line-height: 32rpx;
+      font-size: 24rpx;
+      color: #999;
+    }
+    .line{
+      line-height: 42rpx;
+      font-size: 24rpx;
+      color: #999;
+    }
+  }
+}

@@ -1,0 +1,44 @@
+<view class="user-info mt20">
+  <image class="img" src="../../testimg/order-item.jpg"></image>
+  <view class="title">昵称：灵魂</view>
+</view>
+<view class="line-cell">
+  <view class="cell-title">查询时间</view>
+  <view class="cell-content">
+    <picker
+      mode="date"
+      value="{{date}}"
+      fields="month"
+      bindchange="bindDateChange">{{date}}</picker>
+  </view>
+</view>
+<view>
+  <view class="time-container p25 tac">
+    <view class="time">2017/09/05 15:47</view>
+  </view>
+  <view class="line-cell">
+    <view class="cell-title">交易方式：账期交易</view>
+    <view class="cell-content">
+      金额：<text class="text-energized">3,132.00</text>
+    </view>
+  </view>
+</view>
+<view>
+  <view class="time-container p25 tac">
+    <view class="time">2017/09/05 15:47</view>
+  </view>
+  <view class="line-cell">
+    <view class="cell-title">交易方式：账期交易</view>
+    <view class="cell-content">
+      金额：<text class="text-energized">3,132.00</text>
+    </view>
+  </view>
+</view>
+
+<view class="cart-account">
+  <view class="total">
+    账期未结：<text class="text-energized">3,132.00</text>
+  </view>
+  <navigator class="calc active" url="/pages/prompt_page/prompt_page">销 账</navigator>
+</view>
+

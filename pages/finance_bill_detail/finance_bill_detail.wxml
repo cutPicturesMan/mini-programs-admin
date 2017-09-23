@@ -1,0 +1,26 @@
+<view class="user-info mt20">
+  <image class="img" src="../../testimg/order-item.jpg"></image>
+  <view class="title">昵称：灵魂</view>
+</view>
+<view class="product-section mt20 bb-e5">
+  <view class="product-item">
+    <view class="item-label">
+      <view class="title">电磁炉</view>
+      <view class="content">
+        <input type="text" class="input"/>
+      </view>
+    </view>
+    <view class="item-detail mt25">
+      <view>单价：320</view>
+      <view class="c">优惠：9.5折</view>
+      <view>优惠价：310</view>
+    </view>
+  </view>
+</view>
+<view class="total-price line-cell">
+  <view class="cell-title">
+    商品总价: <text class="text-energized">1,234.00</text>
+  </view>
+  <view class="cell-content">业务员:刘德华</view>
+</view>
+

@@ -1,0 +1,66 @@
+@charset "UTF-8";
+/*字体超出变省略号*/
+/* 实心三角形
+ * 参数有4个
+ * $tb : 上下边框宽
+ * $lr : 左右边框宽
+ * $direction : 三角形指向(top, right, bottom, left)
+ * $color : 三角形颜色
+ */
+page {
+  padding-bottom: 100rpx;
+  background-color: #fff; }
+
+.product_item {
+  padding: 18rpx 0;
+  display: flex; }
+  .product_item .image {
+    width: 100rpx;
+    height: 100rpx; }
+  .product_item .item_detail {
+    padding: 0 20rpx;
+    flex: 1; }
+    .product_item .item_detail .title {
+      line-height: 34rpx;
+      font-size: 24rpx;
+      margin-top: -6rpx;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 2; }
+    .product_item .item_detail .info {
+      color: #666;
+      font-size: 20rpx;
+      margin-top: 20rpx;
+      display: flex; }
+      .product_item .item_detail .info .c {
+        flex: 1;
+        text-align: center; }
+
+.product_sku {
+  min-height: 86rpx;
+  font-size: 20rpx;
+  padding: 12rpx 0;
+  color: #666;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center; }
+  .product_sku .ipt {
+    height: 58rpx;
+    text-align: center;
+    border: 2rpx solid #d9d9d9;
+    display: inline-block; }
+    .product_sku .ipt.discount {
+      width: 100rpx; }
+  .product_sku .c {
+    flex: 1;
+    justify-content: center; }
+  .product_sku .r {
+    padding-right: 20rpx; }
+  .product_sku .c,
+  .product_sku .r {
+    display: flex;
+    align-items: center; }
+
+/*# sourceMappingURL=product_setting.wxss.map */

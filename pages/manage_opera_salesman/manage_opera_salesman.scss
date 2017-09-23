@@ -1,0 +1,10 @@
+@charset "utf-8";
+@import '../../public/css/_mixin.scss';
+@import '../../public/css/_label_item.scss';
+page{
+  padding-bottom: 98rpx;
+}
+.container{
+  background-color: #fff;
+  overflow-x:hidden;
+}

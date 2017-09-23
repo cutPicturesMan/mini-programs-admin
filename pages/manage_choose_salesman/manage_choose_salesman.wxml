@@ -1,0 +1,16 @@
+<view class="container">
+  <view class="label-item bb-e5">
+    <view class="icon iconfont icon-xuanze"></view>
+    <image class="img" src="../../testimg/order-item.jpg"></image>
+    <view class="item-main">刘德华</view>
+    <view class="delete">解除关联</view>
+  </view>
+  <view class="label-item bb-e5 active">
+    <view class="icon iconfont icon-xuanze"></view>
+    <image class="img" src="../../testimg/order-item.jpg"></image>
+    <view class="item-main">刘德华</view>
+    <view class="delete">解除关联</view>
+  </view>
+</view>
+
+<view class="btn btn-fixed btn-energized fixed-bottom">确 定</view>

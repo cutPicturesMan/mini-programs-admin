@@ -1,0 +1,12 @@
+<view class="container">
+  <navigator class="label-item bb-e5" url="/pages/customer_setting/customer_setting">
+    <image class="img" src="../../testimg/order-item.jpg"></image>
+    <view class="item-main">刘德华</view>
+    <view class="delete">解除关联</view>
+  </navigator>
+  <navigator class="label-item bb-e5 active" url="/pages/customer_setting/customer_setting">
+    <image class="img" src="../../testimg/order-item.jpg"></image>
+    <view class="item-main">刘德华</view>
+    <view class="delete">解除关联</view>
+  </navigator>
+</view>

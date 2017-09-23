@@ -1,9 +1,32 @@
 {
   "pages":[
-    "pages/opera/opera",
+    "pages/salesman_customer/salesman_customer",
+
     "pages/pending/pending",
+    "pages/opera/opera",
     "pages/order/order",
-    "pages/my/my"
+    "pages/my/my",
+
+    "pages/finance_collect/finance_collect",
+    "pages/finance_uncollect/finance_uncollect",
+    "pages/finance_account/finance_account",
+    "pages/finance_account_detail/finance_account_detail",
+    "pages/finance_bill_detail/finance_bill_detail",
+
+
+    "pages/manage_choose_salesman/manage_choose_salesman",
+    "pages/manage_opera_salesman/manage_opera_salesman",
+    "pages/manage_customer/manage_customer",
+    "pages/product_setting/product_setting",
+
+    "pages/store_send/store_send",
+    "pages/store_order_detail/store_order_detail",
+
+    "pages/add_customer/add_customer",
+    "pages/customer_setting/customer_setting",
+    "pages/store_remain/store_remain",
+
+    "pages/prompt_page/prompt_page"
   ],
   "window":{
     "backgroundColor":"#f2f2f2",

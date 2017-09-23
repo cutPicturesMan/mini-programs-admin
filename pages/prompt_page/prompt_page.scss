@@ -1,0 +1,28 @@
+@charset "utf-8";
+@import '../../public/css/_mixin.scss';
+
+page{
+  background-color: #eee;
+}
+
+.container{
+  position:absolute;
+  top: 0;
+  right: 0;
+  bottom: 96rpx;
+  left: 0;
+  flex-direction: column;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .icon{
+    width: 160rpx;
+    height: 144rpx;
+  }
+  .text{
+    margin-top: 55rpx;
+    font-size: 32rpx;
+    color: #666;
+    text-align: center;
+  }
+}

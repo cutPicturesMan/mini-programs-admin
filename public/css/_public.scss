@@ -41,6 +41,12 @@
   &.bt{
     border-top: 1rpx solid #e5e5e5;
   }
+  &.fixed-bottom{
+    position:fixed;
+    right:0;
+    bottom:0;
+    left:0;
+  }
   .each-item{
     flex: 1;
     text-align: center;
@@ -49,9 +55,20 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    &.column{
+      background-color: #fff;
+      flex-direction: column;
+      color: #666;
+      .icon{
+        font-size: 34rpx;
+      }
+      .text{
+        font-size: 20rpx;
+      }
+    }
     &.reject{
-      color: #fff;
-      background: linear-gradient(to right, #ffc700 0%, #ff9402 100%);
+      color: #000;
+      background: #e5e5e5;
     }
     &.cancel{
       color: #fff;
@@ -130,7 +147,7 @@
   &.btn-fixed{
     line-height: 96rpx;
     text-align: center;
-    font-size: 28rpx;
+    font-size: 32rpx;
     border-radius:0;
     position:fixed;
     z-index:1;
