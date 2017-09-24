@@ -3,7 +3,7 @@
   <view class="text">灵魂在刘德华业务员处下单成功</view>
 </view>
 <!--经理-->
-<view class="opera-panel manage" wx:if="{{role === 'ROLE_MANAGER'}}">
+<view class="opera-panel manage" wx:if="{{role === ROLE_MANAGER}}">
   <image class="v-line" src="../../icons/v-line.jpg"></image>
   <image class="h-line" src="../../icons/h-line.jpg"></image>
   <view class="item" bindtap="addCustomer">
@@ -36,7 +36,7 @@
   </view>
 </view>
 <!--财务-->
-<view class="opera-panel manage" wx:if="{{role === 'ROLE_FINANCE'}}">
+<view class="opera-panel manage" wx:if="{{role === ROLE_FINANCE}}">
   <image class="v-line" src="../../icons/v-line.jpg"></image>
   <image class="h-line" src="../../icons/h-line.jpg"></image>
   <navigator class="item" url="/pages/finance_collect/finance_collect">
@@ -65,7 +65,7 @@
   </view>
 </view>
 <!--业务员-->
-<view class="opera-panel agent" wx:if="{{role === 'ROLE_SALEMAN'}}">
+<view class="opera-panel agent" wx:if="{{role === ROLE_SALESMAN}}">
   <navigator class="item" url="/pages/salesman_customer/salesman_customer">
     <view class="circle small">
       <view class="icon iconfont icon-people"></view>
@@ -80,15 +80,15 @@
     </view>
   </view>
   <image class="h-line" src="../../icons/h-line.jpg"></image>
-  <view class="item" bindtap="addCustomer">
+  <navigator class="item" url="/pages/add_customer/add_customer" bindtap="addCustomer">
     <view class="circle small">
       <view class="icon iconfont icon-xinzengyonghu"></view>
       <view class="title">新增客户</view>
     </view>
-  </view>
+  </navigator>
 </view>
 <!--仓管-->
-<view class="opera-panel store" wx:if="{{role === 'ROLE_WAREHOUSE'}}">
+<view class="opera-panel store" wx:if="{{role === ROLE_WAREHOUSE}}">
   <navigator class="item" url="/pages/store_send/store_send">
     <view class="circle biggest">
       <view class="icon iconfont icon-fahuo"></view>

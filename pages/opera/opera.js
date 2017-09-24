@@ -1,10 +1,13 @@
 import http from '../../public/js/http.js';
 import api from '../../public/js/api.js';
+import ROLE from '../../public/js/role.js';
 
 let app = getApp();
-console.log(app.globalData.info.role);
+
 Page({
   data: {
+    // 管理员角色常量
+    ...ROLE,
     // 新增客户的开关
     addCustomerToggle: false,
     // 用户角色
@@ -20,7 +23,7 @@ Page({
     });
 
     http.request({
-      url: api.twocode,
+      url: api.site_twocode,
       data: {
         scene: 'adminId=2',
         width: 430,
@@ -36,7 +39,7 @@ Page({
     })
   },
   onLoad: function () {
-    console.log('load')
+    // 获取用户的信息
     app.getUserInfo().then((res) => {
       this.setData({
         role: res.role

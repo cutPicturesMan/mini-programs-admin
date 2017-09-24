@@ -8,13 +8,9 @@
  * $color : 三角形颜色
  */
 .label-item {
-  margin-left: 18rpx;
   display: flex;
-  align-items: center;
   position: relative;
-  transition: .7s; }
-  .label-item.active {
-    transform: translate(-180rpx, 0); }
+  padding: 20rpx 0 20rpx 20rpx; }
   .label-item .icon {
     font-size: 24rpx;
     color: #d9d9d9;
@@ -23,23 +19,20 @@
     width: 90rpx;
     height: 90rpx;
     border: 1rpx solid #e5e5e5;
-    margin: 12rpx 12rpx 12rpx 0; }
+    margin-right: 12rpx; }
   .label-item .item-main {
     font-size: 28rpx;
-    flex: 1;
-    display: flex; }
+    flex: 1; }
   .label-item .delete {
-    width: 180rpx;
-    background-color: #ff0000;
     color: #fff;
+    padding: 24rpx;
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 24rpx;
-    position: absolute;
-    top: 0;
-    right: -180rpx;
-    bottom: -1rpx; }
+    font-size: 24rpx; }
+    .label-item .delete image {
+      width: 35rpx;
+      height: 35rpx; }
 
 .container {
   background-color: #fff;

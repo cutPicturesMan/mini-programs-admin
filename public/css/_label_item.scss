@@ -1,14 +1,8 @@
 .label-item{
-  $delete-w: 180rpx;
-
-  margin-left: 18rpx;
   display: flex;
-  align-items: center;
+  //align-items: center;
   position: relative;
-  transition: .7s;
-  &.active{
-    transform: translate(-$delete-w, 0);
-  }
+  padding: 20rpx 0 20rpx 20rpx;
   .icon{
     font-size: 24rpx;
     color: #d9d9d9;
@@ -18,24 +12,23 @@
     width: 90rpx;
     height: 90rpx;
     border: 1rpx solid #e5e5e5;
-    margin: 12rpx 12rpx 12rpx 0;
+    margin-right: 12rpx;
   }
   .item-main{
     font-size: 28rpx;
     flex: 1;
-    display: flex;
+    //display: flex;
   }
   .delete{
-    width: $delete-w;
-    background-color: #ff0000;
     color: #fff;
+    padding: 24rpx;
     display: flex;
     justify-content: center;
     align-items: center;
     font-size: 24rpx;
-    position:absolute;
-    top:0;
-    right:-$delete-w;
-    bottom:-1rpx;
+    image{
+      width: 35rpx;
+      height: 35rpx;
+    }
   }
 }

@@ -32,6 +32,11 @@ class Http extends Auth {
       }
     }
 
+    // 如果是提交数据，则使用form表单提交
+    if (!!~['POST', 'PUT'].indexOf(params.method)) {
+      config.header['content-type'] = 'application/x-www-form-urlencoded';
+    }
+
     let p = new Promise((resolve, reject) => {
       let fn = {
         success: (res) => {
@@ -66,14 +71,14 @@ class Http extends Auth {
               duration: 3000,
             })
 
-            setTimeout(() => {
-              wx.navigateBack({
-                delta: 2
-              })
-            }, 3000);
+            // setTimeout(() => {
+            //   wx.navigateBack({
+            //     delta: 2
+            //   })
+            // }, 3000);
+          } else {
+            resolve(res);
           }
-
-          resolve(res);
         },
         fail (res) {
           // 请求错误

@@ -1,13 +1,24 @@
 let api = {
-
   // 获取客户列表
-  customer: '/api/user/customer',
+  // 传id?pass=0/1 PUT 为通过、拒绝某个客户申请
+  // 传id GET 为获取某个用户的折扣信息
+  customer: '/api/user/customer/',
+  // 解除客户关系
+  customer_remove: '/api/user/customer/',
+
+  // 获取所有订单
+  order: '/api/order',
+  // 获取所有待处理订单
+  order_wait: '/api/order/wait',
+
   // 登录
   login: '/wx/login',
   // 个人中心
   user: '/wx/info',
-  // 二维码
-  twocode: '/wx/code',
+
+
+  // 管理端二维码
+  admin_twocode: '/wx/code',
 
   // // 获取分类商品
   // category_products: '/category/products/',
@@ -34,5 +45,10 @@ let api = {
 for (var attr in api) {
   api[attr] = 'https://www.byunfu.com/admin' + api[attr];
 }
+
+// 客户端的接口
+api.add_customer = 'https://www.byunfu.com/site/wx/info';
+// 客户端的二维码
+api.site_twocode = 'https://www.byunfu.com/site/wx/code';
 
 export default api;

@@ -8,13 +8,9 @@
  * $color : 三角形颜色
  */
 .label-item {
-  margin-left: 18rpx;
   display: flex;
-  align-items: center;
   position: relative;
-  transition: .7s; }
-  .label-item.active {
-    transform: translate(-180rpx, 0); }
+  padding: 20rpx 0 20rpx 20rpx; }
   .label-item .icon {
     font-size: 24rpx;
     color: #d9d9d9;
@@ -23,26 +19,65 @@
     width: 90rpx;
     height: 90rpx;
     border: 1rpx solid #e5e5e5;
-    margin: 12rpx 12rpx 12rpx 0; }
+    margin-right: 12rpx; }
   .label-item .item-main {
     font-size: 28rpx;
-    flex: 1;
-    display: flex; }
+    flex: 1; }
   .label-item .delete {
-    width: 180rpx;
-    background-color: #ff0000;
     color: #fff;
+    padding: 24rpx;
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 24rpx;
+    font-size: 24rpx; }
+    .label-item .delete image {
+      width: 35rpx;
+      height: 35rpx; }
+
+.role-prompt {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: 10rpx 0 55rpx 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center; }
+  .role-prompt .bg {
     position: absolute;
     top: 0;
-    right: -180rpx;
-    bottom: -1rpx; }
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: -1; }
 
-.container {
+.role-container {
   background-color: #fff;
-  overflow-x: hidden; }
+  overflow: hidden; }
+  .role-container .role-title {
+    line-height: 60rpx;
+    padding: 24rpx; }
+  .role-container .role-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center; }
+    .role-container .role-info .image {
+      width: 130rpx;
+      height: 130rpx;
+      border: 1rpx solid #e8e8e8; }
+    .role-container .role-info .name {
+      margin-top: 25rpx;
+      font-size: 28rpx; }
+  .role-container .info {
+    line-height: 40rpx;
+    padding-left: 40rpx;
+    font-size: 28rpx;
+    color: #666; }
+
+.label-item {
+  background-color: #fff; }
 
 /*# sourceMappingURL=salesman_customer.wxss.map */

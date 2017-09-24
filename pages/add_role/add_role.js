@@ -19,6 +19,8 @@ Page({
     adminId: 0,
     // 数据是否加载完毕
     isLoaded: false,
+    // 是否允许使用个人信息
+    isAllowInfo: true,
     // 是否正在提交
     isSubmit: false
   },
@@ -41,14 +43,17 @@ Page({
       return;
     }
 
-    let { name, phone } = this.data;
+    let { name, phone, adminId } = this.data;
     let { signature, rawData, encryptedData, iv } = this.data.info;
-    let adminId = app.globalData.info.id;
 
     try {
       // 如果用户未授权使用个人信息
       if (!signature || !rawData || !encryptedData || !iv) {
         throw new Error('用户未授权使用个人信息，无法注册。请在右上角的设置中允许授权');
+      }
+      // 如果还未获取用户角色，则请求并设置
+      if (!adminId) {
+        app.getUserInfo();
       }
       // 如果必填字段没有填写
       if (!name) {
@@ -57,10 +62,6 @@ Page({
       // 如果电话没有填写
       if (!phone) {
         throw new Error('请填写电话');
-      }
-      // 如果还未获取用户角色，则请求并设置
-      if (!adminId) {
-        app.getUserInfo();
       }
     } catch (e) {
       return wx.showToast({
@@ -95,7 +96,6 @@ Page({
 
       // 提交成功，则跳转到待处理页面
       if (res.errorCode === 200) {
-        // 提交失败，则提示
         wx.showToast({
           title: res.moreInfo
         })
@@ -127,26 +127,25 @@ Page({
 
         this.setData({
           isLoaded: true,
+          isAllowInfo: true,
           info: res,
           nickName: userInfo.nickName,
           avatarUrl: userInfo.avatarUrl
         });
       },
       fail: () => {
-        wx.showToast({
-          title: '请允许使用您的个人信息，否则无法完成注册。可在右上角的设置中打开',
-          image: '../../icons/close-circled.png',
-          duration: 4000
-        })
+        this.setData({
+          isAllowInfo: false
+        });
       }
     });
   },
   onLoad (options) {
     var scene = decodeURIComponent(options.scene);
-
     this.setData({
-
+      adminId: scene.adminId || 3
     });
+
     this.getUserInfo();
   }
 })
