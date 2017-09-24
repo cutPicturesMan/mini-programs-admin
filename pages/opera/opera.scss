@@ -1,5 +1,6 @@
 @charset "utf-8";
 @import '../../public/css/_mixin.scss';
+@import '../../public/css/_role_prompt.scss';
 
 page{
   background-color: #fff;
@@ -64,6 +65,16 @@ page{
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    &.add-sale-man{
+      position:absolute;
+      top: 50%;
+      left: 50%;
+      margin-left: -150rpx;
+      margin-top: -150rpx;
+      .icon{
+        font-size: 140rpx;
+      }
+    }
     &.small{
       $w: 200rpx;
       width: $w;

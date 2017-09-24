@@ -18,18 +18,15 @@ class Auth {
                 if (res.data.errorCode === 200) {
                   let sessionId = res.data.data;
                   wx.setStorageSync('sessionId', sessionId);
-                } else {
-                  this.logs(new Date() + '服务器登录错误：' + res.data.moreInfo);
                 }
 
-                // 无论登录是否成功，都再次发起请求
-                resolve();
+                // 无论登录是否成功，都再次发起请求，把这个登录是否成功放到下次请求上验证
+                resolve(res);
               }
             });
           } else {
             // 登录出错
             reject(res);
-            this.logs(new Date() + '获取用户登录态失败' + res.errMsg);
           }
         }
       });

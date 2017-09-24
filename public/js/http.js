@@ -1,6 +1,15 @@
 import Auth from './auth.js';
+import api from './api.js';
 
 class Http extends Auth {
+  constructor () {
+    super();
+    // 错误次数
+    this.errorCount = 0;
+    // 允许的最大出错次数，未超过这个次数，则自动重新登录；超过，则提示
+    this.maxErrorCount = 5;
+  }
+
   /**
    * 请求数据，只返回resolve的promise
    *    1、如果请求成功，则返回成功的数据
@@ -29,23 +38,44 @@ class Http extends Auth {
           res = res.data;
           // 用户未登录，则重新登录之后，再次发起本次请求
           if (res.errorCode === 401) {
-            this.logs(new Date() + '用户登录失败，重新登录中。错误：' + res.moreInfo);
+            this.errorCount++;
 
-            this.login()
-              .then(() => {
-                sessionId = wx.getStorageSync('sessionId');
-                config.header.cookie = `SESSION=${sessionId}`;
-                this.request(config);
-              }, () => {
-                sessionId = wx.getStorageSync('sessionId');
-                config.header.cookie = `SESSION=${sessionId}`;
-                this.request(config);
-              });
-          } else {
-            resolve(res);
+            // 如果登录错误的次数小于规定次数，则自动重新登录
+            if (this.errorCount < this.maxErrorCount) {
+              this.login()
+                .then(() => {
+                  sessionId = wx.getStorageSync('sessionId');
+                  config.header.cookie = `SESSION=${sessionId}`;
+                  this.request(config);
+                }, () => {
+                  sessionId = wx.getStorageSync('sessionId');
+                  config.header.cookie = `SESSION=${sessionId}`;
+                  this.request(config);
+                });
+            } else {
+              wx.showToast({
+                title: '自动登录出错',
+                image: '../../icons/close-circled.png'
+              })
+            }
+          } else if (res.errorCode === 403) {
+            // 用户无权限，则提示，并自动返回上一页
+            wx.showToast({
+              title: '暂无权限访问',
+              image: '../../icons/close-circled.png',
+              duration: 3000,
+            })
+
+            setTimeout(() => {
+              wx.navigateBack({
+                delta: 2
+              })
+            }, 3000);
           }
+
+          resolve(res);
         },
-        fail(res){
+        fail (res) {
           // 请求错误
           wx.showToast({
             title: res.data.moreinfo,

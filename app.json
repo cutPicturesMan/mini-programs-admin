@@ -1,11 +1,11 @@
 {
   "pages":[
-    "pages/salesman_customer/salesman_customer",
-
-    "pages/pending/pending",
     "pages/opera/opera",
-    "pages/order/order",
     "pages/my/my",
+    "pages/pending/pending",
+    "pages/order/order",
+
+    "pages/add_role/add_role",
 
     "pages/finance_collect/finance_collect",
     "pages/finance_uncollect/finance_uncollect",
@@ -18,6 +18,8 @@
     "pages/manage_opera_salesman/manage_opera_salesman",
     "pages/manage_customer/manage_customer",
     "pages/product_setting/product_setting",
+
+    "pages/salesman_customer/salesman_customer",
 
     "pages/store_send/store_send",
     "pages/store_order_detail/store_order_detail",

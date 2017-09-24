@@ -1,1 +1,6 @@
-
+<view class="user-info" wx:if="{{!isLoading}}">
+  <view class="btn btn-energized-light" wx:if="{{!isRegisted}}">注册</view>
+  <image class="img" src="../../testimg/order-item.jpg" wx:if="{{isRegisted}}"></image>
+  <view class="title" wx:if="{{isRegisted}}">昵称：{{user.nickName}}</view>
+</view>
+<view bindtap="a">aaa</view>

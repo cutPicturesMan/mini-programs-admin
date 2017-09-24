@@ -7,6 +7,50 @@
  * $direction : 三角形指向(top, right, bottom, left)
  * $color : 三角形颜色
  */
+.role-prompt {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: 10rpx 0 55rpx 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center; }
+  .role-prompt .bg {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: -1; }
+  .role-prompt .role-container {
+    width: 600rpx;
+    background-color: #fff;
+    border-radius: 10rpx;
+    overflow: hidden; }
+    .role-prompt .role-container .role-title {
+      line-height: 60rpx;
+      padding: 24rpx; }
+    .role-prompt .role-container .role-info {
+      display: flex;
+      flex-direction: column;
+      align-items: center; }
+      .role-prompt .role-container .role-info .image {
+        width: 130rpx;
+        height: 130rpx;
+        border: 1rpx solid #e8e8e8; }
+      .role-prompt .role-container .role-info .name {
+        margin-top: 25rpx;
+        font-size: 28rpx; }
+    .role-prompt .role-container .info {
+      line-height: 40rpx;
+      padding-left: 40rpx;
+      font-size: 28rpx;
+      color: #666; }
+
 page {
   background-color: #fff; }
 
@@ -60,6 +104,14 @@ page {
   flex-direction: column;
   justify-content: center;
   align-items: center; }
+  .opera-panel .circle.add-sale-man {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-left: -150rpx;
+    margin-top: -150rpx; }
+    .opera-panel .circle.add-sale-man .icon {
+      font-size: 140rpx; }
   .opera-panel .circle.small {
     width: 200rpx;
     height: 200rpx; }

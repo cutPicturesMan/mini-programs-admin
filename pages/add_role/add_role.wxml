@@ -1,0 +1,20 @@
+<view wx:if="{{isLoaded}}">
+  <view class="user-info">
+    <image class="img" src="{{avatarUrl}}"></image>
+    <view class="title">昵称：{{nickName}}</view>
+  </view>
+  <view class="line-cell bb-e5 mt18">
+    <view class="cell-title">真实姓名：</view>
+    <view class="cell-content">
+      <input type="text" placeholder="请输入" maxlength="20" bindinput="bindNameInput"/>
+    </view>
+  </view>
+  <view class="line-cell bb-e5">
+    <view class="cell-title">电话：</view>
+    <view class="cell-content">
+      <input type="number" placeholder="请输入" maxlength="11" bindinput="bindPhoneInput"/>
+    </view>
+  </view>
+
+  <view class="btn btn-fixed fixed-bottom {{isSubmit ? 'btn-stable': 'btn-energized-linear'}}" bindtap="submit">{{isSubmit ? '正在提交中...': '完  成'}}</view>
+</view>

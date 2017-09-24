@@ -1,29 +1,46 @@
+import http from '../../public/js/http.js';
+import api from '../../public/js/api.js';
+
+let app = getApp();
+console.log(app.globalData.info.role);
 Page({
   data: {
     // 新增客户的开关
     addCustomerToggle: false,
+    // 用户角色
+    role: '',
+    img: '',
+    // 数据是否加载完毕，这里指的是用户的info信息是否返回，返回则设置角色
+    isLoaded: false,
   },
   // 添加客户
   addCustomer () {
-    console.log('123');
     this.setData({
       addCustomerToggle: !this.data.addCustomerToggle
     });
 
-    wx.request({
-      url: 'https://api.weixin.qq.com/wxa/getwxacodeunlimit?access_token=8oBtYoYGHQSieTlfcamtkw5iWXIEXNyYFWTX2UXqwGFlS_FWJG1w71PGbOh5ZIPnZULL2Eb7Gdt1LtSmCico5XnUwGJBHig-MzOsvFGDx5XjAixhbDW2cqi0eTegwHw7EJHgACASXV',
-      method: 'POST',
+    http.request({
+      url: api.twocode,
       data: {
-        page: 'pages/my/my',
+        scene: 'adminId=2',
+        width: 430,
+        auto_color: false,
+        r: '0',
+        g: '0',
+        b: '0'
       },
-      success: function(){
+      success: function (res) {
+        console.log(res.data);
 
       }
     })
   },
-  onLoad: function (options) {
-    // options 中的 scene 需要使用 decodeURIComponent 才能获取到生成二维码时传入的 scene
-    // var scene = decodeURIComponent(options.scene);
-    // console.log(scene);
+  onLoad: function () {
+    console.log('load')
+    app.getUserInfo().then((res) => {
+      this.setData({
+        role: res.role
+      });
+    });
   }
 })

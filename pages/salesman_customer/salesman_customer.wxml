@@ -4,9 +4,4 @@
     <view class="item-main">刘德华</view>
     <view class="delete">解除关联</view>
   </view>
-  <view class="label-item bb-e5 active">
-    <image class="img" src="../../testimg/order-item.jpg"></image>
-    <view class="item-main">刘德华</view>
-    <view class="delete">解除关联</view>
-  </view>
 </view>

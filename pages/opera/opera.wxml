@@ -2,8 +2,41 @@
   <image class="icon" src="../../icons/icon-horn.png"></image>
   <view class="text">灵魂在刘德华业务员处下单成功</view>
 </view>
+<!--经理-->
+<view class="opera-panel manage" wx:if="{{role === 'ROLE_MANAGER'}}">
+  <image class="v-line" src="../../icons/v-line.jpg"></image>
+  <image class="h-line" src="../../icons/h-line.jpg"></image>
+  <view class="item" bindtap="addCustomer">
+    <view class="circle">
+      <view class="icon iconfont icon-chuangjian"></view>
+      <view class="title">创建订单</view>
+    </view>
+  </view>
+  <navigator class="item" url="/pages/manage_opera_salesman/manage_opera_salesman">
+    <view class="circle">
+      <view class="icon iconfont icon-guanli1"></view>
+      <view class="title">业务员管理</view>
+    </view>
+  </navigator>
+  <navigator class="item" url="/pages/manage_customer/manage_customer">
+    <view class="circle">
+      <view class="icon iconfont icon-people"></view>
+      <view class="title">客户列表</view>
+    </view>
+  </navigator>
+  <navigator class="item" url="/pages/product_setting/product_setting">
+    <view class="circle">
+      <view class="icon iconfont icon-tubiaozhizuomoban"></view>
+      <view class="title">商品设置</view>
+    </view>
+  </navigator>
+  <view class="circle big add-sale-man" bindtap="addSaleMan">
+    <view class="icon iconfont icon-xinzengyonghu"></view>
+    <view class="title">新增业务员</view>
+  </view>
+</view>
 <!--财务-->
-<view class="opera-panel manage">
+<view class="opera-panel manage" wx:if="{{role === 'ROLE_FINANCE'}}">
   <image class="v-line" src="../../icons/v-line.jpg"></image>
   <image class="h-line" src="../../icons/h-line.jpg"></image>
   <navigator class="item" url="/pages/finance_collect/finance_collect">
@@ -31,37 +64,8 @@
     </view>
   </view>
 </view>
-<!--经理-->
-<view class="opera-panel manage">
-  <image class="v-line" src="../../icons/v-line.jpg"></image>
-  <image class="h-line" src="../../icons/h-line.jpg"></image>
-  <view class="item">
-    <view class="circle">
-      <view class="icon iconfont icon-chuangjian"></view>
-      <view class="title">创建订单</view>
-    </view>
-  </view>
-  <navigator class="item" url="/pages/manage_opera_salesman/manage_opera_salesman">
-    <view class="circle">
-      <view class="icon iconfont icon-guanli1"></view>
-      <view class="title">业务员管理</view>
-    </view>
-  </navigator>
-  <navigator class="item" url="/pages/manage_customer/manage_customer">
-    <view class="circle">
-      <view class="icon iconfont icon-people"></view>
-      <view class="title">客户列表</view>
-    </view>
-  </navigator>
-  <navigator class="item" url="/pages/product_setting/product_setting">
-    <view class="circle">
-      <view class="icon iconfont icon-tubiaozhizuomoban"></view>
-      <view class="title">商品设置</view>
-    </view>
-  </navigator>
-</view>
 <!--业务员-->
-<view class="opera-panel agent">
+<view class="opera-panel agent" wx:if="{{role === 'ROLE_SALEMAN'}}">
   <navigator class="item" url="/pages/salesman_customer/salesman_customer">
     <view class="circle small">
       <view class="icon iconfont icon-people"></view>
@@ -84,7 +88,7 @@
   </view>
 </view>
 <!--仓管-->
-<view class="opera-panel store">
+<view class="opera-panel store" wx:if="{{role === 'ROLE_WAREHOUSE'}}">
   <navigator class="item" url="/pages/store_send/store_send">
     <view class="circle biggest">
       <view class="icon iconfont icon-fahuo"></view>
@@ -100,9 +104,53 @@
   </navigator>
 </view>
 
+<scroll-view scroll-y="true" class="role-prompt" wx:if="{{addRoleToggle}}">
+  <view class="role-container mtb45">
+    <view class="role-title tac">新增业务员信息</view>
+    <view class="role-info mb15">
+      <image class="image" src="../../testimg/order-item.jpg"></image>
+      <view class="name tac">昵称：灵魂</view>
+    </view>
+    <view class="info">真实姓名：肖思奇</view>
+    <view class="info">电话：13516801753</view>
+    <view class="btns-prompt mt20">
+      <view class="each-item cancel" bindtap="switchAddRemark">取消</view>
+      <view class="each-item confirm">确认</view>
+    </view>
+  </view>
+
+  <view class="role-container mtb45">
+    <view class="role-title tac">新增业务员信息</view>
+    <view class="role-info mb15">
+      <image class="image" src="../../testimg/order-item.jpg"></image>
+      <view class="name tac">昵称：灵魂</view>
+    </view>
+    <view class="info">真实姓名：肖思奇</view>
+    <view class="info">电话：13516801753</view>
+    <view class="btns-prompt mt20">
+      <view class="each-item cancel" bindtap="switchAddRemark">取消</view>
+      <view class="each-item confirm">确认</view>
+    </view>
+  </view>
+
+  <view class="role-container mtb45">
+    <view class="role-title tac">新增业务员信息</view>
+    <view class="role-info mb15">
+      <image class="image" src="../../testimg/order-item.jpg"></image>
+      <view class="name tac">昵称：灵魂</view>
+    </view>
+    <view class="info">真实姓名：肖思奇</view>
+    <view class="info">电话：13516801753</view>
+    <view class="btns-prompt mt20">
+      <view class="each-item cancel" bindtap="switchAddRemark">取消</view>
+      <view class="each-item confirm">确认</view>
+    </view>
+  </view>
+</scroll-view>
+
 <view class="add-customer" wx:if="{{addCustomerToggle}}" bindtap="addCustomer">
   <view class="content animated {{addCustomerToggle ? 'bounceIn' : 'bounceOut'}}">
-    <image class="image" src=""></image>
+    <image class="image" src="https://www.byunfu.com/admin/wx/code?page='pages/my/my'"></image>
     <view class="title tac">将二维码分享出去</view>
   </view>
 </view>
