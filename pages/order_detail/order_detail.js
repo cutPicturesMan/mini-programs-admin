@@ -13,12 +13,10 @@ Page({
     addToggle: false,
     // 用户角色
     role: '',
-    // 当前选中的订单序号
-    idx: 0,
     // 备注框文字
     remark: '',
-    // 列表数据
-    list: [],
+    // 订单数据
+    item: {},
     // 数据是否加载完毕
     isLoaded: false
   },
@@ -34,23 +32,19 @@ Page({
   // 确定备注框
 
   // 获取列表数据
-  getData () {
+  getData (id) {
     wx.showLoading();
 
     http.request({
-      url: api.order_wait,
+      url: `${api.order}${id}`,
     }).then((res) => {
       wx.hideLoading();
 
-      if (res.errorCode === 200) {
-        res.data.forEach((item)=>{
-          item.isCanceling = false;
-          item.isConfirming = false;
-          item.date = utils.formatDate(new Date(item.updatedAt), 'YYYY/MM/DD HH:mm:ss');
-        });
+      res.data.date = utils.formatDate(new Date(res.data.updatedAt), 'YYYY/MM/DD HH:mm:ss');
 
+      if (res.errorCode === 200) {
         this.setData({
-          list: res.data,
+          item: res.data,
           isLoaded: true
         });
       }
@@ -95,14 +89,21 @@ Page({
       }
     })
   },
-  onLoad () {
-    this.getData();
-    // 获取用户的信息
-    app.getUserInfo().then((res) => {
-      this.setData({
-        role: res.role
+  onLoad (params) {
+    // 如果订单id存在，则请求数据
+    if(params.id){
+      this.getData(params.id);
+      // 获取用户的信息
+      app.getUserInfo().then((res) => {
+        this.setData({
+          role: res.role
+        });
       });
-    });
+    }else{
+      wx.showToast({
+        title: '订单id不存在',
+        image: '../../icons/close-circled.png'
+      });
+    }
   }
 })
-

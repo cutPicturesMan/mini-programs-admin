@@ -1,5 +1,6 @@
 {
   "pages":[
+
     "pages/pending/pending",
     "pages/order/order",
     "pages/opera/opera",
@@ -16,11 +17,12 @@
     "pages/manage_customer/manage_customer",
     "pages/product_setting/product_setting",
 
+    "pages/order_detail/order_detail",
+
     "pages/salesman_customer/salesman_customer",
     "pages/customer_setting/customer_setting",
 
     "pages/store_send/store_send",
-    "pages/store_order_detail/store_order_detail",
     "pages/store_remain/store_remain",
 
     "pages/add_role/add_role",

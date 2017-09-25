@@ -1,0 +1,79 @@
+<view class="order-item">
+  <view class="order-figure bb-e5 ml25">
+    <image class="img"
+           src="{{item.orderItems[0].skuMedia.alt1.url ? (item.orderItems[0].skuMedia.alt1.url + '?imageView/2/1/w/260/h/260') : '../../icons/img-none.png'}}"></image>
+    <view class="order-figcaption">
+      <view class="p">订单编号：{{item.orderNumber}}</view>
+      <view class="p">
+        订单状态：<text class="text-energized">{{item.status.friendlyType}}</text>
+      </view>
+      <view class="p">商品名称：{{item.name}}</view>
+      <view class="p">订单小计：{{item.amount}}</view>
+      <view class="p">客户修改的价格：{{item.offerTotal}}</view>
+      <view class="p">客户姓名：{{item.nick}}</view>
+      <view class="p">修改时间：{{item.date}}</view>
+    </view>
+  </view>
+  <view class="label-line small bb-e5">
+    <view class="r">
+      商品总价：<input class="input-price mr20 tac text-energized" type="number"
+                  value="{{item.offerTotal}}"/>
+    </view>
+  </view>
+</view>
+<view class="product-section mt20 bb-e5">
+  <view class="product-item">
+    <view class="item-label">
+      <view class="title">电磁炉</view>
+      <view class="content">
+        <input type="text" class="input"/>
+      </view>
+    </view>
+    <view class="item-detail mt25">
+      <view>单价：320</view>
+      <view class="c">优惠：9.5折</view>
+      <view>优惠价：310</view>
+    </view>
+  </view>
+</view>
+<view class="mt20">
+  <view class="approve-section">
+    <view class="line-cell bb-e5">
+      aaa
+    </view>
+    <view class="line-cell bb-e5">
+      aaa
+    </view>
+    <view class="icon-arrow active">
+      <image src="../../icons/icon-arrow-top.jpg"></image>
+    </view>
+  </view>
+  <view class="line-cell">
+    <view class="cell-title">备注信息</view>
+    <view class="cell-content">
+      <input type="text" placeholder="请输入"/>
+    </view>
+  </view>
+</view>
+
+<!--业务员-->
+<block wx:if="{{role === ROLE_SALESMAN}}">
+  <view class="btns-prompt fixed-bottom">
+    <view class="each-item cancel">取消订单</view>
+    <view class="each-item confirm">提交订单</view>
+  </view>
+</block>
+<!--经理-->
+<block wx:if="{{role === ROLE_MANAGER}}">
+
+</block>
+<!--财务-->
+<block wx:if="{{role === ROLE_FINANCE}}">
+
+</block>
+<!--仓管-->
+<block wx:if="{{role === ROLE_WAREHOUSE}}">
+  <view class="btn btn-fixed fixed-bottom btn-energized-linear">确认发货</view>
+</block>
+
+
