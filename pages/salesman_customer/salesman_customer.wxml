@@ -14,12 +14,12 @@
         <view class="info">电话：{{item.mobile}}</view>
         <view class="info">地址：{{item.address}}</view>
         <view class="btns-prompt mt20">
-          <view class="each-item cancel"
+          <view class="each-item {{item.isRejecting ? 'reject' : 'cancel'}}"
                 data-pass="{{0}}"
                 data-id="{{item.id}}"
                 data-index="{{index}}"
                 bindtap="judge">{{item.isRejecting ? '数据提交中' : '拒绝'}}</view>
-          <view class="each-item confirm"
+          <view class="each-item {{item.isPassing ? 'reject' : 'confirm'}}"
                 data-pass="{{1}}"
                 data-id="{{item.id}}"
                 data-index="{{index}}"

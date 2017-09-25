@@ -1,8 +1,8 @@
-let { formatDate } = require('../../public/js/utils.js');
+import utils from '../../public/js/utils.js';
 
 Page({
   data: {
-    date: formatDate(new Date(), 'YYYY-MM'),
+    date: utils.formatDate(new Date(), 'YYYY-MM'),
   },
   bindDateChange: function(e) {
     console.log('picker发送选择改变，携带值为', e.detail.value)

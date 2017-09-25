@@ -37,7 +37,7 @@
     </view>
   </view>
 
-  <view class="btn btn-fixed fixed-bottom btn-energized-linear" bindtap="submit">{{ isSubmit ? '正在提交中...' : '完成'}}</view>
+  <view class="btn btn-fixed fixed-bottom {{ isSubmit ? 'btn-stable' : 'btn-energized-linear'}}" bindtap="submit">{{ isSubmit ? '正在提交中...' : '完成'}}</view>
 </view>
 
 

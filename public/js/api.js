@@ -8,8 +8,8 @@ let api = {
   // 设置客户折扣，PUT方法
   customer_setting: '/api/user/customer/offer/',
 
-  // 获取所有订单
-  order: '/api/order',
+  // 获取所有订单 or 获取单个订单
+  order: '/api/order/',
   // 获取所有待处理订单
   order_wait: '/api/order/wait',
 
