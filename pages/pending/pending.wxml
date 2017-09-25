@@ -63,7 +63,7 @@
   <!--如果没有数据-->
   <block wx:else>
     <view class="empty-data">
-      <view class="p20 tac fs32 text-stable">暂无待处理订单 ^_^</view>
+      <view class="p20 tac fs32 text-stable">暂无待处理订单</view>
     </view>
   </block>
 </block>

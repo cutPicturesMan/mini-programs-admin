@@ -3,8 +3,12 @@ import api from '../../public/js/api.js';
 
 Page({
   data: {
+    // 数据是否加载完毕
+    isLoaded: false,
+    // 订单列表
     list: []
   },
+  // 获取订单列表
   getData(){
     wx.showLoading();
 
@@ -14,9 +18,10 @@ Page({
       wx.hideLoading();
 
       if (res.errorCode === 200) {
-        // this.setData({
-        //
-        // });
+        this.setData({
+          isLoaded: true,
+          list: res.data
+        });
       }
     })
   },

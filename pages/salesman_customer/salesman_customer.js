@@ -4,7 +4,9 @@ import api from '../../public/js/api.js';
 Page({
   data: {
     // 客户列表
-    list: []
+    list: [],
+    // 数据是否加载完毕
+    isLoaded: false,
   },
   getData () {
     wx.showLoading();
@@ -25,6 +27,7 @@ Page({
         });
 
         this.setData({
+          isLoaded: true,
           list: res.data
         });
       }

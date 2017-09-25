@@ -5,6 +5,8 @@ let api = {
   customer: '/api/user/customer/',
   // 解除客户关系
   customer_remove: '/api/user/customer/',
+  // 设置客户折扣，PUT方法
+  customer_setting: '/api/user/customer/offer/',
 
   // 获取所有订单
   order: '/api/order',

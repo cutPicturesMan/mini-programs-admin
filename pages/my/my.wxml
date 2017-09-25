@@ -1,6 +1,15 @@
-<view class="user-info" wx:if="{{!isLoading}}">
-  <view class="btn btn-energized-light" wx:if="{{!isRegisted}}">注册</view>
-  <image class="img" src="../../testimg/order-item.jpg" wx:if="{{isRegisted}}"></image>
-  <view class="title" wx:if="{{isRegisted}}">昵称：{{user.nickName}}</view>
+<view class="user-info" wx:if="{{isLoaded}}">
+  <image class="img" src="{{info.avatarUrl}}"></image>
+  <view class="title">
+    昵称：{{info.nickName}}
+    <block wx:if="{{info.status.id === 2}}">
+      (<text class="text-assertive">{{info.status.friendlyType}}</text>)
+    </block>
+    <block wx:if="{{info.status.id === 1}}">
+      (<text class="text-energized">{{info.status.friendlyType}}</text>)
+    </block>
+    <block wx:if="{{info.status.id === 0}}">
+      (<text class="text-stable">{{info.status.friendlyType}}</text>)
+    </block>
+  </view>
 </view>
-<view bindtap="a">aaa</view>

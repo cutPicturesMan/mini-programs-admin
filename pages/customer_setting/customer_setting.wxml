@@ -6,36 +6,38 @@
   <view class="customer-discount line-cell bb-e5 mt18">
     <view class="cell-title">客户折扣</view>
     <view class="cell-content">
-      <input class="text-energized" type="text" value="{{scale}}" placeholder="请输入"/>
+      <input class="text-energized mr10" type="text" value="{{scale}}" placeholder="请输入" bindinput="bindScaleInput"/> 折
     </view>
   </view>
   <view class="customer-pay">
     <view class="line-cell bb-e5">
       <view class="cell-title">账期还款方式</view>
     </view>
-    <view class="line-cell bb-e5 ml15"
+    <view class="pay-kind">
+    <view class="line-cell bb-e5"
           data-type="{{0}}"
           bindtap="selectRepayment">
       <view class="cell-title pl35">
-        按月结算（每月 <input class="vam text-energized" type="number" value="{{data}}" placeholder="请输入"/> 号结算）
+        按月结算（每月 <input class="vam text-energized" type="number" value="{{atTime}}" placeholder="请输入" bindinput="bindAtTimeInput"/> 号结算）
       </view>
       <view class="cell-content">
         <view class="icon iconfont {{repaymentType === 0 ? 'icon-iconquanxuananniu text-energized' : 'icon-xuanze'}}"></view>
       </view>
     </view>
-    <view class="line-cell"
-          data-type="{{1}}"
-          bindtap="selectRepayment">
-      <view class="cell-title pl50">
-        订单发货后 <input class="vam text-energized" type="number" value="{{data}}" placeholder="请输入"/> 天内结算
-      </view>
-      <view class="cell-content">
-        <view class="icon iconfont  {{repaymentType === 1 ? 'icon-iconquanxuananniu text-energized' : 'icon-xuanze'}}"></view>
-      </view>
+    <!--<view class="line-cell"-->
+          <!--data-type="{{1}}"-->
+          <!--bindtap="selectRepayment">-->
+      <!--<view class="cell-title pl50">-->
+        <!--订单发货后 <input class="vam text-energized" type="number" value="{{data}}" placeholder="请输入"/> 天内结算-->
+      <!--</view>-->
+      <!--<view class="cell-content">-->
+        <!--<view class="icon iconfont  {{repaymentType === 1 ? 'icon-iconquanxuananniu text-energized' : 'icon-xuanze'}}"></view>-->
+      <!--</view>-->
+    <!--</view>-->
     </view>
   </view>
 
-  <view class="btn btn-fixed fixed-bottom btn-energized-linear">完  成</view>
+  <view class="btn btn-fixed fixed-bottom btn-energized-linear" bindtap="submit">{{ isSubmit ? '正在提交中...' : '完成'}}</view>
 </view>
 
 

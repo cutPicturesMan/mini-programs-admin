@@ -96,6 +96,10 @@ page {
 
 .customer-pay {
   background-color: #fff; }
+  .customer-pay .pay-kind .line-cell {
+    margin-left: 15rpx; }
+    .customer-pay .pay-kind .line-cell:last-child {
+      margin-left: 0; }
   .customer-pay input {
     width: 70rpx; }
 

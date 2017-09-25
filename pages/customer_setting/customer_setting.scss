@@ -32,6 +32,14 @@ page{
 
 .customer-pay{
   background-color: #fff;
+  .pay-kind{
+    .line-cell{
+      margin-left:15rpx;
+      &:last-child{
+        margin-left:0;
+      }
+    }
+  }
   input {
     width: 70rpx;
   }

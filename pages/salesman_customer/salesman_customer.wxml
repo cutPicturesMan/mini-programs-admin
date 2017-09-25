@@ -1,61 +1,72 @@
-<view wx:for="{{list}}" wx:key="{{id}}">
-  <view class="role-container mt18" wx:if="{{item.status.id === 2}}">
-    <view class="role-title tac">新增业务员信息</view>
-    <view class="role-info mb15">
-      <image class="image" src="{{item.avatar}}"></image>
-      <view class="name tac">昵称：{{item.nick}}</view>
-    </view>
-    <view class="info">公司名称：{{item.companyName}}</view>
-    <view class="info">门店名称：{{item.shopName}}</view>
-    <view class="info">联系人：{{item.name}}</view>
-    <view class="info">电话：{{item.mobile}}</view>
-    <view class="info">地址：{{item.address}}</view>
-    <view class="btns-prompt mt20">
-      <view class="each-item cancel"
-            data-pass="{{0}}"
-            data-id="{{item.id}}"
-            data-index="{{index}}"
-            bindtap="judge">{{item.isRejecting ? '数据提交中' : '拒绝'}}</view>
-      <view class="each-item confirm"
-            data-pass="{{1}}"
-            data-id="{{item.id}}"
-            data-index="{{index}}"
-            bindtap="judge">{{item.isPassing ? '数据提交中' : '通过'}}</view>
-    </view>
-  </view>
-  <navigator class="label-item bb-e5 mt18"
-             url="/pages/customer_setting/customer_setting?id={{item.id}}"
-             wx:if="{{item.status.id === 1}}">
-    <image class="img" src="{{item.avatar}}"></image>
-    <view class="item-main">
-      <view class="info">昵称：{{item.nick}}</view>
-      <view class="info">公司名称：{{item.companyName}}</view>
-      <view class="info">门店名称：{{item.shopName}}</view>
-      <view class="info">联系人：{{item.name}}</view>
-      <view class="info">电话：{{item.mobile}}</view>
-      <view class="info">地址：{{item.address}}</view>
-    </view>
-    <view class="delete"
-          data-id="{{item.id}}"
-          data-index="{{index}}"
-          catchtap="confirmRemove">
-      <image src="../../icons/icon-close.png"></image>
-    </view>
-  </navigator>
+<block wx:if="{{isLoaded}}">
+  <!--如果有数据-->
+  <block wx:if="{{list.length !== 0}}">
+    <view wx:for="{{list}}" wx:key="{{id}}">
+      <view class="role-container mt18" wx:if="{{item.status.id === 2}}">
+        <view class="role-title tac">新增业务员信息</view>
+        <view class="role-info mb15">
+          <image class="image" src="{{item.avatar}}"></image>
+          <view class="name tac">昵称：{{item.nick}}</view>
+        </view>
+        <view class="info">公司名称：{{item.companyName}}</view>
+        <view class="info">门店名称：{{item.shopName}}</view>
+        <view class="info">联系人：{{item.name}}</view>
+        <view class="info">电话：{{item.mobile}}</view>
+        <view class="info">地址：{{item.address}}</view>
+        <view class="btns-prompt mt20">
+          <view class="each-item cancel"
+                data-pass="{{0}}"
+                data-id="{{item.id}}"
+                data-index="{{index}}"
+                bindtap="judge">{{item.isRejecting ? '数据提交中' : '拒绝'}}</view>
+          <view class="each-item confirm"
+                data-pass="{{1}}"
+                data-id="{{item.id}}"
+                data-index="{{index}}"
+                bindtap="judge">{{item.isPassing ? '数据提交中' : '通过'}}</view>
+        </view>
+      </view>
+      <navigator class="label-item bb-e5 mt18"
+                 url="/pages/customer_setting/customer_setting?id={{item.id}}"
+                 wx:if="{{item.status.id === 1}}">
+        <image class="img" src="{{item.avatar}}"></image>
+        <view class="item-main">
+          <view class="info">昵称：{{item.nick}}</view>
+          <view class="info">公司名称：{{item.companyName}}</view>
+          <view class="info">门店名称：{{item.shopName}}</view>
+          <view class="info">联系人：{{item.name}}</view>
+          <view class="info">电话：{{item.mobile}}</view>
+          <view class="info">地址：{{item.address}}</view>
+        </view>
+        <view class="delete"
+              data-id="{{item.id}}"
+              data-index="{{index}}"
+              catchtap="confirmRemove">
+          <image src="../../icons/icon-close.png"></image>
+        </view>
+      </navigator>
 
-  <view class="label-item bb-e5 mt18" wx:if="{{item.status.id === 0}}">
-    <image class="img" src="{{item.avatar}}"></image>
-    <view class="item-main text-stable">
-      <view class="info">昵称：{{item.nick}}</view>
-      <view class="info">公司名称：{{item.companyName}}</view>
-      <view class="info">门店名称：{{item.shopName}}</view>
-      <view class="info">联系人：{{item.name}}</view>
-      <view class="info">电话：{{item.mobile}}</view>
-      <view class="info">地址：{{item.address}}</view>
+      <view class="label-item bb-e5 mt18" wx:if="{{item.status.id === 0}}">
+        <image class="img" src="{{item.avatar}}"></image>
+        <view class="item-main text-stable">
+          <view class="info">昵称：{{item.nick}}</view>
+          <view class="info">公司名称：{{item.companyName}}</view>
+          <view class="info">门店名称：{{item.shopName}}</view>
+          <view class="info">联系人：{{item.name}}</view>
+          <view class="info">电话：{{item.mobile}}</view>
+          <view class="info">地址：{{item.address}}</view>
+        </view>
+        <view class="delete">
+          <text class="text-energized">已拒绝</text>
+        </view>
+      </view>
     </view>
-    <view class="delete">
-      <text class="text-energized">已拒绝</text>
+  </block>
+  <!--如果没有数据-->
+  <block wx:else>
+    <view class="empty-data">
+      <view class="p20 tac fs32 text-stable">暂无客户数据</view>
     </view>
-  </view>
-</view>
+  </block>
+</block>
 

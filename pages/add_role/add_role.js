@@ -38,13 +38,13 @@ Page({
   },
   // 提交数据
   submit () {
+    let { name, phone, adminId, isSubmit } = this.data;
+    let { signature, rawData, encryptedData, iv } = this.data.info;
+
     // 防止重复提交
-    if(this.data.isSubmit){
+    if(isSubmit){
       return;
     }
-
-    let { name, phone, adminId } = this.data;
-    let { signature, rawData, encryptedData, iv } = this.data.info;
 
     try {
       // 如果用户未授权使用个人信息
@@ -71,16 +71,13 @@ Page({
       })
     }
 
-    wx.showLoading();
     this.setData({
       isSubmit: true
     });
 
+    wx.showLoading();
     http.request({
       url: api.user,
-      header: {
-        'content-type': 'application/x-www-form-urlencoded'
-      },
       method: 'POST',
       data: {
         signature,
@@ -99,11 +96,6 @@ Page({
         wx.showToast({
           title: res.moreInfo
         })
-        setTimeout(() => {
-          // wx.switchTab({
-          //
-          // });
-        }, 1500)
       } else {
         // 提交失败，则提示
         wx.showToast({
@@ -143,7 +135,7 @@ Page({
   onLoad (options) {
     var scene = decodeURIComponent(options.scene);
     this.setData({
-      adminId: scene.adminId || 3
+      adminId: scene.adminId || 1
     });
 
     this.getUserInfo();
