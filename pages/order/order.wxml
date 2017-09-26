@@ -1,33 +1,129 @@
 <block wx:if="{{isLoaded}}">
   <!--如果有数据-->
   <block wx:if="{{list.length !== 0}}">
-    <!--经理订单-->
-    <view>
-      <view class="time-container ptb25 tac">
-        <text class="time">2017/09/05 15:47</text>
-      </view>
-      <navigator class="order-item plr25" url="/pages/store_order_detail/store_order_detail">
-        <view class="order-figure bb-e5">
-          <image class="img" src="../../testimg/order-item.jpg"></image>
-          <view class="order-figcaption">
-            <view class="p">昵称：灵魂</view>
-            <view class="p">姓名：张学友</view>
-            <view class="p text-stable">电话：13516801753</view>
+    <!--仓管待处理-->
+    <block wx:if="{{role === ROLE_WAREHOUSE}}">
+      <view>
+        <view class="time-container ptb25 tac">
+          <text class="time">2017/09/05 15:47</text>
+        </view>
+        <view class="order-item">
+          <view class="order-figure bb-e5 ml25">
+            <image class="img" src="../../testimg/order-item.jpg"></image>
+            <view class="order-figcaption">
+              <view class="p">昵称：灵魂</view>
+              <view class="p">姓名：张学友</view>
+              <view class="p text-stable">电话：13516801753</view>
+            </view>
+          </view>
+          <view class="label-line small bb-e5">
+            <view class="r">商品总价: <input class="input-price mr20 tac text-energized" type="text"/></view>
+          </view>
+          <view class="label-line mlr20">
+            <view class="l">备注信息</view>
+            <view class="r">
+              <input class="tar text-energized" type="text" placeholder="请输入"/>
+            </view>
           </view>
         </view>
-        <view class="label-line small">
-          <view class="l">商品总价: <text class="text-energized">1,234.00</text></view>
-          <view class="r">业务员：刘德华</view>
+      </view>
+    </block>
+    <!--业务员待处理-->
+    <block wx:if="{{role === ROLE_SALESMAN}}">
+      <view wx:for="{{list}}" wx:key="{{item.id}}">
+        <view class="time-container ptb25 tac">
+          <text class="time">{{item.date}}</text>
         </view>
-      </navigator>
-    </view>
+        <view class="order-item">
+          <navigator class="pl25" url="/pages/order_detail/order_detail?id={{item.id}}">
+            <view class="order-figure bb-e5" >
+              <image class="img"
+                     src="{{item.orderItems[0].skuMedia.alt1.url ? (item.orderItems[0].skuMedia.alt1.url + '?imageView/2/1/w/260/h/260') : '../../icons/img-none.png'}}"></image>
+              <view class="order-figcaption">
+                <view class="p">订单编号：{{item.orderNumber}}</view>
+                <view class="p">
+                  订单状态：<text class="text-energized">{{item.status.friendlyType}}</text>
+                </view>
+                <view class="p">商品名称：{{item.name}}</view>
+                <view class="p">订单小计：{{item.amount}}</view>
+                <view class="p">客户修改的价格：{{item.offerTotal}}</view>
+              </view>
+            </view>
+          </navigator>
+          <view class="label-line small bb-e5">
+            <view class="r">
+              商品总价：<input class="input-price mr20 tac text-energized" type="number"
+                          value="{{item.totalPrice}}"
+                          data-index="{{index}}"
+                          bindinput="inputTotalPrice"/>
+            </view>
+          </view>
+          <view class="label-line mlr20" data-index="{{index}}" catchtap="switchRemark">
+            <view class="l mr20">备注信息</view>
+            <view class="r">
+              {{item.remark}}
+              <text class="text-stable" wx:if="{{!item.remark}}">请输入</text>
+            </view>
+          </view>
+          <view class="btns-prompt">
+            <view class="each-item cancel" data-id="{{item.id}}" catchtap="cancelOrderPopup">取消订单</view>
+            <view class="each-item confirm" data-id="{{item.id}}" catchtap="confirmOrder">提交订单</view>
+          </view>
+        </view>
+      </view>
+    </block>
   </block>
   <!--如果没有数据-->
   <block wx:else>
     <view class="empty-data">
-      <view class="p20 tac fs32 text-stable">暂无订单</view>
+      <view class="p20 tac fs32 text-stable">暂无待处理订单</view>
     </view>
   </block>
 </block>
+
+<!--备注提示框-->
+<view class="remark-add" wx:if="{{addToggle}}">
+  <view class="add-container animated {{addToggle ? 'bounceIn' : 'bounceOut'}}">
+    <view class="title">备注信息</view>
+    <view class="content">
+      <textarea bindinput="inputRemark" value="{{remark}}"></textarea>
+    </view>
+    <view class="btns-prompt bt">
+      <view class="each-item cancel" bindtap="switchRemark">取消</view>
+      <view class="each-item confirm" bindtap="confirmRemark">确认</view>
+    </view>
+  </view>
+</view>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
