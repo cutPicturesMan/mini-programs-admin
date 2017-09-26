@@ -58,23 +58,28 @@
   <view class="line-cell plr20" catchtap="switchRemark">
     <view class="cell-title mr20">备注信息</view>
     <view class="cell-content">
-      {{item.remark}}
-      <text class="text-stable" wx:if="{{!item.remark}}">请输入</text>
+      {{item.remarks}}
+      <text class="text-stable" wx:if="{{!item.remarks}}">请输入</text>
     </view>
   </view>
 </view>
 
-<!--业务员-->
-<block wx:if="{{role === ROLE_SALESMAN}}">
+<!--角色是业务员 && 订单状态是待业务员处理 => 显示修改按钮-->
+<block wx:if="{{role === ROLE_SALESMAN && item.status.type === PENDING_SALEMAN}}">
   <view class="btns-prompt fixed-bottom">
     <view class="each-item cancel" data-id="{{item.id}}" catchtap="cancelOrderPopup">取消订单</view>
     <view class="each-item confirm" bindtap="confirmOrder">提交订单</view>
   </view>
 </block>
-<!--经理-->
-<block wx:if="{{role === ROLE_MANAGER}}">
 
+<!--角色是经理 && 订单状态是待经理处理 => 显示修改按钮-->
+<block wx:if="{{role === ROLE_MANAGER && item.status.type === EXAMINE_MANAGER}}">
+  <view class="btns-prompt fixed-bottom">
+    <view class="each-item cancel" data-type="{{0}}" data-id="{{item.id}}" catchtap="rejectOrderPopup">拒绝</view>
+    <view class="each-item confirm" data-type="{{0}}" data-id="{{item.id}}" catchtap="passOrder">通过</view>
+  </view>
 </block>
+
 <!--财务-->
 <block wx:if="{{role === ROLE_FINANCE}}">
 
@@ -89,7 +94,7 @@
   <view class="add-container animated {{addToggle ? 'bounceIn' : 'bounceOut'}}">
     <view class="title">备注信息</view>
     <view class="content">
-      <textarea bindinput="inputRemark" value="{{remark}}"></textarea>
+      <textarea bindinput="inputRemark" value="{{remarks}}"></textarea>
     </view>
     <view class="btns-prompt bt">
       <view class="each-item cancel" bindtap="switchRemark">取消</view>

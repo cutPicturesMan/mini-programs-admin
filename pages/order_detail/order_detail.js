@@ -1,6 +1,7 @@
 import http from '../../public/js/http.js';
 import api from '../../public/js/api.js';
 import ROLE from '../../public/js/role.js';
+import STATUS from '../../public/js/status.js';
 import utils from '../../public/js/utils.js';
 
 let app = getApp();
@@ -9,6 +10,8 @@ Page({
   data: {
     // 管理员角色常量
     ...ROLE,
+    // 订单状态常量
+    ...STATUS,
     // 备注的开关
     addToggle: false,
     // 用户角色
@@ -16,7 +19,7 @@ Page({
     // 订单总价
     totalPrice: '',
     // 备注框文字
-    remark: '',
+    remarks: '',
     // 订单数据
     item: {},
     // 数据是否加载完毕
@@ -48,12 +51,12 @@ Page({
   },
   // 显示/隐藏新增备注框
   switchRemark: function () {
-    let { remark, item, addToggle } = this.data;
+    let { remarks, item, addToggle } = this.data;
     let obj = {};
 
     // 如果是显示弹窗，则将订单的备注值赋值给全局的备注值
     if (!addToggle) {
-      obj.remark = item.remark;
+      obj.remarks = item.remarks;
     }
 
     // 更新数据
@@ -64,16 +67,16 @@ Page({
   },
   // 输入备注框
   inputRemark (e) {
-    let remark = this.data.remark;
+    let remarks = this.data.remarks;
 
     this.setData({
-      remark: e.detail.value
+      remarks: e.detail.value
     });
   },
   // 确定备注框
   confirmRemark () {
-    let { remark, item } = this.data;
-    item.remark = remark;
+    let { remarks, item } = this.data;
+    item.remarks = remarks;
 
     this.setData({
       item: item
@@ -83,7 +86,6 @@ Page({
   },
   // 输入总价
   inputTotalPrice (e) {
-    console.log(e.detail.value);
     this.setData({
       totalPrice: e.detail.value
     });
@@ -100,7 +102,8 @@ Page({
       item
     });
   },
-  // 取消订单模态框
+
+  // 业务员取消订单模态框
   cancelOrderPopup (e) {
     let id = e.currentTarget.dataset.id;
 
@@ -114,7 +117,7 @@ Page({
       }
     })
   },
-  // 取消订单
+  // 业务员取消订单
   cancelOrder (id) {
     wx.showLoading();
 
@@ -131,7 +134,7 @@ Page({
         setTimeout(() => {
           // this.getData(id);
           wx.navigateBack({
-            delta: 1
+            delta: 1,
           })
         }, 1500)
       } else {
@@ -142,7 +145,7 @@ Page({
       }
     })
   },
-  // 提交
+  // 业务员提交
   confirmOrder(){
     let { totalPrice, item } = this.data;
 
@@ -198,6 +201,11 @@ Page({
         wx.showToast({
           title: res.moreInfo
         })
+        setTimeout(() => {
+          wx.navigateBack({
+            delta: 1
+          })
+        }, 1500)
       } else {
         // 提交失败，则提示
         wx.showToast({
@@ -213,6 +221,119 @@ Page({
       }
     })
   },
+
+  // 经理拒绝订单模态框
+  rejectOrderPopup (e) {
+    let id = e.currentTarget.dataset.id;
+
+    wx.showModal({
+      title: '提示',
+      content: '确定要拒绝该订单吗？',
+      success: (res) => {
+        if (res.confirm) {
+          this.rejectOrder.call(this, id);
+        }
+      }
+    })
+  },
+  // 经理拒绝订单
+  rejectOrder (id) {
+    wx.showLoading();
+    http.request({
+      url: `${api.manage_put_order}${id}`,
+      method: 'POST',
+      data: {
+        adopt: 0,
+        price: this.data.item.offerTotal
+      }
+    }).then((res) => {
+      wx.hideLoading();
+
+      if (res.errorCode === 200) {
+        wx.showToast({
+          title: res.moreInfo
+        });
+        setTimeout(() => {
+          wx.navigateBack({
+            delta: 1
+          });
+        }, 1500)
+      } else {
+        wx.showToast({
+          title: res.moreInfo || '拒绝失败',
+          image: '../../icons/close-circled.png'
+        });
+      }
+    })
+  },
+  // 经理通过
+  passOrder(e){
+    let { id } = e.currentTarget.dataset;
+    let { item, totalPrice } = this.data;
+
+    try {
+      // 如果价格未填写
+      if (!totalPrice) {
+        throw new Error('请填写商品总价');
+      }
+    } catch (e) {
+      return wx.showToast({
+        title: e.message,
+        image: '../../icons/close-circled.png',
+        duration: 4000
+      })
+    }
+
+    this.setData({
+      isSubmit: true
+    });
+
+    // 数据转化格式，然后提交
+    let keys = [];
+    let values = [];
+    item.orderItems.forEach((item, index)=>{
+      keys.push(`skus[${index}].skuId`, `skus[${index}].num`);
+      values.push(item.skuId, item.quantity);
+    });
+
+    let skus = {};
+    keys.forEach((item, index)=>{
+      skus[item] = values[index];
+    });
+
+    wx.showLoading();
+    http.request({
+      url: `${api.manage_put_order}${id}`,
+      method: 'POST',
+      data: {
+        adopt: 1,
+        price: totalPrice,
+        ...skus
+      }
+    }).then((res) => {
+      wx.hideLoading();
+
+      // 提交成功
+      if (res.errorCode === 200) {
+        wx.showToast({
+          title: res.moreInfo
+        })
+
+        setTimeout(() => {
+          wx.navigateBack({
+            delta: 1
+          })
+        }, 1500)
+      } else {
+        // 提交失败，则提示
+        wx.showToast({
+          title: res.moreInfo,
+          image: '../../icons/close-circled.png'
+        })
+      }
+    })
+  },
+
   onLoad (params) {
     // 如果订单id存在，则请求数据
     if (params.id) {

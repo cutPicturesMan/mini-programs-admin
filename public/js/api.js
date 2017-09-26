@@ -13,8 +13,14 @@ let api = {
   // 获取所有待处理订单
   order_wait: '/api/order/wait',
 
+  // 获取所有业务员 [get]
+  // 解除某个业务员的关系 [delete id]
+  salesman: '/api/user/salesman/',
+
   // 业务员修改订单
   salesman_put_order: '/api/order/salesman/',
+  // 经理修改订单
+  manage_put_order: '/api/order/manager/',
 
   // 登录
   login: '/wx/login',
