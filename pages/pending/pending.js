@@ -17,12 +17,37 @@ Page({
     idx: 0,
     // 备注框文字
     remark: '',
-    // 修改后的总价
-    totalPrice: 0,
     // 列表数据
     list: [],
     // 数据是否加载完毕
     isLoaded: false
+  },
+  // 获取列表数据
+  getData () {
+    wx.showLoading();
+
+    http.request({
+      url: api.order_wait,
+    }).then((res) => {
+      wx.hideLoading();
+
+      if (res.errorCode === 200) {
+        res.data.forEach((item) => {
+          item.isCanceling = false;
+          item.isConfirming = false;
+          // 后台没有返回备注，在此模拟一个备注接口
+          item.remark = '客户不想买了';
+          // 总价
+          item.totalPrice = item.offerTotal;
+          item.date = utils.formatDate(new Date(item.updatedAt), 'YYYY/MM/DD HH:mm:ss');
+        });
+
+        this.setData({
+          list: res.data,
+          isLoaded: true
+        });
+      }
+    })
   },
   // 显示/隐藏新增备注框
   switchRemark: function () {
@@ -39,6 +64,17 @@ Page({
       ...obj,
       addToggle: !this.data.addToggle
     })
+  },
+  // 输入总价
+  inputTotalPrice (e) {
+    let index = e.currentTarget.dataset.index;
+    let { list } = this.data;
+
+    list[index].totalPrice = e.detail.value;
+
+    this.setData({
+      list
+    });
   },
   // 输入备注框
   inputRemark (e) {
@@ -58,31 +94,6 @@ Page({
     });
 
     this.switchRemark();
-  },
-  // 获取列表数据
-  getData () {
-    wx.showLoading();
-
-    http.request({
-      url: api.order_wait,
-    }).then((res) => {
-      wx.hideLoading();
-
-      if (res.errorCode === 200) {
-        res.data.forEach((item) => {
-          item.isCanceling = false;
-          item.isConfirming = false;
-          // 后台没有返回备注，在此模拟一个备注接口
-          item.remark = '客户不想买了';
-          item.date = utils.formatDate(new Date(item.updatedAt), 'YYYY/MM/DD HH:mm:ss');
-        });
-
-        this.setData({
-          list: res.data,
-          isLoaded: true
-        });
-      }
-    })
   },
   // 取消订单模态框
   cancelOrderPopup (e) {
@@ -124,7 +135,8 @@ Page({
     })
   },
   // 提交
-  confirmOrder(){
+  confirmOrder(e){
+    let { index, id } = e.currentTarget.dataset;
     let { totalPrice } = this.data;
 
     try {
@@ -132,12 +144,6 @@ Page({
       if (!totalPrice) {
         throw new Error('请填写商品总价');
       }
-
-      item.orderItems.forEach((item)=>{
-        if (!item.quantity) {
-          throw new Error('请填写商品数量');
-        }
-      });
     } catch (e) {
       return wx.showToast({
         title: e.message,
@@ -152,7 +158,7 @@ Page({
 
     wx.showLoading();
     http.request({
-      url: api.user,
+      url: `${api.salesman_put_order}${id}`,
       method: 'POST',
       data: {
         price: totalPrice

@@ -1,11 +1,12 @@
 {
   "pages":[
-    "pages/order_detail/order_detail",
 
     "pages/pending/pending",
     "pages/order/order",
     "pages/opera/opera",
     "pages/my/my",
+
+    "pages/order_detail/order_detail",
 
     "pages/finance_collect/finance_collect",
     "pages/finance_uncollect/finance_uncollect",

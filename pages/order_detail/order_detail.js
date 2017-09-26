@@ -22,9 +22,29 @@ Page({
     // 数据是否加载完毕
     isLoaded: false,
     // 是否正在通过提交中
-    isResolving: false,
+    isCanceling: false,
     // 是否正在拒绝提交中
-    isRejecting: false,
+    isConfirming: false,
+  },
+  // 获取列表数据
+  getData (id) {
+    wx.showLoading();
+
+    http.request({
+      url: `${api.order}${id}`,
+    }).then((res) => {
+      wx.hideLoading();
+
+      res.data.date = utils.formatDate(new Date(res.data.updatedAt), 'YYYY/MM/DD HH:mm:ss');
+
+      if (res.errorCode === 200) {
+        this.setData({
+          totalPrice: res.data.offerTotal,
+          item: res.data,
+          isLoaded: true
+        });
+      }
+    })
   },
   // 显示/隐藏新增备注框
   switchRemark: function () {
@@ -63,6 +83,7 @@ Page({
   },
   // 输入总价
   inputTotalPrice (e) {
+    console.log(e.detail.value);
     this.setData({
       totalPrice: e.detail.value
     });
@@ -108,7 +129,10 @@ Page({
           title: res.moreInfo
         });
         setTimeout(() => {
-          this.getData();
+          // this.getData(id);
+          wx.navigateBack({
+            delta: 1
+          })
         }, 1500)
       } else {
         wx.showToast({
@@ -160,7 +184,7 @@ Page({
 
     wx.showLoading();
     http.request({
-      url: api.user,
+      url: `${api.salesman_put_order}${item.id}`,
       method: 'POST',
       data: {
         price: totalPrice,
@@ -186,65 +210,6 @@ Page({
             isSubmit: false
           });
         }, 1500)
-      }
-    })
-  },
-  // 获取列表数据
-  getData (id) {
-    wx.showLoading();
-
-    http.request({
-      url: `${api.order}${id}`,
-    }).then((res) => {
-      wx.hideLoading();
-
-      res.data.date = utils.formatDate(new Date(res.data.updatedAt), 'YYYY/MM/DD HH:mm:ss');
-
-      if (res.errorCode === 200) {
-        this.setData({
-          totalPrice: res.data.offerTotal,
-          item: res.data,
-          isLoaded: true
-        });
-      }
-    })
-  },
-  // 取消订单模态框
-  cancelOrderPopup (e) {
-    let id = e.currentTarget.dataset.id;
-
-    wx.showModal({
-      title: '提示',
-      content: '确定要取消订单吗？',
-      success: (res) => {
-        if (res.confirm) {
-          this.cancelOrder(id);
-        }
-      }
-    })
-  },
-  // 取消订单
-  cancelOrder (id) {
-    wx.showLoading();
-
-    http.request({
-      url: `${api.order}${id}`,
-      method: 'DELETE'
-    }).then((res) => {
-      wx.hideLoading();
-
-      if (res.errorCode === 200) {
-        wx.showToast({
-          title: res.moreInfo
-        });
-        setTimeout(() => {
-          this.getData();
-        }, 1500)
-      } else {
-        wx.showToast({
-          title: res.moreInfo || '删除失败',
-          image: '../../icons/close-circled.png'
-        });
       }
     })
   },

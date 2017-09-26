@@ -19,7 +19,7 @@
       商品总价：<input class="input-price mr20 tac text-energized"
                   type="number"
                   value="{{totalPrice}}"
-                  bindtap="inputTotalPrice"/>
+                  bindinput="inputTotalPrice"/>
     </view>
   </view>
 </view>
@@ -67,7 +67,7 @@
 <!--业务员-->
 <block wx:if="{{role === ROLE_SALESMAN}}">
   <view class="btns-prompt fixed-bottom">
-    <view class="each-item cancel">取消订单</view>
+    <view class="each-item cancel" data-id="{{item.id}}" catchtap="cancelOrderPopup">取消订单</view>
     <view class="each-item confirm" bindtap="confirmOrder">提交订单</view>
   </view>
 </block>
