@@ -1766,7 +1766,8 @@
 
 .btns-prompt {
   height: 98rpx;
-  display: flex; }
+  display: flex;
+  z-index: 1; }
   .btns-prompt.bt {
     border-top: 1rpx solid #e5e5e5; }
   .btns-prompt.fixed-bottom {

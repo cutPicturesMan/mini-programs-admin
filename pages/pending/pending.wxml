@@ -66,8 +66,8 @@
             </view>
           </view>
           <view class="btns-prompt">
-            <view class="each-item cancel" data-id="{{item.id}}" catchtap="cancelOrderPopup">取消订单</view>
-            <view class="each-item confirm" data-id="{{item.id}}" catchtap="confirmOrder">提交订单</view>
+            <view class="each-item cancel" data-id="{{item.id}}" data-index="{{index}}" catchtap="cancelOrderPopup">取消订单</view>
+            <view class="each-item confirm" data-id="{{item.id}}" data-index="{{index}}" catchtap="confirmOrder">提交订单</view>
           </view>
         </view>
       </view>

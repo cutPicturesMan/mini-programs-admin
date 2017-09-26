@@ -65,10 +65,13 @@
               <text class="text-stable" wx:if="{{!item.remark}}">请输入</text>
             </view>
           </view>
-          <view class="btns-prompt">
-            <view class="each-item cancel" data-id="{{item.id}}" catchtap="cancelOrderPopup">取消订单</view>
-            <view class="each-item confirm" data-id="{{item.id}}" catchtap="confirmOrder">提交订单</view>
-          </view>
+          <!--<block wx:if="{{item.status.type === 'PENDING_SALEMAN'}}">-->
+          <block wx:if="{{false}}">
+            <view class="btns-prompt">
+              <view class="each-item cancel" data-id="{{item.id}}" catchtap="cancelOrderPopup">取消订单</view>
+              <view class="each-item confirm" data-id="{{item.id}}" catchtap="confirmOrder">提交订单</view>
+            </view>
+          </block>
         </view>
       </view>
     </block>

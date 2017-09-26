@@ -214,7 +214,6 @@ Page({
     })
   },
   onLoad (params) {
-    params.id = 10;
     // 如果订单id存在，则请求数据
     if (params.id) {
       this.getData(params.id);

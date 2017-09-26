@@ -137,7 +137,8 @@ Page({
   // 提交
   confirmOrder(e){
     let { index, id } = e.currentTarget.dataset;
-    let { totalPrice } = this.data;
+    let { list } = this.data;
+    let totalPrice = list[index].totalPrice;
 
     try {
       // 如果价格未填写
@@ -171,6 +172,10 @@ Page({
         wx.showToast({
           title: res.moreInfo
         })
+
+        setTimeout(() => {
+          this.getData();
+        }, 1500)
       } else {
         // 提交失败，则提示
         wx.showToast({
