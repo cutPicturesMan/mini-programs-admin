@@ -57,7 +57,7 @@
             </view>
           </view>
           <view class="label-line mlr20" data-index="{{index}}" catchtap="switchRemark">
-            <view class="l">备注信息</view>
+            <view class="l mr20">备注信息</view>
             <view class="r">
               {{item.remark}}
               <text class="text-stable" wx:if="{{!item.remark}}">请输入</text>
@@ -65,7 +65,7 @@
           </view>
           <view class="btns-prompt">
             <view class="each-item cancel" data-id="{{item.id}}" catchtap="cancelOrderPopup">取消订单</view>
-            <view class="each-item confirm">提交订单</view>
+            <view class="each-item confirm" >提交订单</view>
           </view>
         </view>
       </view>
@@ -84,7 +84,7 @@
   <view class="add-container animated {{addToggle ? 'bounceIn' : 'bounceOut'}}">
     <view class="title">备注信息</view>
     <view class="content">
-      <textarea></textarea>
+      <textarea bindinput="inputRemark" value="{{remark}}"></textarea>
     </view>
     <view class="btns-prompt bt">
       <view class="each-item cancel" bindtap="switchRemark">取消</view>

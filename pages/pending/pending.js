@@ -17,6 +17,8 @@ Page({
     idx: 0,
     // 备注框文字
     remark: '',
+    // 修改后的总价
+    totalPrice: 0,
     // 列表数据
     list: [],
     // 数据是否加载完毕
@@ -24,15 +26,39 @@ Page({
   },
   // 显示/隐藏新增备注框
   switchRemark: function () {
-    wx.showShareMenu();
+    let { idx, remark, list, addToggle } = this.data;
+    let obj = {};
+
+    // 如果是显示弹窗，则将订单的备注值赋值给全局的备注值
+    if (!addToggle) {
+      obj.remark = list[idx].remark;
+    }
 
     // 更新数据
     this.setData({
+      ...obj,
       addToggle: !this.data.addToggle
     })
   },
-  // 确定备注框
+  // 输入备注框
+  inputRemark (e) {
+    let { idx, remark, list } = this.data;
 
+    this.setData({
+      remark: e.detail.value
+    });
+  },
+  // 确定备注框
+  confirmRemark () {
+    let { idx, remark, list } = this.data;
+    list[idx].remark = remark;
+
+    this.setData({
+      list: list
+    });
+
+    this.switchRemark();
+  },
   // 获取列表数据
   getData () {
     wx.showLoading();
@@ -43,9 +69,11 @@ Page({
       wx.hideLoading();
 
       if (res.errorCode === 200) {
-        res.data.forEach((item)=>{
+        res.data.forEach((item) => {
           item.isCanceling = false;
           item.isConfirming = false;
+          // 后台没有返回备注，在此模拟一个备注接口
+          item.remark = '客户不想买了';
           item.date = utils.formatDate(new Date(item.updatedAt), 'YYYY/MM/DD HH:mm:ss');
         });
 
@@ -84,7 +112,7 @@ Page({
         wx.showToast({
           title: res.moreInfo
         });
-        setTimeout(()=>{
+        setTimeout(() => {
           this.getData();
         }, 1500)
       } else {
@@ -92,6 +120,63 @@ Page({
           title: res.moreInfo || '删除失败',
           image: '../../icons/close-circled.png'
         });
+      }
+    })
+  },
+  // 提交
+  confirmOrder(){
+    let { totalPrice } = this.data;
+
+    try {
+      // 如果价格未填写
+      if (!totalPrice) {
+        throw new Error('请填写商品总价');
+      }
+
+      item.orderItems.forEach((item)=>{
+        if (!item.quantity) {
+          throw new Error('请填写商品数量');
+        }
+      });
+    } catch (e) {
+      return wx.showToast({
+        title: e.message,
+        image: '../../icons/close-circled.png',
+        duration: 4000
+      })
+    }
+
+    this.setData({
+      isSubmit: true
+    });
+
+    wx.showLoading();
+    http.request({
+      url: api.user,
+      method: 'POST',
+      data: {
+        price: totalPrice
+      }
+    }).then((res) => {
+      wx.hideLoading();
+
+      // 提交成功
+      if (res.errorCode === 200) {
+        wx.showToast({
+          title: res.moreInfo
+        })
+      } else {
+        // 提交失败，则提示
+        wx.showToast({
+          title: res.moreInfo,
+          image: '../../icons/close-circled.png'
+        })
+
+        setTimeout(() => {
+          this.setData({
+            isSubmit: false
+          });
+        }, 1500)
       }
     })
   },
