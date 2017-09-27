@@ -27,7 +27,6 @@ let api = {
   // 个人中心
   user: '/wx/info',
 
-
   // 管理端二维码
   admin_twocode: '/wx/code',
 

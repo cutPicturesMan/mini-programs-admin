@@ -1,8 +1,9 @@
 {
   "pages":[
+
+    "pages/opera/opera",
     "pages/pending/pending",
     "pages/order/order",
-    "pages/opera/opera",
     "pages/my/my",
 
     "pages/order_detail/order_detail",
@@ -13,8 +14,8 @@
     "pages/finance_account_detail/finance_account_detail",
     "pages/finance_bill_detail/finance_bill_detail",
 
-    "pages/manage_choose_salesman/manage_choose_salesman",
     "pages/manage_opera_salesman/manage_opera_salesman",
+    "pages/manage_choose_salesman/manage_choose_salesman",
     "pages/manage_customer/manage_customer",
     "pages/product_setting/product_setting",
 

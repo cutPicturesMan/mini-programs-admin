@@ -1,14 +1,62 @@
-<view class="container">
-  <view class="label-item bb-e5">
-    <image class="img" src="../../testimg/order-item.jpg"></image>
-    <view class="item-main">刘德华</view>
-    <view class="delete">解除关联</view>
-  </view>
-  <view class="label-item bb-e5 active">
-    <image class="img" src="../../testimg/order-item.jpg"></image>
-    <view class="item-main">刘德华</view>
-    <view class="delete">解除关联</view>
-  </view>
-</view>
+<block wx:if="{{isLoaded}}">
+  <!--如果有数据-->
+  <block wx:if="{{list.length !== 0}}">
+    <view class="container" wx:for="{{list}}" wx:key="{{id}}">
+      <view class="role-container mt18" wx:if="{{item.status.id === 2}}">
+        <view class="role-title tac">新增业务员信息</view>
+        <view class="role-info mb15">
+          <image class="image" src="{{item.avatar || '../../icons/img-none.png'}}"></image>
+          <view class="name tac">昵称：{{item.nick}}</view>
+        </view>
+        <view class="info">电话：{{item.phoneNumber}}</view>
+        <view class="btns-prompt mt20">
+          <view class="each-item {{item.isRejecting ? 'reject' : 'cancel'}}"
+                data-pass="{{0}}"
+                data-id="{{item.id}}"
+                data-index="{{index}}"
+                bindtap="judge">{{item.isRejecting ? '数据提交中' : '拒绝'}}</view>
+          <view class="each-item {{item.isPassing ? 'reject' : 'confirm'}}"
+                data-pass="{{1}}"
+                data-id="{{item.id}}"
+                data-index="{{index}}"
+                bindtap="judge">{{item.isPassing ? '数据提交中' : '通过'}}</view>
+        </view>
+      </view>
 
-<view class="btn btn-fixed btn-energized fixed-bottom">确 定</view>
+      <view class="label-item bb-e5 mt18 {{item.isShowRemoveBtn ? 'active' : ''}}"
+            data-index="{{index}}"
+            bindtap="toggleRemove"
+            wx:if="{{item.status.id === 1}}">
+        <image class="img" src="{{item.avatar || '../../icons/img-none.png'}}"></image>
+        <view class="item-main">
+          <view class="info">昵称：{{item.nick}}</view>
+          <view class="info">电话：{{item.phoneNumber}}</view>
+        </view>
+        <view class="del"
+              data-id="{{item.id}}"
+              data-index="{{index}}"
+              catchtap="confirmRemove">
+          解除
+        </view>
+      </view>
+
+      <view class="label-item bb-e5 mt18" wx:if="{{item.status.id === 0}}">
+        <image class="img" src="{{item.avatar ||  '../../icons/img-none.png'}}"></image>
+        <view class="item-main text-stable">
+          <view class="info">昵称：{{item.nick}}</view>
+          <view class="info">电话：{{item.phoneNumber}}</view>
+        </view>
+        <view class="delete">
+          <text class="text-energized">{{item.status.friendlyType}}</text>
+        </view>
+      </view>
+    </view>
+  </block>
+  <!--如果没有数据-->
+  <block wx:else>
+    <view class="empty-data">
+      <view class="p20 tac fs32 text-stable">暂无业务员数据</view>
+    </view>
+  </block>
+</block>
+

@@ -10,7 +10,10 @@
 .label-item {
   display: flex;
   position: relative;
-  padding: 20rpx 0 20rpx 20rpx; }
+  padding: 20rpx 0 20rpx 20rpx;
+  transition: .4s; }
+  .label-item.active {
+    transform: translate(-180rpx, 0); }
   .label-item .icon {
     font-size: 24rpx;
     color: #d9d9d9;
@@ -23,16 +26,26 @@
   .label-item .item-main {
     font-size: 28rpx;
     flex: 1; }
-  .label-item .delete {
+  .label-item .delete,
+  .label-item .del {
     color: #fff;
-    padding: 24rpx;
+    padding: 15rpx;
+    font-size: 24rpx;
+    box-sizing: border-box;
     display: flex;
     justify-content: center;
-    align-items: center;
-    font-size: 24rpx; }
-    .label-item .delete image {
+    align-items: center; }
+    .label-item .delete image,
+    .label-item .del image {
       width: 35rpx;
       height: 35rpx; }
+  .label-item .del {
+    width: 180rpx;
+    background-color: #ff0000;
+    position: absolute;
+    top: 0;
+    right: -180rpx;
+    bottom: -1rpx; }
 
 .role-prompt {
   position: fixed;
