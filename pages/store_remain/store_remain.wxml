@@ -1,47 +1,30 @@
-<view class="line-cell bb-e5">
-  <view class="cell-title">电磁炉</view>
-  <view class="cell-content">
-    <view class="opera-btns">
-      <view class="reduce-btn" bindtap="reduce">
-        <image src="../../icons/icon-reduce.jpg"></image>
-      </view>
-      <input class="count" type="number" value="{{num}}" bindinput="inputNumber"/>
-      <view class="add-btn" bindtap="add">
-        <image src="../../icons/icon-add1.jpg"></image>
-      </view>
-    </view>
-  </view>
-</view>
-<view class="line-cell bb-e5">
-  <view class="cell-title">电磁炉</view>
-  <view class="cell-content">
-    <view class="opera-btns">
-      <view class="reduce-btn" bindtap="reduce">
-        <image src="../../icons/icon-reduce.jpg"></image>
-      </view>
-      <input class="count" type="number" value="{{num}}" bindinput="inputNumber"/>
-      <view class="add-btn" bindtap="add">
-        <image src="../../icons/icon-add1.jpg"></image>
+<block wx:if="{{isLoaded}}">
+  <!--有数据的情况-->
+  <block wx:if="{{list.length !== 0}}">
+    <view class="line-cell bb-e5" wx:for="{{list}}" wx:key="{{id}}">
+      <view class="cell-title">{{item.name}}</view>
+      <view class="cell-content">
+        <view class="opera-btns">
+          <view class="reduce-btn" data-index="{{index}}" bindtap="reduce">
+            <image src="../../icons/icon-reduce.jpg"></image>
+          </view>
+          <input class="count" type="number" value="{{item.qtyAvailable}}" data-index="{{index}}" bindinput="inputNumber"/>
+          <view class="add-btn" data-index="{{index}}" bindtap="add">
+            <image src="../../icons/icon-add1.jpg"></image>
+          </view>
+        </view>
       </view>
     </view>
-  </view>
-</view>
-<view class="line-cell bb-e5">
-  <view class="cell-title">电磁炉</view>
-  <view class="cell-content">
-    <view class="opera-btns">
-      <view class="reduce-btn" bindtap="reduce">
-        <image src="../../icons/icon-reduce.jpg"></image>
-      </view>
-      <input class="count" type="number" value="{{num}}" bindinput="inputNumber"/>
-      <view class="add-btn" bindtap="add">
-        <image src="../../icons/icon-add1.jpg"></image>
-      </view>
+    <view class="btn btn-fixed fixed-bottom btn-energized-linear">库存确认</view>
+  </block>
+  <!--无数据的情况-->
+  <block wx:else>
+    <view class="empty-data">
+      <view class="p20 tac text-stable fs32">空空如也~</view>
     </view>
-  </view>
-</view>
+  </block>
+</block>
 
-<view class="btn btn-fixed fixed-bottom btn-energized-linear">库存确认</view>
 
 
 

@@ -22,6 +22,9 @@ let api = {
   // 经理修改订单
   manage_put_order: '/api/order/manager/',
 
+  // 仓管
+  stock: '/api/product/stock/',
+
   // 登录
   login: '/wx/login',
   // 个人中心

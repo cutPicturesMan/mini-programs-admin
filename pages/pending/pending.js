@@ -23,7 +23,7 @@ Page({
     isLoaded: false
   },
   // 获取列表数据
-  getData () {
+  getData (e) {
     wx.showLoading();
 
     http.request({
@@ -48,7 +48,7 @@ Page({
     })
   },
   // 显示/隐藏新增备注框
-  switchRemark: function () {
+  switchRemark () {
     let { idx, remarks, list, addToggle } = this.data;
     let obj = {};
 
@@ -81,6 +81,17 @@ Page({
     this.setData({
       remarks: e.detail.value
     });
+  },
+  // 显示备注框
+  showRemark(e){
+    let idx = e.currentTarget.dataset.index;
+
+    // 更新数据
+    this.setData({
+      idx
+    })
+
+    this.switchRemark.call(this);
   },
   // 确定备注框
   confirmRemark () {

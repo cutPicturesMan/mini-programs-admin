@@ -29,7 +29,7 @@
                         bindinput="inputTotalPrice"/>
           </view>
         </view>
-        <view class="label-line mlr20" data-index="{{index}}" catchtap="switchRemark">
+        <view class="label-line mlr20" data-index="{{index}}" catchtap="showRemark">
           <view class="l mr20">备注信息</view>
           <view class="r">
             {{item.remarks}}
@@ -55,7 +55,6 @@
 
       </view>
     </view>
-
   </block>
   <!--如果没有数据-->
   <block wx:else>

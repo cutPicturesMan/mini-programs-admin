@@ -17,7 +17,7 @@ Page({
 
       if (res.errorCode === 200) {
         // 为每一行数据添加提示状态
-        res.data.forEach((item)=>{
+        res.data.forEach((item) => {
           // 正在通过中
           item.isPassing = false;
           // 正在拒绝中
@@ -41,18 +41,18 @@ Page({
     let { pass, id, index } = e.currentTarget.dataset;
 
     // 如果正在发送数据，则返回
-    if(list[index].isPassing || list[index].isRejecting){
+    if (list[index].isPassing || list[index].isRejecting) {
       wx.showToast({
         title: '数据提交中，请稍后...',
         image: '../../icons/close-circled.png'
       })
-      return ;
+      return;
     }
 
     // 根据通过、拒绝进行按钮禁用
-    if(pass === 1){
+    if (pass === 1) {
       list[index].isPassing = true;
-    }else{
+    } else {
       list[index].isRejecting = true;
     }
 
@@ -77,6 +77,24 @@ Page({
         setTimeout(() => {
           this.getData();
         }, 1500);
+      } else {
+        wx.showToast({
+          title: res.moreInfo,
+          image: '../../icons/close-circled.png'
+        });
+
+        setTimeout(() => {
+          // 根据通过、拒绝进行按钮解除禁用
+          if (pass === 1) {
+            list[index].isPassing = false;
+          } else {
+            list[index].isRejecting = false;
+          }
+
+          this.setData({
+            list: list
+          });
+        }, 1500);
       }
     })
   },
@@ -92,7 +110,7 @@ Page({
     });
   },
   // 解除提示确认框
-  confirmRemove(e){
+  confirmRemove (e) {
     wx.showModal({
       title: '提示',
       content: '确定要解除业务员关系吗？',
@@ -106,17 +124,17 @@ Page({
     })
   },
   // 解除关系
-  remove(e){
+  remove (e) {
     let list = this.data.list;
     let { id, index } = e.currentTarget.dataset;
 
     // 如果正在发送数据，则返回
-    if(list[index].isRemoving){
+    if (list[index].isRemoving) {
       wx.showToast({
         title: '数据提交中，请稍后...',
         image: '../../icons/close-circled.png'
       })
-      return ;
+      return;
     }
 
     // 进行按钮禁用
