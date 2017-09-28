@@ -57,12 +57,12 @@
       <view class="title">账期已结</view>
     </view>
   </navigator>
-  <view class="item">
+  <navigator class="item" url="/pages/finance_account/finance_account">
     <view class="circle">
       <view class="icon iconfont icon-weijiechaoshenxian"></view>
       <view class="title">账期未结算</view>
     </view>
-  </view>
+  </navigator>
 </view>
 <!--业务员-->
 <view class="opera-panel agent" wx:if="{{role === ROLE_SALESMAN}}">

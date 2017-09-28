@@ -2,7 +2,7 @@
 const STATUS = {
   // 业务员审核
   PENDING_SALEMAN: 'PENDING_SALEMAN',
-  // 财务审核
+  // 仓管审核
   EXAMINE_FINANCE: 'EXAMINE_FINANCE',
   // 经理审核
   EXAMINE_MANAGER: 'EXAMINE_MANAGER',
@@ -10,7 +10,7 @@ const STATUS = {
   SUBMITTED: 'SUBMITTED',
   // 已取消
   CANCELLED: 'CANCELLED',
-  // 已经支付
+  // 财务待处理
   PAID: 'PAID',
   // 运输中
   SHIPPED: 'SHIPPED',

@@ -334,6 +334,143 @@ Page({
     })
   },
 
+  // 财务拒绝订单模态框
+  financeRejectPopup (e) {
+    let id = e.currentTarget.dataset.id;
+
+    wx.showModal({
+      title: '提示',
+      content: '确定要拒绝该订单吗？',
+      success: (res) => {
+        if (res.confirm) {
+          this.financeReject.call(this, id);
+        }
+      }
+    })
+  },
+  // 财务拒绝订单
+  financeReject (id) {
+    wx.showLoading();
+    http.request({
+      url: `${api.finance_put_order}${id}`,
+      method: 'POST',
+      data: {
+        adopt: 0
+      }
+    }).then((res) => {
+      wx.hideLoading();
+
+      if (res.errorCode === 200) {
+        wx.showToast({
+          title: res.moreInfo
+        });
+        setTimeout(() => {
+          wx.navigateBack({
+            delta: 1
+          });
+        }, 1500)
+      } else {
+        wx.showToast({
+          title: res.moreInfo || '拒绝失败',
+          image: '../../icons/close-circled.png'
+        });
+      }
+    })
+  },
+  // 财务通过
+  financePass(e){
+    let { id } = e.currentTarget.dataset;
+    let { item, totalPrice } = this.data;
+
+    try {
+      // 如果价格未填写
+      if (!totalPrice) {
+        throw new Error('请填写商品总价');
+      }
+    } catch (e) {
+      return wx.showToast({
+        title: e.message,
+        image: '../../icons/close-circled.png',
+        duration: 4000
+      })
+    }
+
+    this.setData({
+      isSubmit: true
+    });
+
+    wx.showLoading();
+    http.request({
+      url: `${api.finance_put_order}${id}`,
+      method: 'POST',
+      data: {
+        adopt: 1
+      }
+    }).then((res) => {
+      wx.hideLoading();
+
+      // 提交成功
+      if (res.errorCode === 200) {
+        wx.showToast({
+          title: res.moreInfo
+        })
+
+        setTimeout(() => {
+          wx.navigateBack({
+            delta: 1
+          })
+        }, 1500)
+      } else {
+        // 提交失败，则提示
+        wx.showToast({
+          title: res.moreInfo,
+          image: '../../icons/close-circled.png'
+        })
+      }
+    })
+  },
+
+  // 仓管通过
+  storePass(e){
+    let { item, totalPrice } = this.data;
+
+    this.setData({
+      isSubmit: true
+    });
+
+    wx.showLoading();
+    http.request({
+      url: `${api.warehouse_put_order}${item.id}`,
+      method: 'POST'
+    }).then((res) => {
+      wx.hideLoading();
+
+      // 提交成功
+      if (res.errorCode === 200) {
+        wx.showToast({
+          title: res.moreInfo
+        })
+
+        setTimeout(() => {
+          wx.switchTab({
+            url: `/pages/pending/pending`,
+            success: (e) => {
+              var page = getCurrentPages().pop();
+              if (page == undefined || page == null) return;
+              page.onLoad();
+            }
+          });
+        }, 1500)
+      } else {
+        // 提交失败，则提示
+        wx.showToast({
+          title: res.moreInfo,
+          image: '../../icons/close-circled.png'
+        })
+      }
+    })
+  },
+
   onLoad (params) {
     // 如果订单id存在，则请求数据
     if (params.id) {

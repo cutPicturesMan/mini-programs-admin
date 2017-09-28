@@ -26,16 +26,28 @@
             商品总价：<input class="input-price mr20 tac text-energized" type="number"
                         value="{{item.totalPrice}}"
                         data-index="{{index}}"
-                        bindinput="inputTotalPrice"/>
+                        bindinput="inputTotalPrice"
+                        disabled="{{role === ROLE_FINANCE ? true : false}}"/>
           </view>
         </view>
-        <view class="label-line mlr20" data-index="{{index}}" catchtap="showRemark">
-          <view class="l mr20">备注信息</view>
-          <view class="r">
-            {{item.remarks}}
-            <text class="text-stable" wx:if="{{!item.remarks}}">请输入</text>
+
+        <block wx:if="{{role === ROLE_FINANCE || role === ROLE_WAREHOUSE}}">
+          <view class="label-line mlr20">
+            <view class="l mr20">备注信息</view>
+            <view class="r">
+              {{item.remarks || '暂无'}}
+            </view>
           </view>
-        </view>
+        </block>
+        <block wx:else>
+          <view class="label-line mlr20" data-index="{{index}}" catchtap="showRemark">
+            <view class="l mr20">备注信息</view>
+            <view class="r">
+              {{item.remarks}}
+              <text class="text-stable" wx:if="{{!item.remarks}}">请输入</text>
+            </view>
+          </view>
+        </block>
 
         <!--业务员待处理-->
         <block wx:if="{{role === ROLE_SALESMAN}}">
@@ -50,6 +62,14 @@
           <view class="btns-prompt">
             <view class="each-item cancel" data-type="{{0}}" data-id="{{item.id}}" data-index="{{index}}" catchtap="rejectOrderPopup">拒绝</view>
             <view class="each-item confirm" data-type="{{0}}" data-id="{{item.id}}" data-index="{{index}}" catchtap="passOrder">通过</view>
+          </view>
+        </block>
+
+        <!--财务待处理-->
+        <block wx:if="{{role === ROLE_FINANCE}}">
+          <view class="btns-prompt">
+            <view class="each-item cancel" data-type="{{0}}" data-id="{{item.id}}" data-index="{{index}}" catchtap="financeRejectPopup">拒绝</view>
+            <view class="each-item confirm" data-type="{{0}}" data-id="{{item.id}}" data-index="{{index}}" catchtap="financePass">通过</view>
           </view>
         </block>
 

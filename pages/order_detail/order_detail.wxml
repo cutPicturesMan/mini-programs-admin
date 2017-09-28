@@ -19,7 +19,8 @@
       商品总价：<input class="input-price mr20 tac text-energized"
                   type="number"
                   value="{{totalPrice}}"
-                  bindinput="inputTotalPrice"/>
+                  bindinput="inputTotalPrice"
+                  disabled="{{role === ROLE_FINANCE || role === ROLE_WAREHOUSE}}"/>
     </view>
   </view>
 </view>
@@ -33,7 +34,8 @@
         <input type="text" class="input"
                value="{{item.quantity}}"
                data-index="{{index}}"
-               bindinput="inputQuantity"/>
+               bindinput="inputQuantity"
+               disabled="{{role === ROLE_FINANCE || role === ROLE_WAREHOUSE}}"/>
       </view>
     </view>
     <view class="item-detail mt25" wx:if="{{false}}">
@@ -55,13 +57,24 @@
       <image src="../../icons/icon-arrow-top.jpg"></image>
     </view>
   </view>
-  <view class="line-cell plr20" catchtap="switchRemark">
-    <view class="cell-title mr20">备注信息</view>
-    <view class="cell-content">
-      {{item.remarks}}
-      <text class="text-stable" wx:if="{{!item.remarks}}">请输入</text>
+  <block wx:if="{{role === ROLE_FINANCE || role === ROLE_WAREHOUSE}}">
+    <view class="line-cell plr20">
+      <view class="cell-title mr20">备注信息</view>
+      <view class="cell-content">
+        {{item.remarks || '暂无'}}
+      </view>
     </view>
-  </view>
+  </block>
+  <block wx:else>
+    <view class="line-cell plr20" catchtap="switchRemark">
+      <view class="cell-title mr20">备注信息</view>
+      <view class="cell-content">
+        {{item.remarks}}
+        <text class="text-stable" wx:if="{{!item.remarks}}">请输入</text>
+      </view>
+    </view>
+  </block>
+
 </view>
 
 <!--角色是业务员 && 订单状态是待业务员处理 => 显示修改按钮-->
@@ -76,17 +89,21 @@
 <block wx:if="{{role === ROLE_MANAGER && item.status.type === EXAMINE_MANAGER}}">
   <view class="btns-prompt fixed-bottom">
     <view class="each-item cancel" data-type="{{0}}" data-id="{{item.id}}" catchtap="rejectOrderPopup">拒绝</view>
-    <view class="each-item confirm" data-type="{{0}}" data-id="{{item.id}}" catchtap="passOrder">通过</view>
+    <view class="each-item confirm" data-type="{{1}}" data-id="{{item.id}}" catchtap="passOrder">通过</view>
   </view>
 </block>
 
-<!--财务-->
-<block wx:if="{{role === ROLE_FINANCE}}">
-
+<!--角色是财务 && 订单状态是待财务处理 => 显示修改按钮-->
+<block wx:if="{{role === ROLE_FINANCE && item.status.type === PAID}}">
+  <view class="btns-prompt">
+    <view class="each-item cancel" data-type="{{0}}" data-id="{{item.id}}" catchtap="financeRejectPopup">拒绝</view>
+    <view class="each-item confirm" data-type="{{1}}" data-id="{{item.id}}" catchtap="financePass">通过</view>
+  </view>
 </block>
-<!--仓管-->
-<block wx:if="{{role === ROLE_WAREHOUSE}}">
-  <view class="btn btn-fixed fixed-bottom btn-energized-linear">确认发货</view>
+
+<!--角色是仓管 && 订单状态是待仓管处理 => 显示修改按钮-->
+<block wx:if="{{role === ROLE_WAREHOUSE && item.status.type === EXAMINE_FINANCE}}">
+  <view class="btn btn-fixed fixed-bottom btn-energized-linear" bindtap="storePass">确认发货</view>
 </block>
 
 <!--备注提示框-->

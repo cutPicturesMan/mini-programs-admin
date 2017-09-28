@@ -293,6 +293,92 @@ Page({
     })
   },
 
+  // 财务拒绝订单模态框
+  financeRejectPopup (e) {
+    let { id, index } = e.currentTarget.dataset;
+
+    this.setData({
+      idx: index
+    })
+
+    wx.showModal({
+      title: '提示',
+      content: '确定要拒绝该订单吗？',
+      success: (res) => {
+        if (res.confirm) {
+          this.financeReject.call(this, id);
+        }
+      }
+    })
+  },
+  // 财务拒绝订单
+  financeReject (id, price) {
+    let { idx, list } = this.data;
+
+    wx.showLoading();
+    http.request({
+      url: `${api.finance_put_order}${id}`,
+      method: 'POST',
+      data: {
+        adopt: 0
+      }
+    }).then((res) => {
+      wx.hideLoading();
+
+      if (res.errorCode === 200) {
+        wx.showToast({
+          title: res.moreInfo
+        });
+        setTimeout(() => {
+          this.getData();
+        }, 1500)
+      } else {
+        wx.showToast({
+          title: res.moreInfo || '拒绝失败',
+          image: '../../icons/close-circled.png'
+        });
+      }
+    })
+  },
+  // 财务通过
+  financePass(e){
+    let { index, id } = e.currentTarget.dataset;
+    let { list } = this.data;
+    let totalPrice = list[index].totalPrice;
+
+    this.setData({
+      isSubmit: true
+    });
+
+    wx.showLoading();
+    http.request({
+      url: `${api.finance_put_order}${id}`,
+      method: 'POST',
+      data: {
+        adopt: 1
+      }
+    }).then((res) => {
+      wx.hideLoading();
+
+      // 提交成功
+      if (res.errorCode === 200) {
+        wx.showToast({
+          title: res.moreInfo
+        })
+
+        setTimeout(() => {
+          this.getData();
+        }, 1500)
+      } else {
+        // 提交失败，则提示
+        wx.showToast({
+          title: res.moreInfo,
+          image: '../../icons/close-circled.png'
+        })
+      }
+    })
+  },
+
   onLoad () {
     this.getData();
     // 获取用户的信息

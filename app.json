@@ -1,9 +1,7 @@
 {
   "pages":[
-    "pages/store_remain/store_remain",
-
-    "pages/opera/opera",
     "pages/pending/pending",
+    "pages/opera/opera",
     "pages/order/order",
     "pages/my/my",
 
@@ -24,7 +22,7 @@
     "pages/customer_setting/customer_setting",
 
     "pages/store_send/store_send",
-
+    "pages/store_remain/store_remain",
 
     "pages/add_role/add_role",
     "pages/prompt_page/prompt_page"

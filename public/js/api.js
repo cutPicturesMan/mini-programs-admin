@@ -21,9 +21,17 @@ let api = {
   salesman_put_order: '/api/order/salesman/',
   // 经理修改订单
   manage_put_order: '/api/order/manager/',
+  // 财务修改订单
+  finance_put_order: '/api/order/finance/',
+  // 仓管修改订单
+  warehouse_put_order: '/api/order/warehouse/',
 
   // 仓管
   stock: '/api/product/stock/',
+
+  // 财务 账期未结
+  finance_uncollect: '/api/finance',
+
 
   // 登录
   login: '/wx/login',

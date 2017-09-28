@@ -1,10 +1,26 @@
-<view class="container">
-  <navigator view class="label-item bb-e5" url="/pages/finance_account_detail/finance_account_detail?type=0">
-    <image class="img" src="../../testimg/order-item.jpg"></image>
-    <view class="item-main">刘德华</view>
-  </navigator>
-  <navigator class="label-item bb-e5" url="/pages/finance_account_detail/finance_account_detail?type=1">
-    <image class="img" src="../../testimg/order-item.jpg"></image>
-    <view class="item-main">刘德华</view>
-  </navigator>
-</view>
+<block wx:if="{{isLoaded}}">
+  <!--有数据的情况-->
+  <block wx:if="{{list.length !== 0}}">
+    <view class="container">
+      <navigator view class="label-item bb-e5" url="/pages/finance_account_detail/finance_account_detail?type=0">
+        <image class="img" src="../../testimg/order-item.jpg"></image>
+        <view class="item-main">刘德华</view>
+      </navigator>
+      <navigator class="label-item bb-e5" url="/pages/finance_account_detail/finance_account_detail?type=1">
+        <image class="img" src="../../testimg/order-item.jpg"></image>
+        <view class="item-main">刘德华</view>
+      </navigator>
+    </view>
+  </block>
+  <!--无数据的情况-->
+  <block wx:else>
+    <view class="empty-data">
+      <view class="p20 tac text-stable fs32">空空如也~</view>
+    </view>
+  </block>
+</block>
+
+
+
+
+
