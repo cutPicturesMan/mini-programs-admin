@@ -1,85 +1,102 @@
-<block wx:if="{{isLoaded}}">
-  <!--如果有数据-->
-  <block wx:if="{{list.length !== 0}}">
-    <view wx:for="{{list}}" wx:key="{{item.id}}">
-      <view class="time-container ptb25 tac">
-        <text class="time">{{item.date}}</text>
-      </view>
-      <view class="order-item">
-        <navigator class="pl25" url="/pages/order_detail/order_detail?id={{item.id}}">
-          <view class="order-figure bb-e5" >
-            <image class="img"
-                   src="{{item.orderItems[0].skuMedia.alt1.url ? (item.orderItems[0].skuMedia.alt1.url + '?imageView/2/1/w/260/h/260') : '../../icons/img-none.png'}}"></image>
-            <view class="order-figcaption">
-              <view class="p">订单编号：{{item.orderNumber}}</view>
-              <view class="p">
-                订单状态：<text class="text-energized">{{item.status.friendlyType}}</text>
-              </view>
-              <view class="p">商品名称：{{item.name}}</view>
-              <view class="p">订单小计：{{item.amount}}</view>
-              <view class="p">客户修改的价格：{{item.offerTotal}}</view>
-            </view>
+<!--如果用户角色数据请求完毕-->
+<block wx:if="{{role.status}}">
+  <!--如果用户审核通过(1)，则进入系统-->
+  <block wx:if="{{role.status.id == 1}}">
+    <block wx:if="{{isLoaded}}">
+      <!--如果有数据-->
+      <block wx:if="{{list.length !== 0}}">
+        <view wx:for="{{list}}" wx:key="{{item.id}}">
+          <view class="time-container ptb25 tac">
+            <text class="time">{{item.date}}</text>
           </view>
-        </navigator>
-        <view class="label-line small bb-e5">
-          <view class="r">
-            商品总价：<input class="input-price mr20 tac text-energized" type="number"
-                        value="{{item.totalPrice}}"
-                        data-index="{{index}}"
-                        bindinput="inputTotalPrice"
-                        disabled="{{role === ROLE_FINANCE ? true : false}}"/>
+          <view class="order-item">
+            <navigator class="pl25" url="/pages/order_detail/order_detail?id={{item.id}}">
+              <view class="order-figure bb-e5" >
+                <image class="img"
+                       src="{{item.orderItems[0].skuMedia.alt1.url ? (item.orderItems[0].skuMedia.alt1.url + '?imageView/2/1/w/260/h/260') : '../../icons/img-none.png'}}"></image>
+                <view class="order-figcaption">
+                  <view class="p">订单编号：{{item.orderNumber}}</view>
+                  <view class="p">
+                    订单状态：<text class="text-energized">{{item.status.friendlyType}}</text>
+                  </view>
+                  <view class="p">商品名称：{{item.name}}</view>
+                  <view class="p">订单小计：{{item.amount}}</view>
+                  <view class="p">客户修改的价格：{{item.offerTotal}}</view>
+                </view>
+              </view>
+            </navigator>
+            <view class="label-line small bb-e5">
+              <view class="r">
+                商品总价：<input class="input-price mr20 tac text-energized" type="number"
+                            value="{{item.totalPrice}}"
+                            data-index="{{index}}"
+                            bindinput="inputTotalPrice"
+                            disabled="{{role === ROLE_FINANCE ? true : false}}"/>
+              </view>
+            </view>
+
+            <block wx:if="{{role === ROLE_FINANCE || role === ROLE_WAREHOUSE}}">
+              <view class="label-line mlr20">
+                <view class="l mr20">备注信息</view>
+                <view class="r">
+                  {{item.remarks || '暂无'}}
+                </view>
+              </view>
+            </block>
+            <block wx:else>
+              <view class="label-line mlr20" data-index="{{index}}" catchtap="showRemark">
+                <view class="l mr20">备注信息</view>
+                <view class="r">
+                  {{item.remarks}}
+                  <text class="text-stable" wx:if="{{!item.remarks}}">请输入</text>
+                </view>
+              </view>
+            </block>
+
+            <!--业务员待处理-->
+            <block wx:if="{{role === ROLE_SALESMAN}}">
+              <view class="btns-prompt">
+                <view class="each-item cancel" data-id="{{item.id}}" data-index="{{index}}" catchtap="cancelOrderPopup">取消订单</view>
+                <view class="each-item confirm" data-id="{{item.id}}" data-index="{{index}}" catchtap="confirmOrder">提交订单</view>
+              </view>
+            </block>
+
+            <!--经理待处理-->
+            <block wx:if="{{role === ROLE_MANAGER}}">
+              <view class="btns-prompt">
+                <view class="each-item cancel" data-type="{{0}}" data-id="{{item.id}}" data-index="{{index}}" catchtap="rejectOrderPopup">拒绝</view>
+                <view class="each-item confirm" data-type="{{0}}" data-id="{{item.id}}" data-index="{{index}}" catchtap="passOrder">通过</view>
+              </view>
+            </block>
+
+            <!--财务待处理-->
+            <block wx:if="{{role === ROLE_FINANCE}}">
+              <view class="btns-prompt">
+                <view class="each-item cancel" data-type="{{0}}" data-id="{{item.id}}" data-index="{{index}}" catchtap="financeRejectPopup">拒绝</view>
+                <view class="each-item confirm" data-type="{{0}}" data-id="{{item.id}}" data-index="{{index}}" catchtap="financePass">通过</view>
+              </view>
+            </block>
           </view>
         </view>
-
-        <block wx:if="{{role === ROLE_FINANCE || role === ROLE_WAREHOUSE}}">
-          <view class="label-line mlr20">
-            <view class="l mr20">备注信息</view>
-            <view class="r">
-              {{item.remarks || '暂无'}}
-            </view>
-          </view>
-        </block>
-        <block wx:else>
-          <view class="label-line mlr20" data-index="{{index}}" catchtap="showRemark">
-            <view class="l mr20">备注信息</view>
-            <view class="r">
-              {{item.remarks}}
-              <text class="text-stable" wx:if="{{!item.remarks}}">请输入</text>
-            </view>
-          </view>
-        </block>
-
-        <!--业务员待处理-->
-        <block wx:if="{{role === ROLE_SALESMAN}}">
-          <view class="btns-prompt">
-            <view class="each-item cancel" data-id="{{item.id}}" data-index="{{index}}" catchtap="cancelOrderPopup">取消订单</view>
-            <view class="each-item confirm" data-id="{{item.id}}" data-index="{{index}}" catchtap="confirmOrder">提交订单</view>
-          </view>
-        </block>
-
-        <!--经理待处理-->
-        <block wx:if="{{role === ROLE_MANAGER}}">
-          <view class="btns-prompt">
-            <view class="each-item cancel" data-type="{{0}}" data-id="{{item.id}}" data-index="{{index}}" catchtap="rejectOrderPopup">拒绝</view>
-            <view class="each-item confirm" data-type="{{0}}" data-id="{{item.id}}" data-index="{{index}}" catchtap="passOrder">通过</view>
-          </view>
-        </block>
-
-        <!--财务待处理-->
-        <block wx:if="{{role === ROLE_FINANCE}}">
-          <view class="btns-prompt">
-            <view class="each-item cancel" data-type="{{0}}" data-id="{{item.id}}" data-index="{{index}}" catchtap="financeRejectPopup">拒绝</view>
-            <view class="each-item confirm" data-type="{{0}}" data-id="{{item.id}}" data-index="{{index}}" catchtap="financePass">通过</view>
-          </view>
-        </block>
-
-      </view>
-    </view>
+      </block>
+      <!--如果没有数据-->
+      <block wx:else>
+        <view class="empty-data">
+          <view class="p20 tac fs32 text-stable">暂无待处理订单</view>
+        </view>
+      </block>
+    </block>
   </block>
-  <!--如果没有数据-->
+  <!--否则-->
   <block wx:else>
     <view class="empty-data">
-      <view class="p20 tac fs32 text-stable">暂无待处理订单</view>
+      <!--如果正在审核中(2)、则页面显示正在审核，不进入系统-->
+      <view class="p20 tac fs32 text-stable" wx:if="{{role.status.id == 2}}">您的角色正在审核中</view>
+      <!--如果用户未审核(-1)、审核拒绝(0)，则提示跳转信息申请页-->
+      <block wx:else>
+        <view class="p20 tac fs32 text-stable">对不起，您暂未注册，请先注册</view>
+        <navigator url="/pages/registry/registry" class="btn btn-energized-linear">马上注册</navigator>
+      </block>
     </view>
   </block>
 </block>

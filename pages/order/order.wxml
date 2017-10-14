@@ -1,54 +1,73 @@
-<block wx:if="{{isLoaded}}">
-  <!--如果有数据-->
-  <block wx:if="{{list.length !== 0}}">
-    <view wx:for="{{list}}" wx:key="{{item.id}}">
-      <view class="time-container ptb25 tac">
-        <text class="time">{{item.date}}</text>
-      </view>
-      <view class="order-item">
-        <navigator class="pl25" url="/pages/order_detail/order_detail?id={{item.id}}">
-          <view class="order-figure bb-e5" >
-            <image class="img"
-                   src="{{item.orderItems[0].skuMedia.alt1.url ? (item.orderItems[0].skuMedia.alt1.url + '?imageView/2/1/w/260/h/260') : '../../icons/img-none.png'}}"></image>
-            <view class="order-figcaption">
-              <view class="p">订单编号：{{item.orderNumber}}</view>
-              <view class="p">
-                订单状态：<text class="text-energized">{{item.status.friendlyType}}</text>
+<!--如果用户角色数据请求完毕-->
+<block wx:if="{{role.status}}">
+  <!--如果用户审核通过(1)，则进入系统-->
+  <block wx:if="{{role.status.id == 1}}">
+    <block wx:if="{{isLoaded}}">
+      <!--如果有数据-->
+      <block wx:if="{{list.length !== 0}}">
+        <view wx:for="{{list}}" wx:key="{{item.id}}">
+          <view class="time-container ptb25 tac">
+            <text class="time">{{item.date}}</text>
+          </view>
+          <view class="order-item">
+            <navigator class="pl25" url="/pages/order_detail/order_detail?id={{item.id}}">
+              <view class="order-figure bb-e5" >
+                <image class="img"
+                       src="{{item.orderItems[0].skuMedia.alt1.url ? (item.orderItems[0].skuMedia.alt1.url + '?imageView/2/1/w/260/h/260') : '../../icons/img-none.png'}}"></image>
+                <view class="order-figcaption">
+                  <view class="p">订单编号：{{item.orderNumber}}</view>
+                  <view class="p">
+                    订单状态：<text class="text-energized">{{item.status.friendlyType}}</text>
+                  </view>
+                  <view class="p">商品名称：{{item.name}}</view>
+                  <view class="p">订单小计：{{item.amount}}</view>
+                  <view class="p">客户修改的价格：{{item.offerTotal}}</view>
+                </view>
               </view>
-              <view class="p">商品名称：{{item.name}}</view>
-              <view class="p">订单小计：{{item.amount}}</view>
-              <view class="p">客户修改的价格：{{item.offerTotal}}</view>
+            </navigator>
+            <!--<view class="label-line small bb-e5">-->
+            <!--<view class="r">-->
+            <!--商品总价：<input class="input-price mr20 tac text-energized" type="number"-->
+            <!--value="{{item.totalPrice}}" disabled/>-->
+            <!--</view>-->
+            <!--</view>-->
+            <view class="label-line bb-e5 ml20">
+              <view class="l mr20">
+                商品总价：<text class="text-energized">{{item.totalPrice}}</text>
+              </view>
+              <view class="r mr20">
+                业务员：{{item.salesman || '暂无'}}
+              </view>
+            </view>
+
+            <view class="label-line ml20">
+              <view class="l mr20">备注信息</view>
+              <view class="r mr20">
+                {{item.remark || '暂无'}}
+              </view>
             </view>
           </view>
-        </navigator>
-        <!--<view class="label-line small bb-e5">-->
-          <!--<view class="r">-->
-            <!--商品总价：<input class="input-price mr20 tac text-energized" type="number"-->
-                        <!--value="{{item.totalPrice}}" disabled/>-->
-          <!--</view>-->
-        <!--</view>-->
-        <view class="label-line bb-e5 ml20">
-          <view class="l mr20">
-            商品总价：<text class="text-energized">{{item.totalPrice}}</text>
-          </view>
-          <view class="r mr20">
-            业务员：{{item.salesman || '暂无'}}
-          </view>
         </view>
-
-        <view class="label-line ml20">
-          <view class="l mr20">备注信息</view>
-          <view class="r mr20">
-            {{item.remark || '暂无'}}
-          </view>
+      </block>
+      <!--如果没有数据-->
+      <block wx:else>
+        <view class="empty-data">
+          <view class="p20 tac fs32 text-stable">暂无待处理订单</view>
         </view>
-      </view>
-    </view>
+      </block>
+    </block>
   </block>
-  <!--如果没有数据-->
+  <!--否则-->
   <block wx:else>
     <view class="empty-data">
-      <view class="p20 tac fs32 text-stable">暂无待处理订单</view>
+      <!--如果正在审核中(2)、则页面显示正在审核，不进入系统-->
+      <view class="p20 tac fs32 text-stable" wx:if="{{role.status.id == 2}}">您的角色正在审核中</view>
+      <!--如果用户未审核(-1)、审核拒绝(0)，则提示跳转信息申请页-->
+      <block wx:else>
+        <view class="p20 tac fs32 text-stable">对不起，您暂未注册，请先注册</view>
+        <navigator url="/pages/registry/registry" class="btn btn-energized-linear">马上注册</navigator>
+      </block>
     </view>
   </block>
 </block>
+

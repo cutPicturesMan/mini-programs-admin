@@ -1,15 +1,33 @@
-<view class="user-info" wx:if="{{isLoaded}}">
-  <image class="img" src="{{info.avatarUrl}}"></image>
-  <view class="title">
-    昵称：{{info.nickName}}
-    <block wx:if="{{info.status.id === 2}}">
-      (<text class="text-assertive">{{info.status.friendlyType}}</text>)
-    </block>
-    <block wx:if="{{info.status.id === 1}}">
-      (<text class="text-energized">{{info.status.friendlyType}}</text>)
-    </block>
-    <block wx:if="{{info.status.id === 0}}">
-      (<text class="text-stable">{{info.status.friendlyType}}</text>)
-    </block>
-  </view>
-</view>
+<!--如果用户角色数据请求完毕-->
+<block wx:if="{{role.status}}">
+  <!--如果用户审核通过(1)，则进入系统-->
+  <block wx:if="{{role.status.id == 1}}">
+    <view class="user-info" wx:if="{{isLoaded}}">
+      <image class="img" src="{{info.avatarUrl}}"></image>
+      <view class="title">
+        昵称：{{info.nickName}}
+        <block wx:if="{{info.status.id === 2}}">
+          (<text class="text-assertive">{{info.status.friendlyType}}</text>)
+        </block>
+        <block wx:if="{{info.status.id === 1}}">
+          (<text class="text-energized">{{info.status.friendlyType}}</text>)
+        </block>
+        <block wx:if="{{info.status.id === 0}}">
+          (<text class="text-stable">{{info.status.friendlyType}}</text>)
+        </block>
+      </view>
+    </view>
+  </block>
+  <!--否则-->
+  <block wx:else>
+    <view class="empty-data">
+      <!--如果正在审核中(2)、则页面显示正在审核，不进入系统-->
+      <view class="p20 tac fs32 text-stable" wx:if="{{role.status.id == 2}}">您的角色正在审核中</view>
+      <!--如果用户未审核(-1)、审核拒绝(0)，则提示跳转信息申请页-->
+      <block wx:else>
+        <view class="p20 tac fs32 text-stable">对不起，您暂未注册，请先注册</view>
+        <navigator url="/pages/registry/registry" class="btn btn-energized-linear">马上注册</navigator>
+      </block>
+    </view>
+  </block>
+</block>

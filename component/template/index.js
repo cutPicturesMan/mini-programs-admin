@@ -1,0 +1,5 @@
+const PROMPT = {
+  show () {
+    // this.
+  }
+}

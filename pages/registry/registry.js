@@ -43,7 +43,7 @@ Page({
 
     // 防止重复提交
     if(isSubmit){
-      return;
+      return false;
     }
 
     try {

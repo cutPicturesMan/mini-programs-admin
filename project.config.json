@@ -1,0 +1,39 @@
+{
+	"description": "项目配置文件。",
+	"setting": {
+		"urlCheck": true,
+		"es6": true,
+		"postcss": true,
+		"minified": true
+	},
+	"compileType": "weapp",
+	"libVersion": "1.5.4",
+	"appid": "wxbb01164d692716ea",
+	"projectname": "%E7%84%99%E4%BA%91%E8%AE%A2%E8%B4%A7",
+	"condition": {
+		"weapp": {
+			"current": 1,
+			"list": [
+				{
+					"id": -1,
+					"name": "注册",
+					"pathName": "pages/registry/registry",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "操作面板",
+					"pathName": "pages/opera/opera"
+				}
+			]
+		},
+		"search": {
+			"current": -1,
+			"list": []
+		},
+		"conversation": {
+			"current": -1,
+			"list": []
+		}
+	}
+}

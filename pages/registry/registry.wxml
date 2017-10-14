@@ -22,6 +22,6 @@
 <view class="empty-data" wx:if="{{!isAllowInfo}}">
   <view class="p20 tac fs32 text-stable">
     <view>请允许使用您的个人信息，否则无法完成注册。</view>
-    <view>可在右上角进入小程序主页，在主页右上角的设置中打开--用户信息--允许</view>
+    <view>可在右上角进入小程序主页，在主页右上角的设置中打开--用户信息--允许，然后重新进入小程序</view>
   </view>
 </view>

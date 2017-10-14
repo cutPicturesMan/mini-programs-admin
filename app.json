@@ -24,7 +24,7 @@
     "pages/store_send/store_send",
     "pages/store_remain/store_remain",
 
-    "pages/add_role/add_role",
+    "pages/registry/registry",
     "pages/prompt_page/prompt_page"
   ],
   "window":{
@@ -54,7 +54,7 @@
       "selectedIconPath": "icons/tabs-order-active.png"
     }, {
       "pagePath": "pages/my/my",
-      "text": "个人中心",
+      "text": "切换角色",
       "iconPath": "icons/tabs-my.png",
       "selectedIconPath": "icons/tabs-my-active.png"
     }]

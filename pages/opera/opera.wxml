@@ -1,156 +1,174 @@
-<view class="ad-container">
-  <image class="icon" src="../../icons/icon-horn.png"></image>
-  <view class="text">灵魂在刘德华业务员处下单成功</view>
-</view>
-<!--经理-->
-<view class="opera-panel manage" wx:if="{{role === ROLE_MANAGER}}">
-  <image class="v-line" src="../../icons/v-line.jpg"></image>
-  <image class="h-line" src="../../icons/h-line.jpg"></image>
-  <view class="item" bindtap="addCustomer">
-    <view class="circle">
-      <view class="icon iconfont icon-chuangjian"></view>
-      <view class="title">创建订单</view>
+<!--如果用户角色数据请求完毕-->
+<block wx:if="{{role.status}}">
+  <!--如果用户审核通过(1)，则进入系统-->
+  <block wx:if="{{role.status.id == 1}}">
+    <view class="ad-container">
+      <image class="icon" src="../../icons/icon-horn.png"></image>
+      <view class="text">灵魂在刘德华业务员处下单成功</view>
     </view>
-  </view>
-  <navigator class="item" url="/pages/manage_opera_salesman/manage_opera_salesman">
-    <view class="circle">
-      <view class="icon iconfont icon-guanli1"></view>
-      <view class="title">业务员管理</view>
+    <!--经理-->
+    <view class="opera-panel manage" wx:if="{{role === ROLE_MANAGER}}">
+      <image class="v-line" src="../../icons/v-line.jpg"></image>
+      <image class="h-line" src="../../icons/h-line.jpg"></image>
+      <view class="item" bindtap="addCustomer">
+        <view class="circle">
+          <view class="icon iconfont icon-chuangjian"></view>
+          <view class="title">创建订单</view>
+        </view>
+      </view>
+      <navigator class="item" url="/pages/manage_opera_salesman/manage_opera_salesman">
+        <view class="circle">
+          <view class="icon iconfont icon-guanli1"></view>
+          <view class="title">业务员管理</view>
+        </view>
+      </navigator>
+      <navigator class="item" url="/pages/customer/customer">
+        <view class="circle">
+          <view class="icon iconfont icon-people"></view>
+          <view class="title">客户列表</view>
+        </view>
+      </navigator>
+      <navigator class="item" url="/pages/product_setting/product_setting">
+        <view class="circle">
+          <view class="icon iconfont icon-tubiaozhizuomoban"></view>
+          <view class="title">商品设置</view>
+        </view>
+      </navigator>
+      <view class="circle big add-sale-man" bindtap="addSaleMan">
+        <view class="icon iconfont icon-xinzengyonghu"></view>
+        <view class="title">新增业务员</view>
+      </view>
     </view>
-  </navigator>
-  <navigator class="item" url="/pages/customer/customer">
-    <view class="circle">
-      <view class="icon iconfont icon-people"></view>
-      <view class="title">客户列表</view>
+    <!--财务-->
+    <view class="opera-panel manage" wx:if="{{role === ROLE_FINANCE}}">
+      <image class="v-line" src="../../icons/v-line.jpg"></image>
+      <image class="h-line" src="../../icons/h-line.jpg"></image>
+      <navigator class="item" url="/pages/finance_collect/finance_collect">
+        <view class="circle">
+          <view class="icon iconfont icon-icon"></view>
+          <view class="title">已收款</view>
+        </view>
+      </navigator>
+      <navigator class="item" url="/pages/finance_uncollect/finance_uncollect">
+        <view class="circle">
+          <view class="icon iconfont icon-shouqiankuan"></view>
+          <view class="title">未收款</view>
+        </view>
+      </navigator>
+      <navigator class="item" url="/pages/finance_account/finance_account">
+        <view class="circle">
+          <view class="icon iconfont icon-yijieshu"></view>
+          <view class="title">账期已结</view>
+        </view>
+      </navigator>
+      <navigator class="item" url="/pages/finance_account/finance_account">
+        <view class="circle">
+          <view class="icon iconfont icon-weijiechaoshenxian"></view>
+          <view class="title">账期未结算</view>
+        </view>
+      </navigator>
     </view>
-  </navigator>
-  <navigator class="item" url="/pages/product_setting/product_setting">
-    <view class="circle">
-      <view class="icon iconfont icon-tubiaozhizuomoban"></view>
-      <view class="title">商品设置</view>
+    <!--业务员-->
+    <view class="opera-panel agent" wx:if="{{role === ROLE_SALESMAN}}">
+      <navigator class="item" url="/pages/customer/customer">
+        <view class="circle small">
+          <view class="icon iconfont icon-people"></view>
+          <view class="title">客户列表</view>
+        </view>
+      </navigator>
+      <image class="h-line" src="../../icons/h-line.jpg"></image>
+      <view class="item">
+        <view class="circle big">
+          <view class="icon iconfont icon-chuangjian"></view>
+          <view class="title">创建订单</view>
+        </view>
+      </view>
+      <image class="h-line" src="../../icons/h-line.jpg"></image>
+      <navigator class="item" url="/pages/add_customer/add_customer" bindtap="addCustomer">
+        <view class="circle small">
+          <view class="icon iconfont icon-xinzengyonghu"></view>
+          <view class="title">新增客户</view>
+        </view>
+      </navigator>
     </view>
-  </navigator>
-  <view class="circle big add-sale-man" bindtap="addSaleMan">
-    <view class="icon iconfont icon-xinzengyonghu"></view>
-    <view class="title">新增业务员</view>
-  </view>
-</view>
-<!--财务-->
-<view class="opera-panel manage" wx:if="{{role === ROLE_FINANCE}}">
-  <image class="v-line" src="../../icons/v-line.jpg"></image>
-  <image class="h-line" src="../../icons/h-line.jpg"></image>
-  <navigator class="item" url="/pages/finance_collect/finance_collect">
-    <view class="circle">
-      <view class="icon iconfont icon-icon"></view>
-      <view class="title">已收款</view>
+    <!--仓管-->
+    <view class="opera-panel store" wx:if="{{role === ROLE_WAREHOUSE}}">
+      <navigator class="item" url="/pages/store_send/store_send">
+        <view class="circle biggest">
+          <view class="icon iconfont icon-fahuo"></view>
+          <view class="title">发货处理</view>
+        </view>
+      </navigator>
+      <image class="h-line" src="../../icons/h-line.jpg"></image>
+      <navigator class="item" url="/pages/store_remain/store_remain">
+        <view class="circle biggest">
+          <view class="icon iconfont icon-kucun"></view>
+          <view class="title">商品库存</view>
+        </view>
+      </navigator>
     </view>
-  </navigator>
-  <navigator class="item" url="/pages/finance_uncollect/finance_uncollect">
-    <view class="circle">
-      <view class="icon iconfont icon-shouqiankuan"></view>
-      <view class="title">未收款</view>
-    </view>
-  </navigator>
-  <navigator class="item" url="/pages/finance_account/finance_account">
-    <view class="circle">
-      <view class="icon iconfont icon-yijieshu"></view>
-      <view class="title">账期已结</view>
-    </view>
-  </navigator>
-  <navigator class="item" url="/pages/finance_account/finance_account">
-    <view class="circle">
-      <view class="icon iconfont icon-weijiechaoshenxian"></view>
-      <view class="title">账期未结算</view>
-    </view>
-  </navigator>
-</view>
-<!--业务员-->
-<view class="opera-panel agent" wx:if="{{role === ROLE_SALESMAN}}">
-  <navigator class="item" url="/pages/customer/customer">
-    <view class="circle small">
-      <view class="icon iconfont icon-people"></view>
-      <view class="title">客户列表</view>
-    </view>
-  </navigator>
-  <image class="h-line" src="../../icons/h-line.jpg"></image>
-  <view class="item">
-    <view class="circle big">
-      <view class="icon iconfont icon-chuangjian"></view>
-      <view class="title">创建订单</view>
-    </view>
-  </view>
-  <image class="h-line" src="../../icons/h-line.jpg"></image>
-  <navigator class="item" url="/pages/add_customer/add_customer" bindtap="addCustomer">
-    <view class="circle small">
-      <view class="icon iconfont icon-xinzengyonghu"></view>
-      <view class="title">新增客户</view>
-    </view>
-  </navigator>
-</view>
-<!--仓管-->
-<view class="opera-panel store" wx:if="{{role === ROLE_WAREHOUSE}}">
-  <navigator class="item" url="/pages/store_send/store_send">
-    <view class="circle biggest">
-      <view class="icon iconfont icon-fahuo"></view>
-      <view class="title">发货处理</view>
-    </view>
-  </navigator>
-  <image class="h-line" src="../../icons/h-line.jpg"></image>
-  <navigator class="item" url="/pages/store_remain/store_remain">
-    <view class="circle biggest">
-      <view class="icon iconfont icon-kucun"></view>
-      <view class="title">商品库存</view>
-    </view>
-  </navigator>
-</view>
 
-<scroll-view scroll-y="true" class="role-prompt" wx:if="{{addRoleToggle}}">
-  <view class="role-container mtb45">
-    <view class="role-title tac">新增业务员信息</view>
-    <view class="role-info mb15">
-      <image class="image" src="../../testimg/order-item.jpg"></image>
-      <view class="name tac">昵称：灵魂</view>
-    </view>
-    <view class="info">真实姓名：肖思奇</view>
-    <view class="info">电话：13516801753</view>
-    <view class="btns-prompt mt20">
-      <view class="each-item cancel" bindtap="switchAddRemark">取消</view>
-      <view class="each-item confirm">确认</view>
-    </view>
-  </view>
+    <scroll-view scroll-y="true" class="role-prompt" wx:if="{{addRoleToggle}}">
+      <view class="role-container mtb45">
+        <view class="role-title tac">新增业务员信息</view>
+        <view class="role-info mb15">
+          <image class="image" src="../../testimg/order-item.jpg"></image>
+          <view class="name tac">昵称：灵魂</view>
+        </view>
+        <view class="info">真实姓名：肖思奇</view>
+        <view class="info">电话：13516801753</view>
+        <view class="btns-prompt mt20">
+          <view class="each-item cancel" bindtap="switchAddRemark">取消</view>
+          <view class="each-item confirm">确认</view>
+        </view>
+      </view>
 
-  <view class="role-container mtb45">
-    <view class="role-title tac">新增业务员信息</view>
-    <view class="role-info mb15">
-      <image class="image" src="../../testimg/order-item.jpg"></image>
-      <view class="name tac">昵称：灵魂</view>
-    </view>
-    <view class="info">真实姓名：肖思奇</view>
-    <view class="info">电话：13516801753</view>
-    <view class="btns-prompt mt20">
-      <view class="each-item cancel" bindtap="switchAddRemark">取消</view>
-      <view class="each-item confirm">确认</view>
-    </view>
-  </view>
+      <view class="role-container mtb45">
+        <view class="role-title tac">新增业务员信息</view>
+        <view class="role-info mb15">
+          <image class="image" src="../../testimg/order-item.jpg"></image>
+          <view class="name tac">昵称：灵魂</view>
+        </view>
+        <view class="info">真实姓名：肖思奇</view>
+        <view class="info">电话：13516801753</view>
+        <view class="btns-prompt mt20">
+          <view class="each-item cancel" bindtap="switchAddRemark">取消</view>
+          <view class="each-item confirm">确认</view>
+        </view>
+      </view>
 
-  <view class="role-container mtb45">
-    <view class="role-title tac">新增业务员信息</view>
-    <view class="role-info mb15">
-      <image class="image" src="../../testimg/order-item.jpg"></image>
-      <view class="name tac">昵称：灵魂</view>
-    </view>
-    <view class="info">真实姓名：肖思奇</view>
-    <view class="info">电话：13516801753</view>
-    <view class="btns-prompt mt20">
-      <view class="each-item cancel" bindtap="switchAddRemark">取消</view>
-      <view class="each-item confirm">确认</view>
-    </view>
-  </view>
-</scroll-view>
+      <view class="role-container mtb45">
+        <view class="role-title tac">新增业务员信息</view>
+        <view class="role-info mb15">
+          <image class="image" src="../../testimg/order-item.jpg"></image>
+          <view class="name tac">昵称：灵魂</view>
+        </view>
+        <view class="info">真实姓名：肖思奇</view>
+        <view class="info">电话：13516801753</view>
+        <view class="btns-prompt mt20">
+          <view class="each-item cancel" bindtap="switchAddRemark">取消</view>
+          <view class="each-item confirm">确认</view>
+        </view>
+      </view>
+    </scroll-view>
 
-<view class="add-customer" wx:if="{{addCustomerToggle}}" bindtap="addCustomer">
-  <view class="content animated {{addCustomerToggle ? 'bounceIn' : 'bounceOut'}}">
-    <image class="image" src="https://www.byunfu.com/admin/wx/code?page='pages/my/my'"></image>
-    <view class="title tac">将二维码分享出去</view>
-  </view>
-</view>
+    <view class="add-customer" wx:if="{{addCustomerToggle}}" bindtap="addCustomer">
+      <view class="content animated {{addCustomerToggle ? 'bounceIn' : 'bounceOut'}}">
+        <image class="image" src="https://www.byunfu.com/admin/wx/code?page='pages/my/my'"></image>
+        <view class="title tac">将二维码分享出去</view>
+      </view>
+    </view>
+  </block>
+  <!--否则-->
+  <block wx:else>
+    <view class="empty-data">
+      <!--如果正在审核中(2)、则页面显示正在审核，不进入系统-->
+      <view class="p20 tac fs32 text-stable" wx:if="{{role.status.id == 2}}">您的角色正在审核中</view>
+      <!--如果用户未审核(-1)、审核拒绝(0)，则提示跳转信息申请页-->
+      <block wx:else>
+        <view class="p20 tac fs32 text-stable">对不起，您暂未注册，请先注册</view>
+        <navigator url="/pages/registry/registry" class="btn btn-energized-linear">马上注册</navigator>
+      </block>
+    </view>
+  </block>
+</block>
