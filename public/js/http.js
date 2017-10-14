@@ -1,5 +1,4 @@
 import Auth from './auth.js';
-import api from './api.js';
 
 class Http extends Auth {
   constructor () {

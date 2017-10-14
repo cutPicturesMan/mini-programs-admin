@@ -3,11 +3,13 @@ let app = getApp();
 Page({
   data: {
     // 用户信息
-    info: {},
+    role: {},
     // 是否正在加载数据
     isLoaded: false,
+    // 扫码是否出错
+    isError: false
   },
-  onLoad: function () {
+  onLoad () {
     // 获取用户的信息
     app.getUserInfo()
       .then((res) => {
@@ -15,7 +17,7 @@ Page({
         if (res.status.id == 1) {
           this.setData({
             isLoaded: true,
-            info: res
+            role: res
           });
         } else if (res.status.id == 2) {
           // 如果正在审核中(2)、则页面显示正在审核，不进入系统
@@ -41,8 +43,12 @@ Page({
         // 请求失败
         wx.showModal({
           title: '提示',
-          content: '数据请求失败，请重新进入小程序'
+          content: '扫码出错，未获取到经理的adminId'
         })
+
+        this.setData({
+          isError: true
+        });
       });
   }
 })

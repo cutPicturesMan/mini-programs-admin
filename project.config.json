@@ -12,18 +12,19 @@
 	"projectname": "%E7%84%99%E4%BA%91%E8%AE%A2%E8%B4%A7",
 	"condition": {
 		"weapp": {
-			"current": 1,
+			"current": 0,
 			"list": [
 				{
-					"id": -1,
+					"id": 0,
 					"name": "注册",
 					"pathName": "pages/registry/registry",
-					"query": ""
+					"query": "adminId=1"
 				},
 				{
 					"id": -1,
 					"name": "操作面板",
-					"pathName": "pages/opera/opera"
+					"pathName": "pages/opera/opera",
+					"query": ""
 				}
 			]
 		},

@@ -1,7 +1,6 @@
 // 管理端小程序
 // appid: wxca2c78f63ed513c5
 // appsecret: 176e04d9001b35e8d264dd6c7e8b0d19
-
 import http from './public/js/http.js';
 import api from './public/js/api.js';
 

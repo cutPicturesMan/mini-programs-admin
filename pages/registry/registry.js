@@ -1,7 +1,9 @@
 import http from '../../public/js/http.js';
 import api from '../../public/js/api.js';
+import Auth from '../../public/js/auth.js';
 
 let app = getApp();
+let auth = new Auth();
 
 Page({
   data: {
@@ -21,6 +23,8 @@ Page({
     isLoaded: false,
     // 是否允许使用个人信息
     isAllowInfo: true,
+    // 是否出现扫码错误
+    isScanError: false,
     // 是否正在提交
     isSubmit: false
   },
@@ -42,7 +46,7 @@ Page({
     let { signature, rawData, encryptedData, iv } = this.data.info;
 
     // 防止重复提交
-    if(isSubmit){
+    if (isSubmit) {
       return false;
     }
 
@@ -89,13 +93,17 @@ Page({
         adminId
       }
     }).then((res) => {
-      wx.hideLoading();
-
       // 提交成功，则跳转到待处理页面
       if (res.errorCode === 200) {
         wx.showToast({
-          title: res.moreInfo
+          title: res.moreInfo || '提交成功'
         })
+
+        setTimeout(() => {
+          wx.switchTab({
+            url: '/pages/pending/pending'
+          });
+        }, 1500)
       } else {
         // 提交失败，则提示
         wx.showToast({
@@ -133,11 +141,44 @@ Page({
     });
   },
   onLoad (options) {
-    var scene = decodeURIComponent(options.scene);
-    this.setData({
-      adminId: scene.adminId || 1
-    });
+    auth.login()
+      .then(() => {
+        // 二维码带的查询字符串
+        let scene = decodeURIComponent(options.scene);
 
-    this.getUserInfo();
+        // 这是测试时使用查询字符串来模拟扫码的scene参数
+        // 正式上线时要注释掉，替换成下面的代码
+        // if (options.adminId != undefined) {
+        //   this.setData({
+        //     adminId: options.adminId
+        //   });
+        //
+        //   this.getUserInfo();
+        // } else {
+        // 正式上线代码
+        // 如果扫码正常
+        if (scene.adminId != undefined) {
+          this.setData({
+            adminId: scene.adminId
+          });
+
+          this.getUserInfo();
+        } else {
+          // 如果扫码出现错误，查询字符串中没有经理的id，则提示
+          wx.showModal({
+            title: '提示',
+            content: '扫码出错，该二维码无经理adminId参数'
+          })
+
+          this.setData({
+            isScanError: true
+          });
+        }
+      }, () => {
+        wx.showModal({
+          title: '提示',
+          content: '登录失败，请重新进入小程序'
+        })
+      });
   }
 })

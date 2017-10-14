@@ -1,27 +1,34 @@
-<view wx:if="{{isLoaded}}">
-  <view class="user-info">
-    <image class="img" src="{{avatarUrl}}"></image>
-    <view class="title">昵称：{{nickName}}</view>
-  </view>
-  <view class="line-cell bb-e5 mt18">
-    <view class="cell-title">真实姓名：</view>
-    <view class="cell-content">
-      <input type="text" placeholder="请输入" maxlength="20" bindinput="bindNameInput"/>
-    </view>
-  </view>
-  <view class="line-cell bb-e5">
-    <view class="cell-title">电话：</view>
-    <view class="cell-content">
-      <input type="number" placeholder="请输入" maxlength="11" bindinput="bindPhoneInput"/>
-    </view>
-  </view>
-
-  <view class="btn btn-fixed fixed-bottom {{isSubmit ? 'btn-stable': 'btn-energized-linear'}}" bindtap="submit">{{isSubmit ? '正在提交中...': '完  成'}}</view>
+<!--如果扫码出现错误-->
+<view class="empty-data" wx:if="{{isScanError}}">
+  <view class="p20 tac fs32 text-stable">扫码出错，该二维码无经理adminId参数</view>
 </view>
-
-<view class="empty-data" wx:if="{{!isAllowInfo}}">
+<!--如果用户不允许使用个人信息-->
+<view class="empty-data" wx:elif="{{!isAllowInfo}}">
   <view class="p20 tac fs32 text-stable">
     <view>请允许使用您的个人信息，否则无法完成注册。</view>
     <view>可在右上角进入小程序主页，在主页右上角的设置中打开--用户信息--允许，然后重新进入小程序</view>
   </view>
 </view>
+<!--正常情况-->
+<block wx:else>
+  <view wx:if="{{isLoaded}}">
+    <view class="user-info">
+      <image class="img" src="{{avatarUrl}}"></image>
+      <view class="title">昵称：{{nickName}}</view>
+    </view>
+    <view class="line-cell bb-e5 mt18">
+      <view class="cell-title">真实姓名：</view>
+      <view class="cell-content">
+        <input type="text" placeholder="请输入" maxlength="20" bindinput="bindNameInput"/>
+      </view>
+    </view>
+    <view class="line-cell bb-e5">
+      <view class="cell-title">电话：</view>
+      <view class="cell-content">
+        <input type="number" placeholder="请输入" maxlength="11" bindinput="bindPhoneInput"/>
+      </view>
+    </view>
+
+    <view class="btn btn-fixed fixed-bottom {{isSubmit ? 'btn-stable': 'btn-energized-linear'}}" bindtap="submit">{{isSubmit ? '正在提交中...': '完  成'}}</view>
+  </view>
+</block>
