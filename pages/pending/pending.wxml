@@ -25,55 +25,20 @@
                 </view>
               </view>
             </navigator>
-            <view class="label-line small bb-e5">
-              <view class="r">
-                商品总价：<input class="input-price mr20 tac text-energized" type="number"
-                            value="{{item.totalPrice}}"
-                            data-index="{{index}}"
-                            bindinput="inputTotalPrice"
-                            disabled="{{item.status.type === PENDING_SALEMAN ? true : false}}"/>
+            <view class="label-line bb-e5 ml20">
+              <view class="l mr20">
+                商品总价：<text class="text-energized">{{item.totalPrice}}</text>
+              </view>
+              <view class="r mr20">
+                业务员：{{item.salesman || '暂无'}}
               </view>
             </view>
-
-            <block wx:if="{{item.status.type === PAID || item.status.type === EXAMINE_FINANCE}}">
+            <block>
               <view class="label-line mlr20">
                 <view class="l mr20">备注信息</view>
                 <view class="r">
                   {{item.remarks || '暂无'}}
                 </view>
-              </view>
-            </block>
-            <block wx:else>
-              <view class="label-line mlr20" data-index="{{index}}" catchtap="showRemark">
-                <view class="l mr20">备注信息</view>
-                <view class="r">
-                  {{item.remarks}}
-                  <text class="text-stable" wx:if="{{!item.remarks}}">请输入</text>
-                </view>
-              </view>
-            </block>
-
-            <!--业务员待处理-->
-            <block wx:if="{{item.status.type === PENDING_SALEMAN}}">
-              <view class="btns-prompt">
-                <view class="each-item cancel" data-id="{{item.id}}" data-index="{{index}}" catchtap="cancelOrderPopup">取消订单</view>
-                <view class="each-item confirm" data-id="{{item.id}}" data-index="{{index}}" catchtap="confirmOrder">提交订单</view>
-              </view>
-            </block>
-
-            <!--经理待处理-->
-            <block wx:if="{{item.status.type === EXAMINE_MANAGER}}">
-              <view class="btns-prompt">
-                <view class="each-item cancel" data-type="{{0}}" data-id="{{item.id}}" data-index="{{index}}" catchtap="rejectOrderPopup">拒绝</view>
-                <view class="each-item confirm" data-type="{{0}}" data-id="{{item.id}}" data-index="{{index}}" catchtap="passOrder">通过</view>
-              </view>
-            </block>
-
-            <!--财务待处理-->
-            <block wx:if="{{item.status.type === ROLE_FINANCE}}">
-              <view class="btns-prompt">
-                <view class="each-item cancel" data-type="{{0}}" data-id="{{item.id}}" data-index="{{index}}" catchtap="financeRejectPopup">拒绝</view>
-                <view class="each-item confirm" data-type="{{0}}" data-id="{{item.id}}" data-index="{{index}}" catchtap="financePass">通过</view>
               </view>
             </block>
           </view>
@@ -99,50 +64,3 @@
     </view>
   </block>
 </block>
-
-<!--备注提示框-->
-<view class="remark-add" wx:if="{{addToggle}}">
-  <view class="add-container animated {{addToggle ? 'bounceIn' : 'bounceOut'}}">
-    <view class="title">备注信息</view>
-    <view class="content">
-      <textarea bindinput="inputRemark" value="{{remarks}}"></textarea>
-    </view>
-    <view class="btns-prompt bt">
-      <view class="each-item cancel" bindtap="switchRemark">取消</view>
-      <view class="each-item confirm" bindtap="confirmRemark">确认</view>
-    </view>
-  </view>
-</view>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

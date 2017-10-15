@@ -12,6 +12,8 @@ let api = {
   order: '/api/order/',
   // 获取所有待处理订单
   order_wait: '/api/order/wait',
+  // 获取某个订单的配送方式
+  logistic_list: '/api/order/fulfillType/',
 
   // 获取所有业务员 [get]
   // 解除某个业务员的关系 [delete id]

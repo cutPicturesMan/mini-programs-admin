@@ -13,22 +13,22 @@
     </view>
     <view class="label-act bb plr20">
       <view class="title">电话</view>
-      <view class="sub">{{userInfo.phone}}</view>
+      <view class="sub">{{userInfo.phoneNumber}}</view>
     </view>
     <view class="label-act bb mt20">
       <view class="ico">
         <image src="../../icons/tabs-my-active.png"></image>
       </view>
-      <view class="title">我的角色列表</view>
+      <view class="title">我的权限列表</view>
     </view>
     <view class="role-list bg-light" wx:if="{{userInfo.roles.length != 0}}">
       <view class="label-act bb"
-            wx:for="{{userInfo.roles}}"
-            wx:key="{{index}}"
-            data-index="{{index}}">
-        <view class="title ml60">{{ROLE[item.name].name}}</view>
+            wx:for="{{ROLE}}"
+            wx:key="{{index}}">
+        <view class="title ml60">{{item.name}}</view>
         <view class="arrow">
-          <image class="icon" src="../../icons/icon-radio-selected.png"></image>
+          <image class="icon" src="../../icons/icon-no.png" wx:if="{{!roleObj[item.code]}}"></image>
+          <image class="icon" src="../../icons/icon-ok.png" wx:if="{{roleObj[item.code]}}"></image>
         </view>
       </view>
     </view>

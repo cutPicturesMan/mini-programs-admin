@@ -54,7 +54,7 @@
       "selectedIconPath": "icons/tabs-order-active.png"
     }, {
       "pagePath": "pages/my/my",
-      "text": "切换角色",
+      "text": "个人中心",
       "iconPath": "icons/tabs-my.png",
       "selectedIconPath": "icons/tabs-my-active.png"
     }]

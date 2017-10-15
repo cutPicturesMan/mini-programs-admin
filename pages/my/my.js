@@ -8,6 +8,8 @@ Page({
     userInfo: {},
     // 用户当前角色代码
     roleCode: '',
+    // 用户角色列表对象
+    roleObj: {},
     // 管理员角色列表
     ROLE,
     // 是否正在加载数据
@@ -41,10 +43,16 @@ Page({
       .then((res) => {
         // 如果用户审核通过(1)，则进入系统
         if (res.status.id == 1) {
+          let roleObj = {};
+          res.roles.forEach((item)=>{
+            roleObj[item.name] = true;
+          });
+
           this.setData({
             isLoaded: true,
             userInfo: res,
-            roleCode: app.roleCode
+            roleCode: app.roleCode,
+            roleObj
           });
         } else if (res.status.id == 2) {
           // 如果正在审核中(2)、则页面显示正在审核，不进入系统

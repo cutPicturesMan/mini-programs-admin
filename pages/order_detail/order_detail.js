@@ -5,6 +5,7 @@ import STATUS from '../../public/js/status.js';
 import utils from '../../public/js/utils.js';
 
 let app = getApp();
+let beginDateMillion = new Date().getTime() + (24 * 60 * 60 * 1000) * 2;
 
 Page({
   data: {
@@ -21,9 +22,19 @@ Page({
     // 备注框文字
     remarks: '',
     // 订单数据
-    item: {},
+    order: {},
+    // 物流方式列表
+    logisticList: [],
+    // 选中的物流方式
+    logisticIndex: '',
+    // 交货最早时间
+    beginDate: utils.formatDate(new Date(beginDateMillion), 'YYYY/MM/DD'),
+    // 交货日期
+    deliveryDate: '',
     // 数据是否加载完毕
     isLoaded: false,
+    // 物流方式是否加载完毕
+    isLogisticed: false,
     // 是否正在通过提交中
     isCanceling: false,
     // 是否正在拒绝提交中
@@ -31,6 +42,8 @@ Page({
   },
   // 获取列表数据
   getData (id) {
+    let { PENDING_SALEMAN, EXAMINE_MANAGER } = this.data;
+
     wx.showLoading();
 
     http.request({
@@ -38,25 +51,31 @@ Page({
     }).then((res) => {
       wx.hideLoading();
 
-      res.data.date = utils.formatDate(new Date(res.data.updatedAt), 'YYYY/MM/DD HH:mm:ss');
+      let order = res.data;
+      order.date = utils.formatDate(new Date(res.data.updatedAt), 'YYYY/MM/DD HH:mm:ss');
 
       if (res.errorCode === 200) {
         this.setData({
           totalPrice: res.data.offerTotal,
-          item: res.data,
+          order: order,
           isLoaded: true
         });
+
+        // 如果订单状态是业务员审核、经理审核，则需要去请求物流数据
+        if (order.status.type == PENDING_SALEMAN || order.status.type == EXAMINE_MANAGER) {
+          this.getlogisticList();
+        }
       }
     })
   },
   // 显示/隐藏新增备注框
   switchRemark: function () {
-    let { remarks, item, addToggle } = this.data;
+    let { remarks, order, addToggle } = this.data;
     let obj = {};
 
     // 如果是显示弹窗，则将订单的备注值赋值给全局的备注值
     if (!addToggle) {
-      obj.remarks = item.remarks;
+      obj.remarks = order.remarks;
     }
 
     // 更新数据
@@ -75,11 +94,11 @@ Page({
   },
   // 确定备注框
   confirmRemark () {
-    let { remarks, item } = this.data;
-    item.remarks = remarks;
+    let { remarks, order } = this.data;
+    order.remarks = remarks;
 
     this.setData({
-      item: item
+      order: order
     });
 
     this.switchRemark();
@@ -94,13 +113,46 @@ Page({
   inputQuantity (e) {
     let num = e.detail.value;
     let index = e.currentTarget.dataset.index;
-    let item = this.data.item;
+    let order = this.data.order;
 
-    item.orderItems[index].quantity = num;
+    order.orderItems[index].quantity = num;
 
     this.setData({
-      item
+      order
     });
+  },
+  // 获取物流方式列表
+  getlogisticList () {
+    let { order } = this.data;
+
+    http.request({
+      url: `${api.logistic_list}${order.id}`
+    }).then((res) => {
+      if (res.errorCode === 200) {
+        this.setData({
+          isLogisticed: true,
+          logisticList: res.data
+        });
+      } else {
+        // 获取失败，则提示
+        wx.showToast({
+          title: res.moreInfo,
+          image: '../../icons/close-circled.png'
+        })
+      }
+    })
+  },
+  // 选择物流方式
+  bindLogisticChange (e) {
+    this.setData({
+      logisticIndex: e.detail.value
+    })
+  },
+  // 选择交货日期
+  changeDeliveryDate (e) {
+    this.setData({
+      deliveryDate: e.detail.value
+    })
   },
 
   // 业务员取消订单模态框
@@ -146,16 +198,27 @@ Page({
     })
   },
   // 业务员提交
-  confirmOrder(){
-    let { totalPrice, item } = this.data;
+  confirmOrder () {
+    let { order, totalPrice, logisticList, logisticIndex, deliveryDate, isLogisticed } = this.data;
 
     try {
       // 如果价格未填写
       if (!totalPrice) {
         throw new Error('请填写商品总价');
       }
-
-      item.orderItems.forEach((item)=>{
+      // 如果价格未填写
+      if (!totalPrice) {
+        throw new Error('请填写商品总价');
+      }
+      // 未选择物流
+      if (logisticIndex == '') {
+        throw new Error('请选择物流方式');
+      }
+      // 未选择交货日期
+      if (!deliveryDate) {
+        throw new Error('请选择交货日期');
+      }
+      order.orderItems.forEach((item) => {
         if (!item.quantity) {
           throw new Error('请填写商品数量');
         }
@@ -175,23 +238,27 @@ Page({
     // 数据转化格式，然后提交
     let keys = [];
     let values = [];
-    item.orderItems.forEach((item, index)=>{
+    order.orderItems.forEach((item, index) => {
       keys.push(`skus[${index}].skuId`, `skus[${index}].num`);
       values.push(item.skuId, item.quantity);
     });
 
     let skus = {};
-    keys.forEach((item, index)=>{
+    keys.forEach((item, index) => {
       skus[item] = values[index];
     });
 
+    let fulFillType = logisticList[logisticIndex].type;
+
     wx.showLoading();
     http.request({
-      url: `${api.salesman_put_order}${item.id}`,
+      url: `${api.salesman_put_order}${order.id}`,
       method: 'POST',
       data: {
         price: totalPrice,
-        ...skus
+        ...skus,
+        fulFillType,
+        deliveryDate
       }
     }).then((res) => {
       wx.hideLoading();
@@ -244,11 +311,9 @@ Page({
       method: 'POST',
       data: {
         adopt: 0,
-        price: this.data.item.offerTotal
+        price: this.data.order.offerTotal
       }
     }).then((res) => {
-      wx.hideLoading();
-
       if (res.errorCode === 200) {
         wx.showToast({
           title: res.moreInfo
@@ -267,15 +332,32 @@ Page({
     })
   },
   // 经理通过
-  passOrder(e){
+  passOrder (e) {
     let { id } = e.currentTarget.dataset;
-    let { item, totalPrice } = this.data;
+    let { order, totalPrice, logisticList, logisticIndex, deliveryDate, isLogisticed } = this.data;
 
     try {
+      // 物流列表未加载完毕
+      if (!isLogisticed) {
+        throw new Error('正在加载配送方式中，请稍后');
+      }
       // 如果价格未填写
       if (!totalPrice) {
         throw new Error('请填写商品总价');
       }
+      // 未选择物流
+      if (logisticIndex == '') {
+        throw new Error('请选择物流方式');
+      }
+      // 未选择交货日期
+      if (!deliveryDate) {
+        throw new Error('请选择交货日期');
+      }
+      order.orderItems.forEach((item) => {
+        if (!item.quantity) {
+          throw new Error('请填写商品数量');
+        }
+      });
     } catch (e) {
       return wx.showToast({
         title: e.message,
@@ -291,15 +373,17 @@ Page({
     // 数据转化格式，然后提交
     let keys = [];
     let values = [];
-    item.orderItems.forEach((item, index)=>{
+    order.orderItems.forEach((item, index) => {
       keys.push(`skus[${index}].skuId`, `skus[${index}].num`);
       values.push(item.skuId, item.quantity);
     });
 
     let skus = {};
-    keys.forEach((item, index)=>{
+    keys.forEach((item, index) => {
       skus[item] = values[index];
     });
+
+    let fulFillType = logisticList[logisticIndex].type;
 
     wx.showLoading();
     http.request({
@@ -308,11 +392,11 @@ Page({
       data: {
         adopt: 1,
         price: totalPrice,
-        ...skus
+        ...skus,
+        fulFillType,
+        deliveryDate
       }
     }).then((res) => {
-      wx.hideLoading();
-
       // 提交成功
       if (res.errorCode === 200) {
         wx.showToast({
@@ -358,8 +442,6 @@ Page({
         adopt: 0
       }
     }).then((res) => {
-      wx.hideLoading();
-
       if (res.errorCode === 200) {
         wx.showToast({
           title: res.moreInfo
@@ -378,9 +460,9 @@ Page({
     })
   },
   // 财务通过
-  financePass(e){
+  financePass (e) {
     let { id } = e.currentTarget.dataset;
-    let { item, totalPrice } = this.data;
+    let { order, totalPrice } = this.data;
 
     try {
       // 如果价格未填写
@@ -407,8 +489,6 @@ Page({
         adopt: 1
       }
     }).then((res) => {
-      wx.hideLoading();
-
       // 提交成功
       if (res.errorCode === 200) {
         wx.showToast({
@@ -431,8 +511,8 @@ Page({
   },
 
   // 仓管通过
-  storePass(e){
-    let { item, totalPrice } = this.data;
+  storePass (e) {
+    let { order, totalPrice } = this.data;
 
     this.setData({
       isSubmit: true
@@ -440,11 +520,9 @@ Page({
 
     wx.showLoading();
     http.request({
-      url: `${api.warehouse_put_order}${item.id}`,
+      url: `${api.warehouse_put_order}${order.id}`,
       method: 'POST'
     }).then((res) => {
-      wx.hideLoading();
-
       // 提交成功
       if (res.errorCode === 200) {
         wx.showToast({
@@ -475,12 +553,6 @@ Page({
     // 如果订单id存在，则请求数据
     if (params.id) {
       this.getData(params.id);
-      // 获取用户的信息
-      app.getUserInfo().then((res) => {
-        this.setData({
-          role: res.role
-        });
-      });
     } else {
       wx.showToast({
         title: '订单id不存在',
