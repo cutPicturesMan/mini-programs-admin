@@ -1936,8 +1936,6 @@
   height: 78rpx;
   display: flex;
   align-items: center;
-  color: #757575;
-  font-size: 20rpx;
   background-color: #fff;
   position: relative; }
   .label-act.bb {
@@ -1960,6 +1958,9 @@
       height: 40rpx; }
   .label-act .arrow {
     margin-right: 23rpx; }
+    .label-act .arrow .icon {
+      width: 40rpx;
+      height: 40rpx; }
 
 .select-label {
   height: 107rpx;
@@ -2015,6 +2016,7 @@
 
 page {
   box-sizing: border-box;
-  background: #f2f2f2; }
+  background: #f2f2f2;
+  font-size: 24rpx; }
 
 /*# sourceMappingURL=app.wxss.map */

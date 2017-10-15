@@ -1,6 +1,6 @@
 import http from '../../public/js/http.js';
 import api from '../../public/js/api.js';
-import ROLE from '../../public/js/role.js';
+import { ROLE_LIST } from '../../public/js/role.js';
 import STATUS from '../../public/js/status.js';
 import utils from '../../public/js/utils.js';
 
@@ -8,8 +8,8 @@ let app = getApp();
 
 Page({
   data: {
-    // 管理员角色常量
-    ...ROLE,
+    // 管理员角色列表
+    ...ROLE_LIST,
     // 订单状态常量
     ...STATUS,
     // 备注的开关

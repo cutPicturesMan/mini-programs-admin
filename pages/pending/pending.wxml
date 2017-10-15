@@ -1,7 +1,7 @@
 <!--如果用户角色数据请求完毕-->
-<block wx:if="{{role.status}}">
+<block wx:if="{{userInfo.status}}">
   <!--如果用户审核通过(1)，则进入系统-->
-  <block wx:if="{{role.status.id == 1}}">
+  <block wx:if="{{userInfo.status.id == 1}}">
     <block wx:if="{{isLoaded}}">
       <!--如果有数据-->
       <block wx:if="{{list.length !== 0}}">
@@ -31,11 +31,11 @@
                             value="{{item.totalPrice}}"
                             data-index="{{index}}"
                             bindinput="inputTotalPrice"
-                            disabled="{{role === ROLE_FINANCE ? true : false}}"/>
+                            disabled="{{item.status.type === PENDING_SALEMAN ? true : false}}"/>
               </view>
             </view>
 
-            <block wx:if="{{role === ROLE_FINANCE || role === ROLE_WAREHOUSE}}">
+            <block wx:if="{{item.status.type === PAID || item.status.type === EXAMINE_FINANCE}}">
               <view class="label-line mlr20">
                 <view class="l mr20">备注信息</view>
                 <view class="r">
@@ -54,7 +54,7 @@
             </block>
 
             <!--业务员待处理-->
-            <block wx:if="{{role === ROLE_SALESMAN}}">
+            <block wx:if="{{item.status.type === PENDING_SALEMAN}}">
               <view class="btns-prompt">
                 <view class="each-item cancel" data-id="{{item.id}}" data-index="{{index}}" catchtap="cancelOrderPopup">取消订单</view>
                 <view class="each-item confirm" data-id="{{item.id}}" data-index="{{index}}" catchtap="confirmOrder">提交订单</view>
@@ -62,7 +62,7 @@
             </block>
 
             <!--经理待处理-->
-            <block wx:if="{{role === ROLE_MANAGER}}">
+            <block wx:if="{{item.status.type === EXAMINE_MANAGER}}">
               <view class="btns-prompt">
                 <view class="each-item cancel" data-type="{{0}}" data-id="{{item.id}}" data-index="{{index}}" catchtap="rejectOrderPopup">拒绝</view>
                 <view class="each-item confirm" data-type="{{0}}" data-id="{{item.id}}" data-index="{{index}}" catchtap="passOrder">通过</view>
@@ -70,7 +70,7 @@
             </block>
 
             <!--财务待处理-->
-            <block wx:if="{{role === ROLE_FINANCE}}">
+            <block wx:if="{{item.status.type === ROLE_FINANCE}}">
               <view class="btns-prompt">
                 <view class="each-item cancel" data-type="{{0}}" data-id="{{item.id}}" data-index="{{index}}" catchtap="financeRejectPopup">拒绝</view>
                 <view class="each-item confirm" data-type="{{0}}" data-id="{{item.id}}" data-index="{{index}}" catchtap="financePass">通过</view>
@@ -91,7 +91,7 @@
   <block wx:else>
     <view class="empty-data">
       <!--如果正在审核中(2)、则页面显示正在审核，不进入系统-->
-      <view class="p20 tac fs32 text-stable" wx:if="{{role.status.id == 2}}">您的角色正在审核中</view>
+      <view class="p20 tac fs32 text-stable" wx:if="{{userInfo.status.id == 2}}">您的角色正在审核中</view>
       <!--如果用户未审核(-1)、审核拒绝(0)，则提示跳转信息申请页-->
       <block wx:else>
         <view class="p20 tac fs32 text-stable">对不起，您暂未注册，请扫码注册</view>

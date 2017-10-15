@@ -247,8 +247,6 @@
   height: 78rpx;
   display: flex;
   align-items: center;
-  color: #757575;
-  font-size: 20rpx;
   background-color: #fff;
   position: relative;
   &.bb{
@@ -284,6 +282,10 @@
   }
   .arrow{
     margin-right: 23rpx;
+    .icon{
+      width: 40rpx;
+      height: 40rpx;
+    }
   }
 }
 .select-label{

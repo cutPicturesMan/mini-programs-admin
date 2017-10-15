@@ -1,16 +1,17 @@
 import http from '../../public/js/http.js';
 import api from '../../public/js/api.js';
-import ROLE from '../../public/js/role.js';
+import { ROLE_LIST } from '../../public/js/role.js';
 import utils from '../../public/js/utils.js';
-
 let app = getApp();
 
 Page({
   data: {
-    // 管理员角色常量
-    ...ROLE,
-    // 用户角色
-    role: '',
+    // 用户信息
+    userInfo: {},
+    // 用户当前角色代码
+    roleCode: '',
+    // 管理员角色列表
+    ...ROLE_LIST,
     // 列表数据
     list: [],
     // 数据是否加载完毕
@@ -48,6 +49,11 @@ Page({
       .then((res) => {
         // 如果用户审核通过(1)，则进入系统
         if (res.status.id == 1) {
+          this.setData({
+            userInfo: res,
+            roleCode: app.roleCode
+          });
+
           this.getData();
         } else if (res.status.id == 2) {
           // 如果正在审核中(2)、则页面显示正在审核，不进入系统
@@ -65,10 +71,6 @@ Page({
             }
           })
         }
-
-        this.setData({
-          role: res
-        });
       }, () => {
         // 请求失败
         wx.showModal({

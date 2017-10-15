@@ -12,7 +12,7 @@
 	"projectname": "%E7%84%99%E4%BA%91%E8%AE%A2%E8%B4%A7",
 	"condition": {
 		"weapp": {
-			"current": 0,
+			"current": 3,
 			"list": [
 				{
 					"id": 0,
@@ -25,6 +25,17 @@
 					"name": "操作面板",
 					"pathName": "pages/opera/opera",
 					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "切换角色",
+					"pathName": "pages/my/my",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "待处理",
+					"pathName": "pages/pending/pending"
 				}
 			]
 		},
