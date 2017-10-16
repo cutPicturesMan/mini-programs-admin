@@ -41,9 +41,9 @@ App({
             this.roleCode = userInfo.roles.length != 0 ? userInfo.roles[0].name : '';
             resolve(res.data);
           } else {
-            wx.showToast({
-              title: '用户数据获取失败',
-              image: '../../icons/close-circled.png'
+            wx.showModal({
+              title: '提示',
+              content: '用户数据获取失败，请重新进入小程序'
             })
             reject(res.data);
           }
