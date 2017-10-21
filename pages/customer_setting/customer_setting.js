@@ -1,14 +1,22 @@
 import http from '../../public/js/http.js';
 import api from '../../public/js/api.js';
 
+let days = [];
+
+for(let i = 1; i <= 31; i++){
+  days.push(i);
+}
+
 Page({
   data: {
     id: 0,
     avatar: '',
     nick: '',
-    atTime: 0,
+    dayIndex: 0,
     name: '',
     scale: 0,
+    // 具体天数
+    days,
     // 还款方式，默认第一种
     repaymentType: 0,
     // 数据是否加载完毕
@@ -17,7 +25,7 @@ Page({
     isSubmit: false
   },
   // 处理客户折扣
-  bindScaleInput (e) {
+  changeDiscount (e) {
     this.setData({
       scale: e.detail.value
     })
@@ -25,7 +33,7 @@ Page({
   // 处理账期还款时间
   bindAtTimeInput (e) {
     this.setData({
-      atTime: e.detail.value
+      dayIndex: e.detail.value
     })
   },
   // 选择还款方式
@@ -38,7 +46,7 @@ Page({
   },
   // 提交数据
   submit () {
-    let { id, scale, atTime, isSubmit } = this.data;
+    let { id, scale, days, dayIndex, isSubmit } = this.data;
 
     // 防止重复提交
     if (isSubmit) {
@@ -53,10 +61,6 @@ Page({
       // 如果客户折扣未填写
       if (!scale) {
         throw new Error('客户折扣未填写');
-      }
-      // 如果账期还款时间未填写
-      if (!atTime) {
-        throw new Error('还款时间未填写');
       }
     } catch (e) {
       return wx.showToast({
@@ -75,8 +79,8 @@ Page({
       url: `${api.customer_setting}${id}`,
       method: 'PUT',
       data: {
-        scale,
-        atTime
+        scale: scale/100,
+        atTime: days[dayIndex]
       }
     }).then((res) => {
       wx.hideLoading();
@@ -86,11 +90,10 @@ Page({
         wx.showToast({
           title: res.moreInfo
         })
-        setTimeout(() => {
-          wx.navigateBack({
-            delta: 1
-          })
-        }, 1500)
+
+        this.setData({
+          isSubmit: false
+        });
       } else {
         // 提交失败，则提示
         wx.showToast({
@@ -121,8 +124,8 @@ Page({
           avatar: res.data.avatar,
           nick: res.data.nick,
           name: res.data.name,
-          scale: res.data.scale,
-          atTime: res.data.data
+          scale: res.data.scale * 100,
+          dayIndex: res.data.data - 1
         });
       }
     })

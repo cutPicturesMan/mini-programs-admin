@@ -20,8 +20,12 @@
                     订单状态：<text class="text-energized">{{item.status.friendlyType}}</text>
                   </view>
                   <view class="p">商品名称：{{item.name}}</view>
-                  <view class="p">订单小计：{{item.amount}}</view>
-                  <view class="p">客户修改的价格：{{item.offerTotal}}</view>
+                  <view class="p">订单总计：￥{{item.amount}}</view>
+                  <view class="p">
+                    优惠后价格：
+                    <block wx:if="{{item.offerTotal}}">￥{{item.offerTotal}}</block>
+                    <block wx:else>暂无优惠</block>
+                  </view>
                 </view>
               </view>
             </navigator>
@@ -32,14 +36,10 @@
             <!--</view>-->
             <!--</view>-->
             <view class="label-line bb-e5 ml20">
-              <view class="l mr20">
-                商品总价：<text class="text-energized">{{item.totalPrice}}</text>
-              </view>
               <view class="r mr20">
-                业务员：{{item.salesman || '暂无'}}
+                商品总价：<text class="text-energized">￥{{item.totalPrice}}</text>
               </view>
             </view>
-
             <view class="label-line ml20">
               <view class="l mr20">备注信息</view>
               <view class="r mr20">

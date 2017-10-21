@@ -27,9 +27,6 @@ Page({
           });
 
           this.setData({
-            isLoaded: true,
-            userInfo: res,
-            roleCode: app.roleCode,
             roleObj
           });
         } else if (res.status.id == 2) {
@@ -41,6 +38,12 @@ Page({
             content: '对不起，您还未注册，请扫码注册'
           })
         }
+
+        // 不论status.id为什么状态，都要设置当前页面的用户信息
+        this.setData({
+          userInfo: res,
+          roleCode: app.roleCode
+        });
       }, () => {});
   }
 })

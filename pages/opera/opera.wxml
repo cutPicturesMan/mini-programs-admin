@@ -23,12 +23,12 @@
         </view>
       </view>
       <image class="h-line" src="../../icons/h-line.jpg"></image>
-      <navigator class="item" url="/pages/add_customer/add_customer" bindtap="addCustomer">
+      <view class="item" bindtap="addCustomer">
         <view class="circle small">
           <view class="icon iconfont icon-xinzengyonghu"></view>
           <view class="title">新增客户</view>
         </view>
-      </navigator>
+      </view>
     </view>
     <!--经理-->
     <view class="opera-panel manage" wx:if="{{roleObj[ROLE_MANAGER]}}">
@@ -67,25 +67,25 @@
     <view class="opera-panel manage" wx:if="{{roleObj[ROLE_FINANCE]}}">
       <image class="v-line" src="../../icons/v-line.jpg"></image>
       <image class="h-line" src="../../icons/h-line.jpg"></image>
-      <navigator class="item" url="/pages/finance_collect/finance_collect">
-        <view class="circle">
-          <view class="icon iconfont icon-icon"></view>
-          <view class="title">已收款</view>
-        </view>
-      </navigator>
-      <navigator class="item" url="/pages/finance_uncollect/finance_uncollect">
-        <view class="circle">
-          <view class="icon iconfont icon-shouqiankuan"></view>
-          <view class="title">未收款</view>
-        </view>
-      </navigator>
-      <navigator class="item" url="/pages/finance_account/finance_account">
+      <!--<navigator class="item" url="/pages/finance_collect/finance_collect">-->
+        <!--<view class="circle">-->
+          <!--<view class="icon iconfont icon-icon"></view>-->
+          <!--<view class="title">已收款</view>-->
+        <!--</view>-->
+      <!--</navigator>-->
+      <!--<navigator class="item" url="/pages/finance_uncollect/finance_uncollect">-->
+        <!--<view class="circle">-->
+          <!--<view class="icon iconfont icon-shouqiankuan"></view>-->
+          <!--<view class="title">未收款</view>-->
+        <!--</view>-->
+      <!--</navigator>-->
+      <navigator class="item" url="/pages/finance_account/finance_account?type=0">
         <view class="circle">
           <view class="icon iconfont icon-yijieshu"></view>
-          <view class="title">账期已结</view>
+          <view class="title">账期列表</view>
         </view>
       </navigator>
-      <navigator class="item" url="/pages/finance_account/finance_account">
+      <navigator class="item" url="/pages/finance_account/finance_account?type=1">
         <view class="circle">
           <view class="icon iconfont icon-weijiechaoshenxian"></view>
           <view class="title">账期未结算</view>
@@ -111,8 +111,8 @@
 
     <view class="add-customer" wx:if="{{addCustomerToggle}}" bindtap="addCustomer">
       <view class="content animated {{addCustomerToggle ? 'bounceIn' : 'bounceOut'}}">
-        <image class="image" src="https://www.byunfu.com/admin/wx/code?page='pages/my/my'"></image>
-        <view class="title tac">将二维码分享出去</view>
+        <image class="image" src="{{twoCodeUrl}}" catchtap="viewTwoCode"></image>
+        <view class="title tac">点击查看，并长按保存</view>
       </view>
     </view>
   </block>

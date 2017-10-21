@@ -10,31 +10,31 @@ Page({
     userInfo: {},
     // 用户当前角色代码
     roleCode: '',
+    // 二维码地址
+    twoCodeUrl: '',
     // 管理员角色列表
     ...ROLE_LIST,
+    // 数据是否加载完毕
+    isLoaded: false,
     // 新增客户的开关
     addCustomerToggle: false,
   },
   // 添加客户
   addCustomer () {
+    let { userInfo } = this.data;
+    let scene = encodeURIComponent(`adminId=${userInfo.id}`);
+
     this.setData({
+      twoCodeUrl: `${api.site_twocode}?scene=${scene}`,
       addCustomerToggle: !this.data.addCustomerToggle
     });
+  },
+  // 查看二维码
+  viewTwoCode () {
+    let { twoCodeUrl } = this.data;
 
-    http.request({
-      url: api.site_twocode,
-      data: {
-        scene: 'adminId=2',
-        width: 430,
-        auto_color: false,
-        r: '0',
-        g: '0',
-        b: '0'
-      },
-      success: function (res) {
-        console.log(res.data);
-
-      }
+    wx.previewImage({
+      urls: [twoCodeUrl]
     })
   },
   // 显示页面
@@ -50,8 +50,6 @@ Page({
           });
 
           this.setData({
-            userInfo: res,
-            roleCode: app.roleCode,
             roleObj
           });
         } else if (res.status.id == 2) {
@@ -63,6 +61,12 @@ Page({
             content: '对不起，您还未注册，请扫码注册'
           })
         }
+
+        // 不论status.id为什么状态，都要设置当前页面的用户信息
+        this.setData({
+          userInfo: res,
+          roleCode: app.roleCode
+        });
       }, () => {});
   }
 })

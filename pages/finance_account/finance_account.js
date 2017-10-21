@@ -3,17 +3,21 @@ import api from '../../public/js/api.js';
 
 Page({
   data: {
-    // 订单列表
+    // 账期状态，0为获取全部账期，1为获取未结算账期
+    type: 0,
+    // 账期列表
     list: [],
     // 数据是否加载完毕
     isLoaded: false
   },
   // 获取列表数据
   getData () {
+    let { type } = this.data;
     wx.showLoading();
 
     http.request({
-      url: api.finance_uncollect,
+      url: api.finance_collect,
+      type
     }).then((res) => {
       wx.hideLoading();
 
@@ -25,7 +29,13 @@ Page({
       }
     })
   },
-  onLoad () {
+  onLoad (params) {
+    let type = params.type ? params.type : 0;
+
+    this.setData({
+      type
+    });
+
     this.getData();
   }
 })

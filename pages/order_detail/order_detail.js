@@ -28,7 +28,7 @@ Page({
     // 选中的物流方式
     logisticIndex: '',
     // 交货最早时间
-    beginDate: utils.formatDate(new Date(beginDateMillion), 'YYYY/MM/DD'),
+    beginDate: utils.formatDate(new Date(beginDateMillion), 'YYYY-MM-DD'),
     // 交货日期
     deliveryDate: '',
     // 数据是否加载完毕
@@ -52,11 +52,13 @@ Page({
       wx.hideLoading();
 
       let order = res.data;
-      order.date = utils.formatDate(new Date(res.data.updatedAt), 'YYYY/MM/DD HH:mm:ss');
+      order.date = utils.formatDate(new Date(order.updatedAt), 'YYYY-MM-DD HH:mm:ss');
+      let deliveryDate = utils.formatDate(order.deliveryDate ? new Date(order.deliveryDate) : undefined, 'YYYY-MM-DD');
 
       if (res.errorCode === 200) {
         this.setData({
-          totalPrice: res.data.offerTotal,
+          deliveryDate,
+          totalPrice: order.offerTotal || order.amount,
           order: order,
           isLoaded: true
         });
@@ -129,9 +131,24 @@ Page({
       url: `${api.logistic_list}${order.id}`
     }).then((res) => {
       if (res.errorCode === 200) {
+        let logisticList = res.data;
+        let logisticIndex = 0;
+
+        if(order.orderFulFillType){
+          logisticList.some((item, index) => {
+            if(item.type == order.orderFulFillType.type){
+              logisticIndex = index;
+              return true;
+            } else {
+              return false;
+            }
+          })
+        }
+
         this.setData({
           isLogisticed: true,
-          logisticList: res.data
+          logisticIndex,
+          logisticList
         });
       } else {
         // 获取失败，则提示
@@ -202,17 +219,21 @@ Page({
     let { order, totalPrice, logisticList, logisticIndex, deliveryDate, isLogisticed } = this.data;
 
     try {
-      // 如果价格未填写
-      if (!totalPrice) {
-        throw new Error('请填写商品总价');
+      // 物流列表未加载完毕
+      if (!isLogisticed) {
+        throw new Error('正在加载配送方式中，请稍后');
       }
       // 如果价格未填写
       if (!totalPrice) {
         throw new Error('请填写商品总价');
       }
-      // 未选择物流
-      if (logisticIndex == '') {
-        throw new Error('请选择物流方式');
+      // 如果价格未填写
+      if (!totalPrice) {
+        throw new Error('请填写商品总价');
+      }
+      // 无物流
+      if (logisticList.length == 0) {
+        throw new Error('暂无可选物流方式，无法下单');
       }
       // 未选择交货日期
       if (!deliveryDate) {
@@ -345,9 +366,9 @@ Page({
       if (!totalPrice) {
         throw new Error('请填写商品总价');
       }
-      // 未选择物流
-      if (logisticIndex == '') {
-        throw new Error('请选择物流方式');
+      // 无物流
+      if (logisticList.length == 0) {
+        throw new Error('暂无可选物流方式，无法下单');
       }
       // 未选择交货日期
       if (!deliveryDate) {

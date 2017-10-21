@@ -48,7 +48,9 @@
     bottom: -1rpx; }
 
 .container {
-  background-color: #fff;
   overflow-x: hidden; }
+
+.label-item {
+  background-color: #fff; }
 
 /*# sourceMappingURL=finance_account.wxss.map */

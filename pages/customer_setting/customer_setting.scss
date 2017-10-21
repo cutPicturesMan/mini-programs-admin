@@ -9,6 +9,7 @@ page{
 }
 
 .line-cell{
+  line-height:40rpx;
   min-height: 100rpx;
   font-size: 28rpx;
   padding: 15rpx;
@@ -16,8 +17,15 @@ page{
   box-sizing: border-box;
   display: flex;
   align-items: center;
-  input{
+  .tip{
+    font-size:20rpx;
+    line-height:1;
+    color: #aaa;
+  }
+  .date-picker{
+    width: 140rpx;
     height: 68rpx;
+    line-height:68rpx;
     border: 2rpx solid #eee;
     text-align: center;
     display: inline-block;
@@ -25,8 +33,8 @@ page{
 }
 
 .customer-discount{
-  input {
-    width: 140rpx;
+  slider {
+    width: 100%;
   }
 }
 

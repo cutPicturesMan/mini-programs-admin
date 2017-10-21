@@ -52,10 +52,6 @@ Page({
       .then((res) => {
         // 如果用户审核通过(1)，则进入系统
         if (res.status.id == 1) {
-          this.setData({
-            userInfo: res,
-            roleCode: app.roleCode
-          });
           this.getData();
         } else if (res.status.id == 2) {
           // 如果正在审核中(2)、则页面显示正在审核，不进入系统
@@ -66,6 +62,12 @@ Page({
             content: '对不起，您还未注册，请扫码注册'
           })
         }
+
+        // 不论status.id为什么状态，都要设置当前页面的用户信息
+        this.setData({
+          userInfo: res,
+          roleCode: app.roleCode
+        });
       }, () => {});
   }
 })

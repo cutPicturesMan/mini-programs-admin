@@ -49,6 +49,18 @@
 					"name": "待业务员处理",
 					"pathName": "pages/order_detail/order_detail",
 					"query": "id=8"
+				},
+				{
+					"id": -1,
+					"name": "客户设置",
+					"pathName": "pages/customer_setting/customer_setting",
+					"query": "id=2"
+				},
+				{
+					"id": -1,
+					"name": "账期列表",
+					"pathName": "pages/finance_account/finance_account",
+					"query": ""
 				}
 			]
 		},

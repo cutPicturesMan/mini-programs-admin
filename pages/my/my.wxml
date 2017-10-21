@@ -2,7 +2,7 @@
 <block wx:if="{{userInfo.status}}">
   <!--如果用户审核通过(1)，则进入系统-->
   <block wx:if="{{userInfo.status.id == 1}}">
-    <view class="user-info bb-e5" wx:if="{{isLoaded}}">
+    <view class="user-info bb-e5">
       <image class="img" src="{{userInfo.avatarUrl}}"></image>
       <view class="title">
         昵称：{{userInfo.nickName}}

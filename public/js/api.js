@@ -31,8 +31,8 @@ let api = {
   // 仓管
   stock: '/api/product/stock/',
 
-  // 财务 账期未结
-  finance_uncollect: '/api/finance',
+  // 财务 账期列表
+  finance_collect: '/api/finance/',
 
 
   // 登录

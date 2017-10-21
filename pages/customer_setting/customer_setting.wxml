@@ -4,9 +4,12 @@
     <view class="title">昵称：{{nick}}</view>
   </view>
   <view class="customer-discount line-cell bb-e5 mt18">
-    <view class="cell-title">客户折扣</view>
+    <view class="cell-title">
+      <view>客户折扣</view>
+      <view class="tip">(80即为8折)</view>
+    </view>
     <view class="cell-content">
-      <input class="text-energized mr10" type="text" value="{{scale}}" placeholder="请输入" bindinput="bindScaleInput"/> 折
+      <slider bindchange="changeDiscount" value="{{scale}}" show-value/>
     </view>
   </view>
   <view class="customer-pay">
@@ -18,7 +21,13 @@
           data-type="{{0}}"
           bindtap="selectRepayment">
       <view class="cell-title pl35">
-        按月结算（每月 <input class="vam text-energized" type="number" value="{{atTime}}" placeholder="请输入" bindinput="bindAtTimeInput"/> 号结算）
+        按月结算（每月
+        <picker class="date-picker vam text-energized"
+                range="{{days}}"
+                value="{{dayIndex}}"
+                bindchange="bindAtTimeInput">
+            {{days[dayIndex]}}
+        </picker> 号结算）
       </view>
       <view class="cell-content">
         <view class="icon iconfont {{repaymentType === 0 ? 'icon-iconquanxuananniu text-energized' : 'icon-xuanze'}}"></view>

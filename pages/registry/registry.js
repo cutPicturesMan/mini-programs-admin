@@ -1,6 +1,7 @@
 import http from '../../public/js/http.js';
 import api from '../../public/js/api.js';
 import Auth from '../../public/js/auth.js';
+import utils from '../../public/js/utils.js';
 
 let app = getApp();
 let auth = new Auth();
@@ -140,28 +141,18 @@ Page({
       }
     });
   },
-  onLoad (options) {
+  onLoad (params) {
     auth.login()
       .then(() => {
-        // 二维码带的查询字符串
-        let scene = decodeURIComponent(options.scene);
+        // 如果是通过扫码进来的
+        if(params.scene){
+          let scene = utils.parseQueryString(decodeURIComponent(params.scene));
+          let adminId = 0;
+          scene.adminId && (adminId = scene.adminId);
 
-        // 这是测试时使用查询字符串来模拟扫码的scene参数
-        // 正式上线时要注释掉，替换成下面的代码
-        // if (options.adminId != undefined) {
-        //   this.setData({
-        //     adminId: options.adminId
-        //   });
-        //
-        //   this.getUserInfo();
-        // } else {
-        // 正式上线代码
-        // 如果扫码正常
-        if (scene.adminId != undefined) {
           this.setData({
-            adminId: scene.adminId
+            adminId
           });
-
           this.getUserInfo();
         } else {
           // 如果扫码出现错误，查询字符串中没有经理的id，则提示

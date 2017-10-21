@@ -1,7 +1,5 @@
 // 管理端小程序
 // http://ovweugbfd.bkt.clouddn.com/admin-test.jpg
-// appid: wxca2c78f63ed513c5
-// appsecret: 176e04d9001b35e8d264dd6c7e8b0d19
 import http from './public/js/http.js';
 import api from './public/js/api.js';
 
@@ -9,12 +7,12 @@ App({
   // 用户当前角色代码
   roleCode: '',
   // 用户整体信息
-  userInfo: {},
+  userInfo: null,
   // 获取用户信息，返回一个promise
   getUserInfo () {
     let p = new Promise((resolve, reject) => {
       // 如果还未获取用户角色，则请求并设置
-      if (!this.userInfo.id) {
+      if (!this.userInfo) {
         wx.showLoading();
 
         http.request({
