@@ -5,7 +5,7 @@ import STATUS from '../../public/js/status.js';
 import utils from '../../public/js/utils.js';
 
 let app = getApp();
-let beginDateMillion = new Date().getTime() + (24 * 60 * 60 * 1000) * 2;
+let beginDateMillion = new Date().getTime();
 
 Page({
   data: {
@@ -108,7 +108,7 @@ Page({
   // 输入总价
   inputTotalPrice (e) {
     this.setData({
-      totalPrice: e.detail.value
+      totalPrice: parseInt(e.detail.value)
     });
   },
   // 输入数量
@@ -216,7 +216,7 @@ Page({
   },
   // 业务员提交
   confirmOrder () {
-    let { order, totalPrice, logisticList, logisticIndex, deliveryDate, isLogisticed } = this.data;
+    let { order, totalPrice, remarks, logisticList, logisticIndex, deliveryDate, isLogisticed } = this.data;
 
     try {
       // 物流列表未加载完毕
@@ -279,7 +279,8 @@ Page({
         price: totalPrice,
         ...skus,
         fulFillType,
-        deliveryDate
+        deliveryDate,
+        remarks
       }
     }).then((res) => {
       wx.hideLoading();
@@ -355,7 +356,7 @@ Page({
   // 经理通过
   passOrder (e) {
     let { id } = e.currentTarget.dataset;
-    let { order, totalPrice, logisticList, logisticIndex, deliveryDate, isLogisticed } = this.data;
+    let { order, totalPrice, remarks, logisticList, logisticIndex, deliveryDate, isLogisticed } = this.data;
 
     try {
       // 物流列表未加载完毕
@@ -415,7 +416,8 @@ Page({
         price: totalPrice,
         ...skus,
         fulFillType,
-        deliveryDate
+        deliveryDate,
+        remarks
       }
     }).then((res) => {
       // 提交成功

@@ -159,7 +159,7 @@ page {
     margin-left: -267.5rpx; }
   .opera-panel.manage .item {
     width: 50%;
-    height: 495rpx;
+    height: 300rpx;
     display: flex;
     justify-content: center;
     align-items: center; }

@@ -125,7 +125,7 @@ Page({
           nick: res.data.nick,
           name: res.data.name,
           scale: res.data.scale * 100,
-          dayIndex: res.data.data - 1
+          dayIndex: (res.data.data > 0) ? (res.data.data - 1) : 0
         });
       }
     })

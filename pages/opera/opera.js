@@ -17,16 +17,25 @@ Page({
     // 数据是否加载完毕
     isLoaded: false,
     // 新增客户的开关
-    addCustomerToggle: false,
+    addUserToggle: false,
   },
-  // 添加客户
-  addCustomer () {
+  // 添加用户
+  // 1表示新增客户，生成的二维码是客户端的
+  // 2表示新增业务员，生成的二维码是管理端的
+  addUser (type = 1) {
     let { userInfo } = this.data;
     let scene = encodeURIComponent(`adminId=${userInfo.id}`);
+    let twoCodeUrl = '';
+
+    if(type == 1){
+      twoCodeUrl = `${api.site_twocode}?scene=${scene}`
+    } else {
+      twoCodeUrl = `${api.admin_twocode}?scene=${scene}`
+    }
 
     this.setData({
-      twoCodeUrl: `${api.site_twocode}?scene=${scene}`,
-      addCustomerToggle: !this.data.addCustomerToggle
+      twoCodeUrl,
+      addUserToggle: !this.data.addUserToggle
     });
   },
   // 查看二维码

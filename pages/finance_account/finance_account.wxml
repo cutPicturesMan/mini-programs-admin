@@ -2,7 +2,7 @@
   <!--有数据的情况-->
   <block wx:if="{{list.length !== 0}}">
     <view class="container">
-      <navigator class="label-item bb-e5 mt18"
+      <view class="label-item bb-e5 mt18"
                  url="/pages/finance_account_detail/finance_account_detail?id={{item.id}}"
                  wx:for="{{list}}"
                  wx:key="{{index}}">
@@ -20,7 +20,7 @@
           <view class="info">账期是否可用：{{item.cycleStatus ? '是' : '否'}}</view>
           <view class="info">还款日期：每月{{item.cycleEndTs}}号</view>
         </view>
-      </navigator>
+      </view>
     </view>
   </block>
   <!--无数据的情况-->

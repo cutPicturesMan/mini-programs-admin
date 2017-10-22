@@ -1,6 +1,8 @@
 import http from '../../public/js/http.js';
 import api from '../../public/js/api.js';
 
+let app = getApp();
+
 Page({
   data: {
     // 客户列表
@@ -127,6 +129,24 @@ Page({
         setTimeout(() => {
           this.getData();
         }, 1500);
+      }
+    })
+  },
+  // 代下单
+  replaceOrder (e) {
+    let { id } = e.currentTarget.dataset;
+
+    wx.showModal({
+      title: '提示',
+      content: '确定要替这位客户下单吗？',
+      success: (res) => {
+        if (res.confirm) {
+          wx.navigateToMiniProgram({
+            appId: 'wx2e4d4fbd70affcb6',
+            path: `pages/index/index?customerId=${id}&adminId=${app.userInfo.id}`,
+            envVersion: 'develop'
+          })
+        }
       }
     })
   },

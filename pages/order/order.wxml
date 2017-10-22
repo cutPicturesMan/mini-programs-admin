@@ -43,7 +43,7 @@
             <view class="label-line ml20">
               <view class="l mr20">备注信息</view>
               <view class="r mr20">
-                {{item.remark || '暂无'}}
+                {{item.remarks || '暂无'}}
               </view>
             </view>
           </view>

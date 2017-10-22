@@ -6,50 +6,24 @@
       <!--<image class="icon" src="../../icons/icon-horn.png"></image>-->
       <!--<view class="text">灵魂在刘德华业务员处下单成功</view>-->
     <!--</view>-->
-
-    <!--业务员-->
-    <view class="opera-panel agent" wx:if="{{roleObj[ROLE_SALESMAN]}}">
-      <navigator class="item" url="/pages/customer/customer">
-        <view class="circle small">
+    <!--经理-->
+    <view class="opera-panel manage">
+      <navigator class="item" url="/pages/customer/customer" wx:if="{{roleObj[ROLE_SALESMAN] || roleObj[ROLE_MANAGER]}}">
+        <view class="circle">
           <view class="icon iconfont icon-people"></view>
           <view class="title">客户列表</view>
         </view>
       </navigator>
-      <!--<image class="h-line" src="../../icons/h-line.jpg"></image>-->
-      <!--<view class="item">-->
-        <!--<view class="circle big">-->
-          <!--<view class="icon iconfont icon-chuangjian"></view>-->
-          <!--<view class="title">创建订单</view>-->
-        <!--</view>-->
-      <!--</view>-->
-      <image class="h-line" src="../../icons/h-line.jpg"></image>
-      <view class="item" bindtap="addCustomer">
-        <view class="circle small">
+      <view class="item" bindtap="addUser" wx:if="{{roleObj[ROLE_SALESMAN] || roleObj[ROLE_MANAGER]}}">
+        <view class="circle">
           <view class="icon iconfont icon-xinzengyonghu"></view>
           <view class="title">新增客户</view>
         </view>
       </view>
-    </view>
-    <!--经理-->
-    <view class="opera-panel manage" wx:if="{{roleObj[ROLE_MANAGER]}}">
-      <image class="v-line" src="../../icons/v-line.jpg"></image>
-      <image class="h-line" src="../../icons/h-line.jpg"></image>
-      <view class="item" bindtap="addCustomer">
-        <view class="circle">
-          <view class="icon iconfont icon-chuangjian"></view>
-          <view class="title">创建订单</view>
-        </view>
-      </view>
-      <navigator class="item" url="/pages/manage_opera_salesman/manage_opera_salesman">
+      <navigator class="item" url="/pages/manage_opera_salesman/manage_opera_salesman" wx:if="{{roleObj[ROLE_MANAGER]}}">
         <view class="circle">
           <view class="icon iconfont icon-guanli1"></view>
           <view class="title">业务员管理</view>
-        </view>
-      </navigator>
-      <navigator class="item" url="/pages/customer/customer">
-        <view class="circle">
-          <view class="icon iconfont icon-people"></view>
-          <view class="title">客户列表</view>
         </view>
       </navigator>
       <!--<navigator class="item" url="/pages/product_setting/product_setting">-->
@@ -58,15 +32,15 @@
           <!--<view class="title">商品设置</view>-->
         <!--</view>-->
       <!--</navigator>-->
-      <view class="circle big add-sale-man" bindtap="addSaleMan">
-        <view class="icon iconfont icon-xinzengyonghu"></view>
-        <view class="title">新增业务员</view>
+      <view class="item" bindtap="addUser" wx:if="{{roleObj[ROLE_MANAGER]}}">
+        <view class="circle">
+          <view class="icon iconfont icon-xinzengyonghu"></view>
+          <view class="title">新增业务员</view>
+        </view>
       </view>
     </view>
     <!--财务-->
     <view class="opera-panel manage" wx:if="{{roleObj[ROLE_FINANCE]}}">
-      <image class="v-line" src="../../icons/v-line.jpg"></image>
-      <image class="h-line" src="../../icons/h-line.jpg"></image>
       <!--<navigator class="item" url="/pages/finance_collect/finance_collect">-->
         <!--<view class="circle">-->
           <!--<view class="icon iconfont icon-icon"></view>-->
@@ -93,7 +67,7 @@
       </navigator>
     </view>
     <!--仓管-->
-    <view class="opera-panel store" wx:if="{{roleObj[ROLE_WAREHOUSE]}}">
+    <view class="opera-panel manage" wx:if="{{roleObj[ROLE_WAREHOUSE]}}">
       <!--<navigator class="item" url="/pages/store_send/store_send">-->
         <!--<view class="circle biggest">-->
           <!--<view class="icon iconfont icon-fahuo"></view>-->
@@ -102,15 +76,15 @@
       <!--</navigator>-->
       <!--<image class="h-line" src="../../icons/h-line.jpg"></image>-->
       <navigator class="item" url="/pages/store_remain/store_remain">
-        <view class="circle biggest">
+        <view class="circle">
           <view class="icon iconfont icon-kucun"></view>
           <view class="title">商品库存</view>
         </view>
       </navigator>
     </view>
 
-    <view class="add-customer" wx:if="{{addCustomerToggle}}" bindtap="addCustomer">
-      <view class="content animated {{addCustomerToggle ? 'bounceIn' : 'bounceOut'}}">
+    <view class="add-customer" wx:if="{{addUserToggle}}" bindtap="addUser">
+      <view class="content animated {{addUserToggle ? 'bounceIn' : 'bounceOut'}}">
         <image class="image" src="{{twoCodeUrl}}" catchtap="viewTwoCode"></image>
         <view class="title tac">点击查看，并长按保存</view>
       </view>

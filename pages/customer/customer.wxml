@@ -29,25 +29,36 @@
       </view>
 
       <!--已通过的客户-->
-      <navigator class="label-item bb-e5 mt18"
-                 url="/pages/customer_setting/customer_setting?id={{item.id}}"
-                 wx:if="{{item.status.id === 1}}">
-        <image class="img" src="{{item.avatar ? item.avatar : '../../icons/img-none.png'}}"></image>
-        <view class="item-main">
-          <view class="info">昵称：{{item.nick || '暂无'}}</view>
-          <view class="info">公司名称：{{item.companyName || '暂无'}}</view>
-          <view class="info">门店名称：{{item.shopName || '暂无'}}</view>
-          <view class="info">联系人：{{item.name || '暂无'}}</view>
-          <view class="info">电话：{{item.mobile || '暂无'}}</view>
-          <view class="info">地址：{{item.address || '暂无'}}</view>
+      <view>
+        <navigator class="label-item bb-e5 mt18"
+                   url="/pages/customer_setting/customer_setting?id={{item.id}}"
+                   wx:if="{{item.status.id === 1}}">
+          <image class="img" src="{{item.avatar ? item.avatar : '../../icons/img-none.png'}}"></image>
+          <view class="item-main">
+            <view class="info">昵称：{{item.nick || '暂无'}}</view>
+            <view class="info">公司名称：{{item.companyName || '暂无'}}</view>
+            <view class="info">门店名称：{{item.shopName || '暂无'}}</view>
+            <view class="info">联系人：{{item.name || '暂无'}}</view>
+            <view class="info">电话：{{item.mobile || '暂无'}}</view>
+            <view class="info">地址：{{item.address || '暂无'}}</view>
+          </view>
+          <!--<view class="delete"-->
+                <!--data-id="{{item.id}}"-->
+                <!--data-index="{{index}}"-->
+                <!--catchtap="confirmRemove">-->
+            <!--<image src="../../icons/icon-close.png"></image>-->
+          <!--</view>-->
+        </navigator>
+        <view class="btns-prompt">
+          <view class="each-item cancel"
+                data-id="{{item.id}}"
+                data-index="{{index}}"
+                bindtap="confirmRemove">删除客户</view>
+          <view class="each-item confirm"
+                data-id="{{item.id}}"
+                bindtap="replaceOrder">代下单</view>
         </view>
-        <view class="delete"
-              data-id="{{item.id}}"
-              data-index="{{index}}"
-              catchtap="confirmRemove">
-          <image src="../../icons/icon-close.png"></image>
-        </view>
-      </navigator>
+      </view>
 
       <!--已拒绝的客户-->
       <view class="label-item bb-e5 mt18" wx:if="{{item.status.id === 0}}">
