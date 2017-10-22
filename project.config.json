@@ -61,6 +61,12 @@
 					"name": "账期列表",
 					"pathName": "pages/finance_account/finance_account",
 					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "商品库存",
+					"pathName": "pages/store_remain/store_remain",
+					"query": ""
 				}
 			]
 		},

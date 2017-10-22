@@ -15,7 +15,7 @@
         </view>
       </view>
     </view>
-    <view class="btn btn-fixed fixed-bottom btn-energized-linear">库存确认</view>
+    <view class="btn btn-fixed fixed-bottom {{isSubmit ? 'btn-stable' : 'btn-energized-linear'}}" bindtap="submit">{{isSubmit ? '正在提交中' : '库存确认'}}</view>
   </block>
   <!--无数据的情况-->
   <block wx:else>

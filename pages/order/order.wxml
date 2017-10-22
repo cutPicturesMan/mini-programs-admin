@@ -37,7 +37,7 @@
             <!--</view>-->
             <view class="label-line bb-e5 ml20">
               <view class="r mr20">
-                商品总价：<text class="text-energized">￥{{item.totalPrice}}</text>
+                商品总价：<text class="text-energized">￥{{item.amount}}</text>
               </view>
             </view>
             <view class="label-line ml20">

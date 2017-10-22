@@ -15,13 +15,13 @@
           <view class="title">客户列表</view>
         </view>
       </navigator>
-      <image class="h-line" src="../../icons/h-line.jpg"></image>
-      <view class="item">
-        <view class="circle big">
-          <view class="icon iconfont icon-chuangjian"></view>
-          <view class="title">创建订单</view>
-        </view>
-      </view>
+      <!--<image class="h-line" src="../../icons/h-line.jpg"></image>-->
+      <!--<view class="item">-->
+        <!--<view class="circle big">-->
+          <!--<view class="icon iconfont icon-chuangjian"></view>-->
+          <!--<view class="title">创建订单</view>-->
+        <!--</view>-->
+      <!--</view>-->
       <image class="h-line" src="../../icons/h-line.jpg"></image>
       <view class="item" bindtap="addCustomer">
         <view class="circle small">
@@ -52,12 +52,12 @@
           <view class="title">客户列表</view>
         </view>
       </navigator>
-      <navigator class="item" url="/pages/product_setting/product_setting">
-        <view class="circle">
-          <view class="icon iconfont icon-tubiaozhizuomoban"></view>
-          <view class="title">商品设置</view>
-        </view>
-      </navigator>
+      <!--<navigator class="item" url="/pages/product_setting/product_setting">-->
+        <!--<view class="circle">-->
+          <!--<view class="icon iconfont icon-tubiaozhizuomoban"></view>-->
+          <!--<view class="title">商品设置</view>-->
+        <!--</view>-->
+      <!--</navigator>-->
       <view class="circle big add-sale-man" bindtap="addSaleMan">
         <view class="icon iconfont icon-xinzengyonghu"></view>
         <view class="title">新增业务员</view>
@@ -94,13 +94,13 @@
     </view>
     <!--仓管-->
     <view class="opera-panel store" wx:if="{{roleObj[ROLE_WAREHOUSE]}}">
-      <navigator class="item" url="/pages/store_send/store_send">
-        <view class="circle biggest">
-          <view class="icon iconfont icon-fahuo"></view>
-          <view class="title">发货处理</view>
-        </view>
-      </navigator>
-      <image class="h-line" src="../../icons/h-line.jpg"></image>
+      <!--<navigator class="item" url="/pages/store_send/store_send">-->
+        <!--<view class="circle biggest">-->
+          <!--<view class="icon iconfont icon-fahuo"></view>-->
+          <!--<view class="title">发货处理</view>-->
+        <!--</view>-->
+      <!--</navigator>-->
+      <!--<image class="h-line" src="../../icons/h-line.jpg"></image>-->
       <navigator class="item" url="/pages/store_remain/store_remain">
         <view class="circle biggest">
           <view class="icon iconfont icon-kucun"></view>
