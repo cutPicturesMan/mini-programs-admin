@@ -38,44 +38,15 @@
           <view class="title">新增业务员</view>
         </view>
       </view>
-    </view>
-    <!--财务-->
-    <view class="opera-panel manage" wx:if="{{roleObj[ROLE_FINANCE]}}">
-      <!--<navigator class="item" url="/pages/finance_collect/finance_collect">-->
-        <!--<view class="circle">-->
-          <!--<view class="icon iconfont icon-icon"></view>-->
-          <!--<view class="title">已收款</view>-->
-        <!--</view>-->
-      <!--</navigator>-->
-      <!--<navigator class="item" url="/pages/finance_uncollect/finance_uncollect">-->
-        <!--<view class="circle">-->
-          <!--<view class="icon iconfont icon-shouqiankuan"></view>-->
-          <!--<view class="title">未收款</view>-->
-        <!--</view>-->
-      <!--</navigator>-->
-      <navigator class="item" url="/pages/finance_account/finance_account?type=0">
+
+      <navigator class="item" url="/pages/finance_account/finance_account?type=0" wx:if="{{roleObj[ROLE_FINANCE]}}">
         <view class="circle">
           <view class="icon iconfont icon-yijieshu"></view>
           <view class="title">账期列表</view>
         </view>
       </navigator>
-      <navigator class="item" url="/pages/finance_account/finance_account?type=1">
-        <view class="circle">
-          <view class="icon iconfont icon-weijiechaoshenxian"></view>
-          <view class="title">账期未结算</view>
-        </view>
-      </navigator>
-    </view>
-    <!--仓管-->
-    <view class="opera-panel manage" wx:if="{{roleObj[ROLE_WAREHOUSE]}}">
-      <!--<navigator class="item" url="/pages/store_send/store_send">-->
-        <!--<view class="circle biggest">-->
-          <!--<view class="icon iconfont icon-fahuo"></view>-->
-          <!--<view class="title">发货处理</view>-->
-        <!--</view>-->
-      <!--</navigator>-->
-      <!--<image class="h-line" src="../../icons/h-line.jpg"></image>-->
-      <navigator class="item" url="/pages/store_remain/store_remain">
+
+      <navigator class="item" url="/pages/store_remain/store_remain" wx:if="{{roleObj[ROLE_WAREHOUSE]}}">
         <view class="circle">
           <view class="icon iconfont icon-kucun"></view>
           <view class="title">商品库存</view>

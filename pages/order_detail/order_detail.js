@@ -108,7 +108,7 @@ Page({
   // 输入总价
   inputTotalPrice (e) {
     this.setData({
-      totalPrice: parseInt(e.detail.value)
+      totalPrice: e.detail.value
     });
   },
   // 输入数量

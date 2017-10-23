@@ -3,7 +3,7 @@
   <block wx:if="{{list.length !== 0}}">
     <view wx:for="{{list}}" wx:key="{{id}}">
       <!--新增的客户-->
-      <view class="role-container mt18" wx:if="{{item.status.id === 2}}">
+      <view class="role-container mt18" wx:if="{{item.status.id === 2 && roleObj[ROLE_MANAGER]}}">
         <view class="role-title tac">新增业务员信息</view>
         <view class="role-info mb15">
           <image class="image" src="{{item.avatar ? item.avatar : '../../icons/img-none.png'}}"></image>
@@ -29,10 +29,9 @@
       </view>
 
       <!--已通过的客户-->
-      <view>
+      <view wx:if="{{item.status.id === 1}}">
         <navigator class="label-item bb-e5 mt18"
-                   url="/pages/customer_setting/customer_setting?id={{item.id}}"
-                   wx:if="{{item.status.id === 1}}">
+                   url="/pages/customer_setting/customer_setting?id={{item.id}}">
           <image class="img" src="{{item.avatar ? item.avatar : '../../icons/img-none.png'}}"></image>
           <view class="item-main">
             <view class="info">昵称：{{item.nick || '暂无'}}</view>

@@ -19,7 +19,7 @@
         <!--只有业务员、经理，才可以更改总价-->
         <block wx:if="{{order.status.type == PENDING_SALEMAN || order.status.type == EXAMINE_MANAGER}}">
           商品总价：￥<input class="input-price tac text-energized"
-                      type="number"
+                      type="digit"
                       value="{{totalPrice}}"
                       bindinput="inputTotalPrice"/>
         </block>
