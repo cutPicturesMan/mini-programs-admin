@@ -12,6 +12,8 @@ let api = {
   order: '/api/order/',
   // 获取所有待处理订单
   order_wait: '/api/order/wait',
+  // 退单
+  order_back: '/api/order/back/',
   // 获取某个订单的配送方式
   logistic_list: '/api/order/fulfillType/',
 

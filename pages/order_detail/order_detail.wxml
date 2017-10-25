@@ -32,8 +32,12 @@
   <view class="product-section mt20 bb-e5" wx:for="{{order.orderItems}}" wx:key="{{index}}">
     <view class="product-item">
       <view class="item-label">
+        <view class="title">{{item.name}}</view>
+        <view class="content"></view>
+      </view>
+      <view class="item-label">
         <view class="title">
-          <block wx:for="{{item.productOption}}" wx:key="{{index}}">{{item.attributeName}}</block>
+          <block wx:for="{{item.productOption}}" wx:key="{{index}}">{{item.attributeName}}：{{item.attributeValue}}</block>
         </view>
         <view class="content">
           <!--只有业务员、经理，才可以更改规格数量-->
@@ -89,32 +93,46 @@
     </block>
   </view>
 
-  <!--订单状态是待业务员处理 => 显示修改按钮-->
-  <block wx:if="{{order.status.type === PENDING_SALEMAN}}">
+  <!--订单状态是退货中 && 用户角色列表中有相应的角色 => 显示退货按钮-->
+  <block wx:if="{{order.status.type === BACKING && isInRoles}}">
+    <view class="btns-prompt fixed-bottom">
+      <view class="each-item cancel"
+            data-type="{{0}}"
+            data-id="{{order.id}}"
+            bindtap="backOrderPopup">拒绝退货</view>
+      <view class="each-item confirm"
+            data-type="{{1}}"
+            data-id="{{order.id}}"
+            bindtap="backOrderPopup">同意退货</view>
+    </view>
+  </block>
+
+  <!--订单状态是待业务员处理 && 用户角色列表中有业务员的角色 => 显示修改按钮-->
+  <block wx:if="{{order.status.type === PENDING_SALEMAN && isInRoles}}">
     <view class="btns-prompt fixed-bottom">
       <view class="each-item cancel" data-id="{{order.id}}" catchtap="cancelOrderPopup">取消订单</view>
       <view class="each-item confirm" bindtap="confirmOrder">提交订单</view>
     </view>
   </block>
 
-  <!--订单状态是待经理处理 => 显示修改按钮-->
-  <block wx:if="{{order.status.type === EXAMINE_MANAGER}}">
+  <!--订单状态是待经理处理 && 用户角色列表中有经理的角色 => 显示修改按钮-->
+  <block wx:if="{{order.status.type === EXAMINE_MANAGER && isInRoles}}">
     <view class="btns-prompt fixed-bottom">
       <view class="each-item cancel" data-type="{{0}}" data-id="{{order.id}}" catchtap="rejectOrderPopup">拒绝</view>
       <view class="each-item confirm" data-type="{{1}}" data-id="{{order.id}}" catchtap="passOrder">通过</view>
     </view>
   </block>
 
-  <!--订单状态是待财务处理 => 显示修改按钮-->
-  <block wx:if="{{order.status.type === PAID}}">
+  <!--订单状态是待财务处理 && 用户角色列表中有财务的角色 => 显示修改按钮-->
+  <block wx:if="{{order.status.type === PAID && isInRoles}}">
     <view class="btns-prompt fixed-bottom">
       <view class="each-item cancel" data-type="{{0}}" data-id="{{order.id}}" catchtap="financeRejectPopup">拒绝</view>
       <view class="each-item confirm" data-type="{{1}}" data-id="{{order.id}}" catchtap="financePass">通过</view>
     </view>
   </block>
 
-  <!--订单状态是待仓管处理 => 显示修改按钮-->
-  <block wx:if="{{order.status.type === EXAMINE_FINANCE}}">
+  <!--订单状态是待仓管处理 && 用户角色列表中有仓管的角色 => 显示修改按钮-->
+  <block wx:if="{{order.status.type === EXAMINE_FINANCE && isInRoles}}">
     <view class="btn btn-fixed fixed-bottom btn-energized-linear" bindtap="storePass">确认发货</view>
   </block>
 </block>

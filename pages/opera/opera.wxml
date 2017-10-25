@@ -14,7 +14,7 @@
           <view class="title">客户列表</view>
         </view>
       </navigator>
-      <view class="item" bindtap="addUser" wx:if="{{roleObj[ROLE_SALESMAN] || roleObj[ROLE_MANAGER]}}">
+      <view class="item" data-type="{{1}}" bindtap="addUser" wx:if="{{roleObj[ROLE_SALESMAN] || roleObj[ROLE_MANAGER]}}">
         <view class="circle">
           <view class="icon iconfont icon-xinzengyonghu"></view>
           <view class="title">新增客户</view>
@@ -32,7 +32,7 @@
           <!--<view class="title">商品设置</view>-->
         <!--</view>-->
       <!--</navigator>-->
-      <view class="item" bindtap="addUser" wx:if="{{roleObj[ROLE_MANAGER]}}">
+      <view class="item" data-type="{{2}}" bindtap="addUser" wx:if="{{roleObj[ROLE_MANAGER]}}">
         <view class="circle">
           <view class="icon iconfont icon-xinzengyonghu"></view>
           <view class="title">新增业务员</view>

@@ -18,7 +18,7 @@
 					"id": 0,
 					"name": "注册",
 					"pathName": "pages/registry/registry",
-					"query": "adminId=1"
+					"query": "scene=adminId%3D15"
 				},
 				{
 					"id": -1,

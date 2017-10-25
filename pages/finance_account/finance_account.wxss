@@ -51,6 +51,13 @@
   overflow-x: hidden; }
 
 .label-item {
-  background-color: #fff; }
+  background-color: #fff;
+  position: relative; }
+  .label-item .icon-expire {
+    position: absolute;
+    top: 20rpx;
+    right: 20rpx;
+    width: 80rpx;
+    height: 80rpx; }
 
 /*# sourceMappingURL=finance_account.wxss.map */

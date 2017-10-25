@@ -15,8 +15,8 @@ Page({
     ...STATUS,
     // 备注的开关
     addToggle: false,
-    // 用户角色
-    role: '',
+    // 用户角色列表
+    userInfo: {},
     // 订单总价
     totalPrice: '',
     // 备注框文字
@@ -31,6 +31,8 @@ Page({
     beginDate: utils.formatDate(new Date(beginDateMillion), 'YYYY-MM-DD'),
     // 交货日期
     deliveryDate: '',
+    // 本订单的用户权限状态，是否在用户角色列表中
+    isInRoles: false,
     // 数据是否加载完毕
     isLoaded: false,
     // 物流方式是否加载完毕
@@ -39,6 +41,20 @@ Page({
     isCanceling: false,
     // 是否正在拒绝提交中
     isConfirming: false,
+  },
+  // 当前订单的角色，是否在用户的角色列表中
+  judgeRole (role) {
+    let { userInfo } = this.data;
+
+    let result = userInfo.roles.some((item)=>{
+      if(item.id == role){
+        return true;
+      }else{
+        return false;
+      }
+    });
+
+    return result;
   },
   // 获取列表数据
   getData (id) {
@@ -60,6 +76,7 @@ Page({
           deliveryDate,
           totalPrice: order.offerTotal || order.amount,
           order: order,
+          isInRoles: this.judgeRole(order.status.type),
           isLoaded: true
         });
 
@@ -186,6 +203,20 @@ Page({
       }
     })
   },
+  // 业务员退单模态框
+  backOrderPopup (e) {
+    let { id, type } = e.currentTarget.dataset;
+
+    wx.showModal({
+      title: '提示',
+      content: `确定要${type == 0 ? '拒绝' : '同意'}退单吗？`,
+      success: (res) => {
+        if (res.confirm) {
+          this.confirmBack(id, type);
+        }
+      }
+    })
+  },
   // 业务员取消订单
   cancelOrder (id) {
     wx.showLoading();
@@ -200,12 +231,9 @@ Page({
         wx.showToast({
           title: res.moreInfo
         });
-        setTimeout(() => {
-          // this.getData(id);
-          wx.navigateBack({
-            delta: 1,
-          })
-        }, 1500)
+        wx.navigateBack({
+          delta: 1,
+        })
       } else {
         wx.showToast({
           title: res.moreInfo || '删除失败',
@@ -280,7 +308,7 @@ Page({
         ...skus,
         fulFillType,
         deliveryDate,
-        remarks
+        remarks: remarks ? remarks : order.remarks
       }
     }).then((res) => {
       wx.hideLoading();
@@ -307,6 +335,30 @@ Page({
             isSubmit: false
           });
         }, 1500)
+      }
+    })
+  },
+  confirmBack (id, type) {
+    wx.showLoading();
+
+    http.request({
+      url: `${api.order_back}${id}`,
+      method: 'PUT',
+      data: {
+        adopt: type
+      }
+    }).then((res) => {
+      wx.hideLoading();
+
+      if (res.errorCode === 200) {
+        wx.showToast({
+          title: res.moreInfo
+        });
+      } else {
+        wx.showToast({
+          title: res.moreInfo || '退货失败',
+          image: '../../icons/close-circled.png'
+        });
       }
     })
   },
@@ -417,7 +469,7 @@ Page({
         ...skus,
         fulFillType,
         deliveryDate,
-        remarks
+        remarks: remarks ? remarks : order.remarks
       }
     }).then((res) => {
       // 提交成功
@@ -571,10 +623,12 @@ Page({
       }
     })
   },
-
   onLoad (params) {
     // 如果订单id存在，则请求数据
     if (params.id) {
+      this.setData({
+        userInfo: app.userInfo
+      });
       this.getData(params.id);
     } else {
       wx.showToast({

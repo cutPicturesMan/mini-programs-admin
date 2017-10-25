@@ -96,6 +96,9 @@ Page({
     }).then((res) => {
       // 提交成功，则跳转到待处理页面
       if (res.errorCode === 200) {
+        // 从后台进入前台时，刷新当前用户信息
+        app.userInfo = null;
+
         wx.showToast({
           title: res.moreInfo || '提交成功'
         })
@@ -141,35 +144,57 @@ Page({
       }
     });
   },
-  onLoad (params) {
-    auth.login()
-      .then(() => {
-        // 如果是通过扫码进来的
-        if(params.scene){
-          let scene = utils.parseQueryString(decodeURIComponent(params.scene));
-          let adminId = 0;
-          scene.adminId && (adminId = scene.adminId);
-
-          this.setData({
-            adminId
-          });
-          this.getUserInfo();
-        } else {
-          // 如果扫码出现错误，查询字符串中没有经理的id，则提示
-          wx.showModal({
-            title: '提示',
-            content: '扫码出错，该二维码无经理adminId参数'
+  onLoad (params = {}) {
+    // 获取用户的信息
+    app.getUserInfo()
+      .then((res) => {
+        if (res.status && res.status.id == 1) {
+          wx.showToast({
+            title: '您已注册，自动跳转中',
+            image: '../../icons/close-circled.png'
           })
 
-          this.setData({
-            isScanError: true
-          });
+          setTimeout(() => {
+            wx.switchTab({
+              url: `/pages/pending/pending`
+            });
+          }, 1500)
+        } else {
+          auth.login()
+            .then(() => {
+              // 如果是通过扫码进来的
+              if (params.scene) {
+                let scene = utils.parseQueryString(decodeURIComponent(params.scene));
+                let adminId = 0;
+                scene.adminId && (adminId = scene.adminId);
+
+                this.setData({
+                  adminId
+                });
+                this.getUserInfo();
+              } else {
+                // 如果扫码出现错误，查询字符串中没有经理的id，则提示
+                wx.showModal({
+                  title: '提示',
+                  content: '扫码出错，该二维码无经理adminId参数'
+                })
+
+                this.setData({
+                  isScanError: true
+                });
+              }
+            }, () => {
+              wx.showModal({
+                title: '提示',
+                content: '登录失败，请重新进入小程序'
+              })
+            });
         }
       }, () => {
         wx.showModal({
           title: '提示',
-          content: '登录失败，请重新进入小程序'
+          content: '获取用户信息失败，请重新进入小程序'
         })
-      });
+      })
   }
 })

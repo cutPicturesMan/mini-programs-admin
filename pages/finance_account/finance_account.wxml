@@ -2,11 +2,12 @@
   <!--有数据的情况-->
   <block wx:if="{{list.length !== 0}}">
     <view class="container">
-      <view class="label-item bb-e5 mt18"
+      <navigator class="label-item bb-e5 mt18"
                  url="/pages/finance_account_detail/finance_account_detail?id={{item.id}}"
                  wx:for="{{list}}"
                  wx:key="{{index}}">
         <image class="img" src="{{item.avatar ? item.avatar : '../../icons/img-none.png'}}"></image>
+        <image class="icon-expire" src="../../icons/icon-expired.png" wx:if="{{!item.cycleStatus}}"></image>
         <view class="item-main">
           <view class="info">昵称：{{item.nick || '暂无'}}</view>
           <view class="info">状态：
@@ -20,7 +21,7 @@
           <view class="info">账期是否可用：{{item.cycleStatus ? '是' : '否'}}</view>
           <view class="info">还款日期：每月{{item.cycleEndTs}}号</view>
         </view>
-      </view>
+      </navigator>
     </view>
   </block>
   <!--无数据的情况-->

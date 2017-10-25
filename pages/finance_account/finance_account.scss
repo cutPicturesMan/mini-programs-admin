@@ -7,4 +7,12 @@
 }
 .label-item{
   background-color: #fff;
+  position: relative;
+  .icon-expire{
+    position:absolute;
+    top:20rpx;
+    right: 20rpx;
+    width: 80rpx;
+    height: 80rpx;
+  }
 }

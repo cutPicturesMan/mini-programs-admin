@@ -15,7 +15,7 @@ Page({
     // 是否正在加载数据
     isLoaded: false
   },
-  onLoad () {
+  onShow () {
     // 获取用户的信息
     app.getUserInfo()
       .then((res) => {

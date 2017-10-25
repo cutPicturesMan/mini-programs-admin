@@ -1,44 +1,39 @@
-<view class="user-info mt20">
-  <image class="img" src="../../testimg/order-item.jpg"></image>
-  <view class="title">昵称：灵魂</view>
-</view>
-<view class="line-cell">
-  <view class="cell-title">查询时间</view>
-  <view class="cell-content">
-    <picker
-      mode="date"
-      value="{{date}}"
-      fields="month"
-      bindchange="bindDateChange">{{date}}</picker>
+<view class="list-section mt18" wx:for="{{list}}" wx:key="{{item.id}}">
+  <view class="label-act bb">
+    <view class="title">
+      <text class="pr20 pl15">订单编号</text>
+    </view>
+    <view class="arrow">{{item.orderNumber}}</view>
   </view>
-</view>
-<view>
-  <view class="time-container p25 tac">
-    <view class="time">2017/09/05 15:47</view>
-  </view>
-  <view class="line-cell">
-    <view class="cell-title">交易方式：账期交易</view>
-    <view class="cell-content">
-      金额：<text class="text-energized">3,132.00</text>
+  <view class="list-item bb" wx:for="{{item.orderItems}}" wx:for-item="sku" wx:key="{{sku.id}}"
+        url="/pages/product/index?id={{item.id}}">
+    <view class="item-img">
+      <image
+        src="{{item.orderItems[0].skuMedia.primary.url ? (item.orderItems[0].skuMedia.primary.url + '?imageView/2/1/w/260/h/260') : '../../icons/img-none.png'}}"></image>
+    </view>
+    <view class="content">
+      <view class="title" url="/pages/product/index">{{sku.name}}</view>
+      <view class="descrip-container">
+        <view class="descrip-list">
+          <view class="intro">数量：{{sku.quantity}}</view>
+          <!--<view class="intro">单价：￥{{sku.amount}}</view>-->
+          <view class="intro" wx:for="{{sku.productOption}}" wx:key="{{sku.attributeName}}">
+            {{item.attributeName}}：{{item.attributeValue}}
+          </view>
+        </view>
+      </view>
     </view>
   </view>
-</view>
-<view>
-  <view class="time-container p25 tac">
-    <view class="time">2017/09/05 15:47</view>
+  <view class="label-act bb">
+    <view class="title"></view>
+    <view class="arrow">订单名称：{{item.name}}</view>
   </view>
-  <view class="line-cell">
-    <view class="cell-title">交易方式：账期交易</view>
-    <view class="cell-content">
-      金额：<text class="text-energized">3,132.00</text>
-    </view>
+  <view class="label-act bb">
+    <view class="title"></view>
+    <view class="arrow">订单金额：{{item.amount}}</view>
   </view>
-</view>
 
-<view class="cart-account">
-  <view class="total">
-    账期未结：<text class="text-energized">3,132.00</text>
-  </view>
-  <navigator class="calc active" url="/pages/prompt_page/prompt_page">销 账</navigator>
 </view>
+<view class="p20 tac text-stable" wx:if="{{isLoaded && list.length == 0}}">暂无数据</view>
 
+<view class="btn btn-fixed fixed-bottom btn-energized-linear" bindtap="submit" wx:if="{{list.length != 0}}">销账</view>

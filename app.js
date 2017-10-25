@@ -8,6 +8,10 @@ App({
   roleCode: '',
   // 用户整体信息
   userInfo: null,
+  onShow () {
+    // 从后台进入前台时，刷新当前用户信息
+    this.userInfo = null;
+  },
   // 获取用户信息，返回一个promise
   getUserInfo () {
     let p = new Promise((resolve, reject) => {

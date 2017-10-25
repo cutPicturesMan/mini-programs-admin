@@ -22,15 +22,16 @@ Page({
   // 添加用户
   // 1表示新增客户，生成的二维码是客户端的
   // 2表示新增业务员，生成的二维码是管理端的
-  addUser (type = 1) {
+  addUser (e) {
+    let { type } = e.currentTarget.dataset;
     let { userInfo } = this.data;
-    let scene = encodeURIComponent(`adminId=${userInfo.id}`);
+    let scene = `adminId=${userInfo.id}`;
     let twoCodeUrl = '';
 
     if(type == 1){
-      twoCodeUrl = `${api.site_twocode}?scene=${scene}`
+      twoCodeUrl = `${api.site_twocode}?scene=${scene}&page=pages/registry/registry`
     } else {
-      twoCodeUrl = `${api.admin_twocode}?scene=${scene}`
+      twoCodeUrl = `${api.admin_twocode}?scene=${scene}&page=pages/registry/registry`
     }
 
     this.setData({

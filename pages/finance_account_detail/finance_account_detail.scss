@@ -2,9 +2,17 @@
 @import '../../public/css/_mixin.scss';
 @import '../../public/css/_user_info.scss';
 @import '../../public/css/_line_cell.scss';
+@import '../../public/css/_list_section.scss';
 @import '../../public/css/_time.scss';
 @import '../../public/css/_cart_account.scss';
 
+Page{
+  padding-bottom:100rpx;
+  box-sizing:border-box;
+}
+.bb{
+  border-bottom: 1rpx solid #e5e5e5;
+}
 .container{
   background-color: #fff;
   overflow-x:hidden;
@@ -14,3 +22,4 @@
   padding: 20rpx;
   background-color: #fff;
 }
+
