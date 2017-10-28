@@ -48,6 +48,8 @@ class Http extends Auth {
             if (this.errorCount < this.maxErrorCount) {
               this.login()
                 .then(() => {
+                  this.errorCount = 0;
+
                   sessionId = wx.getStorageSync('sessionId');
                   config.header.cookie = `SESSION=${sessionId}`;
                   this.request(config);
@@ -63,18 +65,12 @@ class Http extends Auth {
               })
             }
           } else if (res.errorCode === 403) {
-            // 用户无权限，则提示，并自动返回上一页
+            // 用户无权限，则提示
             wx.showToast({
               title: '暂无权限访问',
               image: '../../icons/close-circled.png',
               duration: 3000,
             })
-
-            // setTimeout(() => {
-            //   wx.navigateBack({
-            //     delta: 2
-            //   })
-            // }, 3000);
           } else {
             resolve(res);
           }
