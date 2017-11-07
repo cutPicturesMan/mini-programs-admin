@@ -42,12 +42,28 @@ Page({
     // 是否正在拒绝提交中
     isConfirming: false,
   },
-  // 当前订单的角色，是否在用户的角色列表中
+   // 当前订单的角色，是否在用户的角色列表中
   judgeRole (role) {
-    let { userInfo } = this.data;
+    let { userInfo,  PENDING_SALEMAN, EXAMINE_MANAGER, PAID, EXAMINE_FINANCE  } = this.data;
+    let id = 0;
+
+    switch(role){
+      case PENDING_SALEMAN: 
+        id = 2;
+        break;
+      case EXAMINE_MANAGER: 
+        id = 3;
+        break;
+      case PAID: 
+        id = 4;
+        break;
+      case EXAMINE_FINANCE: 
+        id = 5;
+        break;
+    }
 
     let result = userInfo.roles.some((item)=>{
-      if(item.id == role){
+      if(item.id == id){
         return true;
       }else{
         return false;
