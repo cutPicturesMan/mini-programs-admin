@@ -7,21 +7,6 @@
  * $direction : 三角形指向(top, right, bottom, left)
  * $color : 三角形颜色
  */
-.user-info {
-  height: 280rpx;
-  background-color: #fff;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column; }
-  .user-info .img {
-    width: 130rpx;
-    height: 130rpx;
-    border: 1rpx solid #e5e5e5; }
-  .user-info .title {
-    margin-top: 25rpx;
-    font-size: 28rpx; }
-
 .line-cell {
   line-height: 50rpx;
   padding: 17rpx 0;
@@ -43,6 +28,30 @@
     .line-cell .cell-content .select {
       width: 37rpx;
       height: 37rpx; }
+
+.order-item {
+  background-color: #fff; }
+  .order-item .order-figure {
+    padding: 25rpx 0 20rpx 0;
+    display: flex; }
+    .order-item .order-figure .img {
+      width: 130rpx;
+      height: 130rpx;
+      border: 1rpx solid #e8e8e8;
+      margin-right: 22rpx; }
+    .order-item .order-figure .order-figcaption {
+      flex: 1;
+      padding: 7rpx 0; }
+      .order-item .order-figure .order-figcaption .p {
+        line-height: 40rpx;
+        font-size: 28rpx; }
+  .order-item .input-price {
+    width: 140rpx;
+    height: 40rpx;
+    border: 1rpx solid #e5e5e5; }
+  .order-item .label-line.small {
+    font-size: 24rpx;
+    padding: 12rpx 0; }
 
 .product-item {
   padding: 24rpx; }
@@ -81,10 +90,6 @@
 page {
   padding-bottom: 100rpx; }
 
-.container {
-  background-color: #fff;
-  overflow-x: hidden; }
-
 .product-section {
   background-color: #fff; }
 
@@ -93,10 +98,20 @@ page {
   padding: 20rpx;
   background-color: #fff; }
 
-.total-price {
-  position: fixed;
-  right: 0;
-  bottom: 0;
-  left: 0; }
+.approve-section {
+  position: relative; }
+  .approve-section.active {
+    transform: rotate(180deg); }
+  .approve-section .line-cell {
+    padding-right: 88rpx; }
+  .approve-section .icon-arrow {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    padding: 20rpx; }
+    .approve-section .icon-arrow image {
+      width: 48rpx;
+      height: 48rpx; }
 
-/*# sourceMappingURL=finance_bill_detail.wxss.map */
+/*# sourceMappingURL=store_order_detail.css.map */

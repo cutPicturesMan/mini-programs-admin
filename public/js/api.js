@@ -63,8 +63,6 @@ let api = {
   // // 获取收货地址
   // address: '/address',
   // // 获取默认收货地址
-
-
 }
 
 for (var attr in api) {

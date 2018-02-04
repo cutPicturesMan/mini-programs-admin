@@ -26,6 +26,9 @@
                     <block wx:if="{{item.offerTotal}}">￥{{item.offerTotal}}</block>
                     <block wx:else>暂无优惠</block>
                   </view>
+                  <view class="p">公司名称：{{item.companyName}}</view>
+                  <view class="p">客户名称：{{item.customerName}}</view>
+                  <view class="p">联系方式：{{item.mobile}}</view>
                 </view>
               </view>
             </navigator>

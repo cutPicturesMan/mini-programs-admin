@@ -3,7 +3,7 @@
     <image class="img" src="{{avatar}}"></image>
     <view class="title">昵称：{{nick}}</view>
   </view>
-  <view class="customer-discount line-cell bb-e5 mt18">
+  <view class="customer-discount line-cell bb-e5 mt18" wx:if="{{false}}">
     <view class="cell-title">
       <view>客户折扣</view>
       <view class="tip">(80即为8折)</view>

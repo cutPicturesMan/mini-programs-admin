@@ -51,6 +51,10 @@
     justify-content: center;
     align-items: center; }
     .product-item .item-label .title {
+      width: 50%;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
       font-size: 28rpx;
       color: #333; }
     .product-item .item-label .content {

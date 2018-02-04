@@ -81,22 +81,37 @@
 page {
   padding-bottom: 100rpx; }
 
-.container {
-  background-color: #fff;
-  overflow-x: hidden; }
-
-.product-section {
-  background-color: #fff; }
-
 .line-cell {
+  line-height: 40rpx;
+  min-height: 100rpx;
   font-size: 28rpx;
-  padding: 20rpx;
+  padding: 15rpx;
+  background-color: #fff;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center; }
+  .line-cell .tip {
+    font-size: 20rpx;
+    line-height: 1;
+    color: #aaa; }
+  .line-cell .date-picker {
+    width: 140rpx;
+    height: 68rpx;
+    line-height: 68rpx;
+    border: 2rpx solid #eee;
+    text-align: center;
+    display: inline-block; }
+
+.customer-discount slider {
+  width: 100%; }
+
+.customer-pay {
   background-color: #fff; }
+  .customer-pay .pay-kind .line-cell {
+    margin-left: 15rpx; }
+    .customer-pay .pay-kind .line-cell:last-child {
+      margin-left: 0; }
+  .customer-pay input {
+    width: 70rpx; }
 
-.total-price {
-  position: fixed;
-  right: 0;
-  bottom: 0;
-  left: 0; }
-
-/*# sourceMappingURL=finance_bill_detail.wxss.map */
+/*# sourceMappingURL=customer_setting.css.map */

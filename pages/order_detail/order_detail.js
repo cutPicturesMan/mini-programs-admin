@@ -156,6 +156,18 @@ Page({
       order
     });
   },
+  // 输入单价
+  inputPrice (e) {
+    let price = e.detail.value;
+    let index = e.currentTarget.dataset.index;
+    let order = this.data.order;
+
+    order.orderItems[index].buyprice = price;
+
+    this.setData({
+      order
+    });
+  },
   // 获取物流方式列表
   getlogisticList () {
     let { order } = this.data;
@@ -284,8 +296,11 @@ Page({
         throw new Error('请选择交货日期');
       }
       order.orderItems.forEach((item) => {
-        if (!item.quantity) {
+        if (!(item.quantity * 1)) {
           throw new Error('请填写商品数量');
+        }
+        if (!(item.buyprice * 1)) {
+          throw new Error('请填写商品单价');
         }
       });
     } catch (e) {
@@ -304,8 +319,8 @@ Page({
     let keys = [];
     let values = [];
     order.orderItems.forEach((item, index) => {
-      keys.push(`skus[${index}].skuId`, `skus[${index}].num`);
-      values.push(item.skuId, item.quantity);
+      keys.push(`skus[${index}].skuId`, `skus[${index}].num`, `skus[${index}].price`);
+      values.push(item.skuId, item.quantity, item.buyprice);
     });
 
     let skus = {};
@@ -444,8 +459,11 @@ Page({
         throw new Error('请选择交货日期');
       }
       order.orderItems.forEach((item) => {
-        if (!item.quantity) {
+        if (!(item.quantity * 1)) {
           throw new Error('请填写商品数量');
+        }
+        if (!(item.buyprice * 1)) {
+          throw new Error('请填写商品单价');
         }
       });
     } catch (e) {
@@ -464,8 +482,8 @@ Page({
     let keys = [];
     let values = [];
     order.orderItems.forEach((item, index) => {
-      keys.push(`skus[${index}].skuId`, `skus[${index}].num`);
-      values.push(item.skuId, item.quantity);
+      keys.push(`skus[${index}].skuId`, `skus[${index}].num`, `skus[${index}].price`);
+      values.push(item.skuId, item.quantity, item.buyprice);
     });
 
     let skus = {};
