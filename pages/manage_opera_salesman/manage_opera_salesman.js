@@ -1,8 +1,10 @@
 import http from '../../public/js/http.js';
 import api from '../../public/js/api.js';
+import { ROLE, ROLE_LIST } from '../../public/js/role.js';
 
 Page({
   data: {
+    ROLE,
     // 客户列表
     list: [],
     // 数据是否加载完毕
@@ -26,6 +28,15 @@ Page({
           item.isRemoving = false;
           // 是否显示移除按钮
           item.isShowRemoveBtn = false;
+          // 是否处于编辑状态中
+          item.isEdit = false;
+
+          let roleObj = {};
+          item.allRoles.forEach((item)=>{
+            roleObj[item.name] = true;
+          });
+
+          item.roleObj = roleObj;
         });
 
         this.setData({
@@ -34,6 +45,79 @@ Page({
         });
       }
     })
+  },
+  // 开始编辑角色
+  beginEdit (e) {
+    let { index } = e.currentTarget.dataset;
+    let { list } = this.data;
+
+    this.setData({
+        [`list[${index}].isEdit`]: true
+    });
+  },
+  // 选择角色
+  chooseRole (e) {
+    let { code, index } = e.currentTarget.dataset;
+    let { list } = this.data;
+    let { roleObj, isEdit } = list[index];
+
+    // 非编辑模式下，提示
+    if(!isEdit){
+        wx.showToast({
+            title: '请点击编辑按钮',
+            image: '../../icons/close-circled.png'
+        });
+
+        return false;
+    }
+
+    roleObj[code] = !roleObj[code];
+    this.setData({
+      [`list[${index}].roleObj`]: roleObj
+    });
+  },
+  // 结束编辑角色
+  endEdit (e) {
+    let { index } = e.currentTarget.dataset;
+    let { list } = this.data;
+    let { roleObj, allRoles } = list[index];
+    let roleArr = [];
+
+    for(var key in roleObj){
+      // 过滤出已选择的角色
+      if(roleObj[key]){
+        roleArr.push(key);
+      }
+    }
+
+    // 如果待修改的角色数量和原始角色相同
+    if(roleArr.length == allRoles.length){
+      // 如果内容完全一样，则不发送请求
+      let isSame = roleArr.every((rItem)=>{
+        return allRoles.some((aItem)=>{
+          if(rItem == aItem.name){
+            return true;
+          } else {
+            return false;
+          }
+        });
+      });
+
+      if(isSame){
+        wx.showToast({
+            title: '没有任何修改',
+            image: '../../icons/close-circled.png'
+        });
+
+        return false;
+      }
+    } else {
+
+    }
+
+    this.setData({
+      [`list[${index}].isEdit`]: false
+    });
   },
   // 通过、拒绝业务员
   judge (e) {

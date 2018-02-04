@@ -1,5 +1,6 @@
 @charset "utf-8";
 @import '../../public/css/_mixin.scss';
+@import '../../public/css/_public.scss';
 @import '../../public/css/_label_item.scss';
 @import '../../public/css/_role_prompt.scss';
 
@@ -8,4 +9,9 @@
 }
 .label-item{
   background-color: #fff;
+}
+.label-act{
+  .ico{
+    margin-left: 0;
+  }
 }

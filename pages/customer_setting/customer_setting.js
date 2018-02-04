@@ -36,6 +36,14 @@ Page({
       dayIndex: e.detail.value
     })
   },
+  // 开启关闭账期开关
+  switch2Change(){
+    let { state } = this.data;
+
+    this.setData({
+        state: !state
+    });
+  },
   // 选择还款方式
   selectRepayment (e) {
     let { type } = e.currentTarget.dataset;
@@ -46,7 +54,7 @@ Page({
   },
   // 提交数据
   submit () {
-    let { id, scale, days, dayIndex, isSubmit } = this.data;
+    let { id, scale, days, dayIndex, state, isSubmit } = this.data;
 
     // 防止重复提交
     if (isSubmit) {
@@ -58,10 +66,10 @@ Page({
       if (!id) {
         throw new Error('客户id未获取');
       }
-      // 如果客户折扣未填写
-      if (!scale) {
-        throw new Error('客户折扣未填写');
-      }
+      // // 如果客户折扣未填写
+      // if (!scale) {
+      //   throw new Error('客户折扣未填写');
+      // }
     } catch (e) {
       return wx.showToast({
         title: e.message,
@@ -79,8 +87,9 @@ Page({
       url: `${api.customer_setting}${id}`,
       method: 'PUT',
       data: {
-        scale: scale/100,
-        atTime: days[dayIndex]
+        // scale: scale/100,
+        atTime: days[dayIndex],
+        state
       }
     }).then((res) => {
       wx.hideLoading();
@@ -124,6 +133,9 @@ Page({
           avatar: res.data.avatar,
           nick: res.data.nick,
           name: res.data.name,
+          phone: res.data.phone,
+          companyName: res.data.companyName,
+          state: res.data.state,
           scale: res.data.scale * 100,
           dayIndex: (res.data.data > 0) ? (res.data.data - 1) : 0
         });

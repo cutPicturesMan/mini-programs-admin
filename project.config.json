@@ -4,15 +4,27 @@
 		"urlCheck": true,
 		"es6": true,
 		"postcss": true,
-		"minified": true
+		"minified": true,
+		"newFeature": true
 	},
-	"compileType": "weapp",
+	"compileType": "miniprogram",
 	"libVersion": "1.5.4",
 	"appid": "wxbb01164d692716ea",
 	"projectname": "%E7%84%99%E4%BA%91%E8%AE%A2%E8%B4%A7",
 	"condition": {
-		"weapp": {
+		"search": {
 			"current": -1,
+			"list": []
+		},
+		"conversation": {
+			"current": -1,
+			"list": []
+		},
+		"game": {
+			"list": []
+		},
+		"miniprogram": {
+			"current": 9,
 			"list": [
 				{
 					"id": 0,
@@ -67,16 +79,13 @@
 					"name": "商品库存",
 					"pathName": "pages/store_remain/store_remain",
 					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "员工管理",
+					"pathName": "pages/manage_opera_salesman/manage_opera_salesman"
 				}
 			]
-		},
-		"search": {
-			"current": -1,
-			"list": []
-		},
-		"conversation": {
-			"current": -1,
-			"list": []
 		}
 	}
 }

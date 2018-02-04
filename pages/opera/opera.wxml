@@ -23,7 +23,7 @@
       <navigator class="item" url="/pages/manage_opera_salesman/manage_opera_salesman" wx:if="{{roleObj[ROLE_MANAGER]}}">
         <view class="circle">
           <view class="icon iconfont icon-guanli1"></view>
-          <view class="title">业务员管理</view>
+          <view class="title">员工管理</view>
         </view>
       </navigator>
       <!--<navigator class="item" url="/pages/product_setting/product_setting">-->

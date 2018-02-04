@@ -1,7 +1,11 @@
 <view wx:if="{{isLoaded}}">
-  <view class="user-info mt20">
+  <view class="user-info mt20 mb20 pb20 bb-e5">
     <image class="img" src="{{avatar}}"></image>
-    <view class="title">昵称：{{nick}}</view>
+    <view class="title">
+      <view>客户姓名：{{name}}</view>
+      <view>联系方式：{{phone}}</view>
+      <view>公司名称：{{companyName}}</view>
+    </view>
   </view>
   <view class="customer-discount line-cell bb-e5 mt18" wx:if="{{false}}">
     <view class="cell-title">
@@ -13,6 +17,12 @@
     </view>
   </view>
   <view class="customer-pay">
+    <view class="line-cell bb-e5">
+      <view class="cell-title">是否启用账期</view>
+      <view class="cell-content">
+        <switch checked="{{state}}" bindchange="switch2Change"/>
+      </view>
+    </view>
     <view class="line-cell bb-e5">
       <view class="cell-title">账期还款方式</view>
     </view>

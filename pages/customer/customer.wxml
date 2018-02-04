@@ -1,9 +1,12 @@
+<view class="time-container ptb25 tac">
+  <text class="time">点击客户信息即可进入账期设置</text>
+</view>
 <block wx:if="{{isLoaded}}">
   <!--如果有数据-->
   <block wx:if="{{list.length !== 0}}">
     <view wx:for="{{list}}" wx:key="{{id}}">
       <!--新增的客户-->
-      <view class="role-container mt18" wx:if="{{item.status.id === 2}}">
+      <view class="role-container mb20" wx:if="{{item.status.id === 2}}">
         <navigator url="/pages/customer_setting/customer_setting?id={{item.id}}">
           <view class="role-title tac">新增客户信息</view>
           <view class="role-info mb15">
@@ -31,8 +34,8 @@
       </view>
 
       <!--已通过的客户-->
-      <view wx:if="{{item.status.id === 1}}">
-        <navigator class="label-item bb-e5 mt18"
+      <view class="mb20" wx:if="{{item.status.id === 1}}">
+        <navigator class="label-item bb-e5"
                    url="/pages/customer_setting/customer_setting?id={{item.id}}">
           <image class="img" src="{{item.avatar ? item.avatar : '../../icons/img-none.png'}}"></image>
           <view class="item-main">
@@ -62,7 +65,7 @@
       </view>
 
       <!--已拒绝的客户-->
-      <view class="label-item bb-e5 mt18" wx:if="{{item.status.id === 0}}">
+      <view class="label-item bb-e5 mb20" wx:if="{{item.status.id === 0}}">
         <image class="img" src="{{item.avatar ? item.avatar : '../../icons/img-none.png'}}"></image>
         <view class="item-main text-stable">
           <view class="info">昵称：{{item.nick || '暂无'}}</view>

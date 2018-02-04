@@ -7,6 +7,17 @@
  * $direction : 三角形指向(top, right, bottom, left)
  * $color : 三角形颜色
  */
+.time-container {
+  font-size: 24rpx; }
+  .time-container .time {
+    line-height: 40rpx;
+    color: #fff;
+    padding: 0 15rpx;
+    margin: 0 20rpx;
+    border-radius: 5rpx;
+    background-color: #bebebe;
+    display: inline-block; }
+
 .label-item {
   display: flex;
   position: relative;
