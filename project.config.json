@@ -24,7 +24,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 9,
+			"current": 0,
 			"list": [
 				{
 					"id": 0,
@@ -83,7 +83,8 @@
 				{
 					"id": -1,
 					"name": "员工管理",
-					"pathName": "pages/manage_opera_salesman/manage_opera_salesman"
+					"pathName": "pages/manage_opera_salesman/manage_opera_salesman",
+					"query": ""
 				}
 			]
 		}

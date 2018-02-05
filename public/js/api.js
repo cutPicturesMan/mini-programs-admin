@@ -44,7 +44,8 @@ let api = {
 
   // 管理端二维码
   admin_twocode: '/wx/code',
-
+  // 模板消息
+  template_msg: '/api/user/formId'
   // // 获取分类商品
   // category_products: '/category/products/',
   // // 获取某个商品
