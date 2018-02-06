@@ -25,6 +25,8 @@ let api = {
   salesman_put_order: '/api/order/salesman/',
   // 经理修改订单
   manage_put_order: '/api/order/manager/',
+  // 经理修改员工角色
+  manage_change_rule: '/api/user/manager/',
   // 财务修改订单
   finance_put_order: '/api/order/finance/',
   // 仓管修改订单
@@ -35,7 +37,6 @@ let api = {
 
   // 财务 账期列表
   finance_collect: '/api/finance/',
-
 
   // 登录
   login: '/wx/login',

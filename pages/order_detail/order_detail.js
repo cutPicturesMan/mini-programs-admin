@@ -31,6 +31,14 @@ Page({
     beginDate: utils.formatDate(new Date(beginDateMillion), 'YYYY-MM-DD'),
     // 交货日期
     deliveryDate: '',
+
+    // 物流单号
+    logisticNum: '',
+    // 司机名称
+    driverName: '',
+    // 司机手机号
+    driverPhone: '',
+
     // 本订单的用户权限状态，是否在用户角色列表中
     isInRoles: false,
     // 数据是否加载完毕
@@ -218,15 +226,12 @@ Page({
   },
 
   // 发送模板消息
-  sendTemplateMsg(formId) {
+  sendTemplateMsg(e) {
     http.request({
       url: `${api.template_msg}`,
       method: 'POST',
-      header: {
-        'content-type': 'application/x-www-form-urlencoded'
-      },
       data: {
-        formIds: formId
+        formIds: e.detail.formId
       }
     }).then((res) => {
       console.log(res);
@@ -636,7 +641,36 @@ Page({
 
   // 仓管通过
   storePass (e) {
-    let { order, totalPrice } = this.data;
+    let {
+      order,
+      totalPrice,
+      logisticNum,
+      driverName,
+      driverPhone
+    } = this.data;
+
+    try {
+      // 如果物流单号未填写
+      if (!logisticNum) {
+        throw new Error('请填写物流单号');
+      }
+      // 如果司机姓名未填写
+      if (!driverName) {
+        throw new Error('请填写司机姓名');
+      }
+      // 如果司机手机号未填写
+      if (!driverPhone) {
+        throw new Error('请填写司机手机号');
+      }
+    } catch (e) {
+      return wx.showToast({
+        title: e.message,
+        image: '../../icons/close-circled.png',
+        duration: 4000
+      })
+    }
+
+    let logistics = `物流单号：${logisticNum}; 司机姓名：${driverName}; 司机手机号：${driverPhone}`;
 
     this.setData({
       isSubmit: true
@@ -645,7 +679,10 @@ Page({
     wx.showLoading();
     http.request({
       url: `${api.warehouse_put_order}${order.id}`,
-      method: 'POST'
+      method: 'POST',
+      data: {
+        logistics
+      }
     }).then((res) => {
       // 提交成功
       if (res.errorCode === 200) {

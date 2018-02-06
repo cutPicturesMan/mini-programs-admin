@@ -80,7 +80,7 @@ Page({
   endEdit (e) {
     let { index } = e.currentTarget.dataset;
     let { list } = this.data;
-    let { roleObj, allRoles } = list[index];
+    let { id, roleObj, allRoles } = list[index];
     let roleArr = [];
 
     for(var key in roleObj){
@@ -105,14 +105,32 @@ Page({
 
       if(isSame){
         wx.showToast({
-            title: '没有任何修改',
+            title: '您没有做出任何修改',
             image: '../../icons/close-circled.png'
         });
-
-        return false;
       }
     } else {
+      wx.showLoading();
+      http.request({
+        url: `${api.manage_change_rule}${id}`,
+        method: 'PUT',
+        data: {
+          roleNames: roleArr.join(',')
+        }
+      }).then((res) => {
+        wx.hideLoading();
 
+        if (res.errorCode === 200) {
+          wx.showToast({
+            title: res.moreInfo || '恭喜你，修改成功'
+          });
+        } else {
+          wx.showToast({
+            image: '../../icons/close-circled.png',
+            title: '修改失败，请重试'
+          });
+        }
+      })
     }
 
     this.setData({

@@ -36,7 +36,9 @@
             <view class="ico">
               <image src="../../icons/tabs-my-active.png"></image>
             </view>
-            <view class="title">我的权限列表</view>
+            <view class="title">
+              我的权限列表 <view class="small" wx:if="{{item.isEdit}}">（点击即可设置相应角色）</view>
+            </view>
             <view class="content">
               <view class="btn btn-energized-light" wx:if="{{!item.isEdit}}" data-index="{{index}}" catchtap="beginEdit">编辑</view>
               <view class="btn btn-energized" wx:if="{{item.isEdit}}" data-index="{{index}}" catchtap="endEdit">完成</view>

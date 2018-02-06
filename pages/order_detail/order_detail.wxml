@@ -1,4 +1,4 @@
-<form bindsubmit="submit" report-submit="true">
+<form bindsubmit="sendTemplateMsg" report-submit="true">
   <block wx:if="{{isLoaded}}">
     <view class="order-item">
       <view class="order-figure bb-e5 ml25">
@@ -92,6 +92,7 @@
           </view>
         </view>
       </block>
+      <!--只有业务员，才可以填写备注信息；如果是仓管，则把物流单号, 司机，司机手机号放入备注信息中-->
       <block wx:if="{{order.status.type === PENDING_SALEMAN}}">
         <view class="line-cell plr20" catchtap="switchRemark">
           <view class="cell-title mr20">备注信息</view>
@@ -102,10 +103,38 @@
         </view>
       </block>
       <block wx:else>
-        <view class="line-cell plr20">
+        <view class="line-cell bb plr20">
           <view class="cell-title mr20">备注信息</view>
           <view class="cell-content">
             {{order.remarks || '暂无'}}
+          </view>
+        </view>
+      </block>
+
+      <!--如果是仓管，需要填写物流单号, 司机，司机手机号，提交时放入备注信息中-->
+      <block wx:if="{{order.status.type === EXAMINE_FINANCE}}">
+        <view class="line-cell bb">
+          <view class="cell-title mr20">物流单号</view>
+          <view class="cell-content">
+            <input type="text" class="input"
+                      value="{{logisticNum}}"
+                      bindinput="inputLogisticNum"/>
+          </view>
+        </view>
+        <view class="line-cell bb">
+          <view class="cell-title mr20">司机姓名</view>
+          <view class="cell-content">
+            <input type="text" class="input"
+                   value="{{driverName}}"
+                   bindinput="inputDriverName"/>
+          </view>
+        </view>
+        <view class="line-cell bb">
+          <view class="cell-title mr20">司机手机号</view>
+          <view class="cell-content">
+            <input type="text" class="input"
+                   value="{{driverPhone}}"
+                   bindinput="inputDriverPhone"/>
           </view>
         </view>
       </block>
@@ -114,44 +143,69 @@
     <!--订单状态是退货中 && 用户角色列表中有相应的角色 => 显示退货按钮-->
     <block wx:if="{{order.status.type === BACKING && isInRoles}}">
       <view class="btns-prompt fixed-bottom">
-        <view class="each-item cancel"
+        <button class="each-item reset-btn cancel"
               data-type="{{0}}"
               data-id="{{order.id}}"
-              bindtap="backOrderPopup">拒绝退货</view>
-        <view class="each-item confirm"
+              formType="submit"
+              bindtap="backOrderPopup">拒绝退货</button>
+        <button class="each-item reset-btn confirm"
               data-type="{{1}}"
               data-id="{{order.id}}"
-              bindtap="backOrderPopup">同意退货</view>
+              formType="submit"
+              bindtap="backOrderPopup">同意退货</button>
       </view>
     </block>
 
     <!--订单状态是待业务员处理 && 用户角色列表中有业务员的角色 => 显示修改按钮-->
     <block wx:if="{{order.status.type === PENDING_SALEMAN && isInRoles}}">
       <view class="btns-prompt fixed-bottom">
-        <view class="each-item cancel" data-id="{{order.id}}" catchtap="cancelOrderPopup">取消订单</view>
-        <view class="each-item confirm" bindtap="confirmOrder">提交订单</view>
+        <button class="each-item reset-btn cancel"
+                data-id="{{order.id}}"
+                formType="submit"
+                bindtap="cancelOrderPopup">取消订单</button>
+        <button class="each-item reset-btn confirm"
+                formType="submit"
+                bindtap="confirmOrder">提交订单</button>
       </view>
     </block>
 
     <!--订单状态是待经理处理 && 用户角色列表中有经理的角色 => 显示修改按钮-->
     <block wx:if="{{order.status.type === EXAMINE_MANAGER && isInRoles}}">
       <view class="btns-prompt fixed-bottom">
-        <view class="each-item cancel" data-type="{{0}}" data-id="{{order.id}}" catchtap="rejectOrderPopup">拒绝</view>
-        <view class="each-item confirm" data-type="{{1}}" data-id="{{order.id}}" catchtap="passOrder">通过</view>
+        <button class="each-item reset-btn cancel"
+                data-type="{{0}}"
+                data-id="{{order.id}}"
+                formType="submit"
+                catchtap="rejectOrderPopup">拒绝</button>
+        <button class="each-item reset-btn confirm"
+                data-type="{{1}}"
+                data-id="{{order.id}}"
+                formType="submit"
+                catchtap="passOrder">通过</button>
       </view>
     </block>
 
     <!--订单状态是待财务处理 && 用户角色列表中有财务的角色 => 显示修改按钮-->
     <block wx:if="{{order.status.type === PAID && isInRoles}}">
       <view class="btns-prompt fixed-bottom">
-        <view class="each-item cancel" data-type="{{0}}" data-id="{{order.id}}" catchtap="financeRejectPopup">拒绝</view>
-        <view class="each-item confirm" data-type="{{1}}" data-id="{{order.id}}" catchtap="financePass">通过</view>
+        <button class="each-item reset-btn cancel"
+                data-type="{{0}}"
+                data-id="{{order.id}}"
+                formType="submit"
+                catchtap="financeRejectPopup">拒绝</button>
+        <button class="each-item reset-btn confirm"
+                data-type="{{1}}"
+                data-id="{{order.id}}"
+                formType="submit"
+                catchtap="financePass">通过</button>
       </view>
     </block>
 
     <!--订单状态是待仓管处理 && 用户角色列表中有仓管的角色 => 显示修改按钮-->
     <block wx:if="{{order.status.type === EXAMINE_FINANCE && isInRoles}}">
-      <view class="btn btn-fixed fixed-bottom btn-energized-linear" bindtap="storePass">确认发货</view>
+      <button class="reset-btn btn btn-fixed fixed-bottom btn-energized-linear"
+              formType="submit"
+              bindtap="storePass">确认发货</button>
     </block>
   </block>
 
