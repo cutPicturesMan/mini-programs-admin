@@ -20,6 +20,12 @@ Page({
     avatarUrl: '',
     // 经理id
     adminId: 0,
+
+    // 姓名输入框聚焦
+    isNameFocus: false,
+    // 电话输入框聚焦
+    isPhoneFocus: false,
+
     // 数据是否加载完毕
     isLoaded: false,
     // 是否允许使用个人信息
@@ -29,10 +35,22 @@ Page({
     // 是否正在提交
     isSubmit: false
   },
+  // 点击姓名区域，自动聚焦
+  bindNameTap: function() {
+    this.setData({
+        isNameFocus: true
+    })
+  },
   // 输入姓名
   bindNameInput (e) {
     this.setData({
       name: e.detail.value
+    })
+  },
+  // 点击电话区域，自动聚焦
+  bindPhoneTap: function() {
+    this.setData({
+        isPhoneFocus: true
     })
   },
   // 输入电话

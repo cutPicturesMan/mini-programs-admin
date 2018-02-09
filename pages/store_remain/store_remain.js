@@ -7,30 +7,70 @@ Page({
     list: [],
     // 列表原始的库存数量，用于提交时比对
     numList: [],
-    // 数据是否加载完毕
-    isLoaded: false,
+    // 页码
+    page: 0,
+    // 一页显示的数量
+    size: 30,
+    // 是否还有更多数据，默认是；当返回的分类数据小于this.data.size时，表示没有更多数据了
+    isMore: true,
+    // 是否正在加载更多数据
+    isLoading: false,
     // 数据是否正在提交中
     isSubmit: false
   },
-  // 获取列表数据
-  getData () {
-    wx.showLoading();
+  // 加载下一页
+  loadmore () {
+    let {
+      page,
+      size,
+      isMore,
+      isLoading,
+      list,
+      numList
+    } = this.data;
 
+    // 如果没有更多数据，则不执行操作
+    if (!isMore) {
+        return false;
+    }
+
+    // 如果正在加载中，则不执行操作
+    if (isLoading) {
+        return false;
+    }
+
+    this.data.isLoading = true;
+
+    wx.showLoading();
     http.request({
       url: api.stock,
+      data: {
+        page,
+        size,
+      }
     }).then((res) => {
       wx.hideLoading();
-      let list = res.data;
-      let numList = [];
-      list.forEach((item) => {
-        numList.push(item.qtyAvailable);
-      });
+      this.data.isLoading = false;
 
       if (res.errorCode === 200) {
+        page++;
+        let data = res.data;
+
+        // 如果返回的数据长度小于请求预期长度，则表示没有下一页了
+        if (data.length < size) {
+          isMore = false;
+        }
+
+        data.forEach((item) => {
+          numList.push(item.qtyAvailable);
+        });
+
         this.setData({
-          list,
+          page,
+          isMore,
+          list: list.concat(data),
           numList,
-          isLoaded: true
+
         });
       }
     })
@@ -148,10 +188,17 @@ Page({
         })
 
         setTimeout(() => {
+          // 清空numList，设置为修改后的数据
+          numList = [];
+
+          list.forEach((item) => {
+            numList.push(item.qtyAvailable);
+          });
+
           this.setData({
+            numList,
             isSubmit: false
           })
-          this.getData();
         }, 1500)
       } else {
         // 提交失败，则提示
@@ -173,6 +220,6 @@ Page({
     })
   },
   onLoad () {
-    this.getData();
+    this.loadmore();
   }
 })

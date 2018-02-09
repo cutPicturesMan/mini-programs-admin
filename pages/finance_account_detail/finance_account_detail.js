@@ -18,6 +18,15 @@ Page({
       date: e.detail.value
     })
   },
+  // 选中、不选购物车条目
+  addToEditArr (e) {
+    let list = this.data.list;
+    let index = e.currentTarget.dataset.index;
+
+    this.setData({
+        [`list[${index}].isSelected`]: !list[index].isSelected
+    });
+  },
   // 获取列表数据
   getData () {
     let { id } = this.data;
@@ -45,12 +54,25 @@ Page({
     })
   },
   submit () {
-    let { id, isSubmit } = this.data;
-    wx.showLoading();
+    let { list, id, isSubmit } = this.data;
+    let ids = [];
+
+    list.forEach((item, index) => {
+      if (item.isSelected) {
+        ids.push(item.id);
+      }
+    });
 
     try {
       if (isSubmit) {
         throw new Error('正在销账中');
+      }
+
+      if (ids.length === 0) {
+        return wx.showToast({
+          image: '../../icons/close-circled.png',
+          title: '请至少选择一个订单'
+        })
       }
     } catch (e) {
       return wx.showToast({
@@ -60,22 +82,30 @@ Page({
       })
     }
 
+    wx.showLoading();
+
     this.setData({
       isSubmit: true
     });
 
     http.request({
-      url: `${api.finance_collect}${id}`,
+      url: `${api.finance_collect_logs}`,
       method: 'PUT',
       data: {
-        status: 1
+        ids: ids.join(',')
       }
     }).then((res) => {
       if (res.errorCode === 200) {
         wx.showToast({
           title: res.moreInfo || '销账成功'
         })
+
+        setTimeout(()=>{
+          this.getData();
+        }, 1500);
       } else {
+        wx.hideLoading();
+
         wx.showModal({
           title: '提示',
           content: '销账失败，请重试'

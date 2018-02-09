@@ -9,6 +9,17 @@
   &.bb{
     border-bottom: 1rpx solid #e5e5e5;
   }
+  .cell-ico{
+    $w: 100rpx;
+    width: $w;
+    height: $w;
+    margin-right:20rpx;
+    .img{
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+  }
   .cell-title{
     margin-right:30rpx;
   }

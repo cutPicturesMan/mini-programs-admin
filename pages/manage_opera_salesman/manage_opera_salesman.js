@@ -10,6 +10,7 @@ Page({
     // 数据是否加载完毕
     isLoaded: false,
   },
+
   getData () {
     wx.showLoading();
     http.request({

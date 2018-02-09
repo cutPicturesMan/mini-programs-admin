@@ -30,6 +30,14 @@
   display: flex; }
   .line-cell.bb {
     border-bottom: 1rpx solid #e5e5e5; }
+  .line-cell .cell-ico {
+    width: 100rpx;
+    height: 100rpx;
+    margin-right: 20rpx; }
+    .line-cell .cell-ico .img {
+      width: 100%;
+      height: 100%;
+      display: block; }
   .line-cell .cell-title {
     margin-right: 30rpx; }
   .line-cell .cell-content {

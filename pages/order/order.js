@@ -17,6 +17,18 @@ Page({
     // 数据是否加载完毕
     isLoaded: false
   },
+  // 发送模板消息
+  sendTemplateMsg(e) {
+    http.request({
+        url: `${api.template_msg}`,
+        method: 'POST',
+        data: {
+            formIds: e.detail.formId
+        }
+    }).then((res) => {
+        console.log(res);
+    })
+  },
   // 获取列表数据
   getData () {
     wx.showLoading();

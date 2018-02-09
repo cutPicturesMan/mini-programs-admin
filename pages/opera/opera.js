@@ -19,6 +19,18 @@ Page({
     // 新增客户的开关
     addUserToggle: false,
   },
+  // 发送模板消息
+  sendTemplateMsg(e) {
+    http.request({
+        url: `${api.template_msg}`,
+        method: 'POST',
+        data: {
+            formIds: e.detail.formId
+        }
+    }).then((res) => {
+        console.log(res);
+    })
+  },
   // 添加用户
   // 1表示新增客户，生成的二维码是客户端的
   // 2表示新增业务员，生成的二维码是管理端的

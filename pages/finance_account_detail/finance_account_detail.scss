@@ -22,4 +22,22 @@ Page{
   padding: 20rpx;
   background-color: #fff;
 }
+.each-section{
+  display: flex;
+  padding-left: 18rpx;
+  background-color: #fff;
+  .sel{
+    display:flex;
+    align-items:center;
+    padding-right:20rpx;
+    image {
+      width: 36rpx;
+      height: 36rpx;
+      display: block;
+    }
+  }
+  .list-section{
+    flex: 1;
+  }
+}
 

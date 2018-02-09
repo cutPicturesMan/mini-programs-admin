@@ -6,53 +6,66 @@
       <!--<image class="icon" src="../../icons/icon-horn.png"></image>-->
       <!--<view class="text">灵魂在刘德华业务员处下单成功</view>-->
     <!--</view>-->
-    <!--经理-->
-    <view class="opera-panel manage">
-      <navigator class="item" url="/pages/customer/customer" wx:if="{{roleObj[ROLE_SALESMAN] || roleObj[ROLE_MANAGER]}}">
-        <view class="circle">
-          <view class="icon iconfont icon-people"></view>
-          <view class="title">客户列表</view>
+    <form bindsubmit="sendTemplateMsg" report-submit="true">
+      <view class="opera-panel manage">
+        <navigator class="item" url="/pages/customer/customer" wx:if="{{roleObj[ROLE_SALESMAN] || roleObj[ROLE_MANAGER]}}">
+          <button class="reset-btn" formType="submit">
+            <view class="circle">
+              <view class="icon iconfont icon-people"></view>
+              <view class="title">客户列表</view>
+            </view>
+          </button>
+        </navigator>
+        <view class="item" data-type="{{1}}" bindtap="addUser" wx:if="{{roleObj[ROLE_SALESMAN] || roleObj[ROLE_MANAGER]}}">
+          <button class="reset-btn" formType="submit">
+            <view class="circle">
+              <view class="icon iconfont icon-xinzengyonghu"></view>
+              <view class="title">新增客户</view>
+            </view>
+          </button>
         </view>
-      </navigator>
-      <view class="item" data-type="{{1}}" bindtap="addUser" wx:if="{{roleObj[ROLE_SALESMAN] || roleObj[ROLE_MANAGER]}}">
-        <view class="circle">
-          <view class="icon iconfont icon-xinzengyonghu"></view>
-          <view class="title">新增客户</view>
+        <navigator class="item" url="/pages/manage_opera_salesman/manage_opera_salesman" wx:if="{{roleObj[ROLE_MANAGER]}}">
+          <button class="reset-btn" formType="submit">
+            <view class="circle">
+              <view class="icon iconfont icon-guanli1"></view>
+              <view class="title">员工管理</view>
+            </view>
+          </button>
+        </navigator>
+        <!--<navigator class="item" url="/pages/product_setting/product_setting">-->
+          <!--<view class="circle">-->
+            <!--<view class="icon iconfont icon-tubiaozhizuomoban"></view>-->
+            <!--<view class="title">商品设置</view>-->
+          <!--</view>-->
+        <!--</navigator>-->
+        <view class="item" data-type="{{2}}" bindtap="addUser" wx:if="{{roleObj[ROLE_MANAGER]}}">
+          <button class="reset-btn" formType="submit">
+            <view class="circle">
+              <view class="icon iconfont icon-xinzengyonghu"></view>
+              <view class="title">新增业务员</view>
+            </view>
+          </button>
         </view>
-      </view>
-      <navigator class="item" url="/pages/manage_opera_salesman/manage_opera_salesman" wx:if="{{roleObj[ROLE_MANAGER]}}">
-        <view class="circle">
-          <view class="icon iconfont icon-guanli1"></view>
-          <view class="title">员工管理</view>
-        </view>
-      </navigator>
-      <!--<navigator class="item" url="/pages/product_setting/product_setting">-->
-        <!--<view class="circle">-->
-          <!--<view class="icon iconfont icon-tubiaozhizuomoban"></view>-->
-          <!--<view class="title">商品设置</view>-->
-        <!--</view>-->
-      <!--</navigator>-->
-      <view class="item" data-type="{{2}}" bindtap="addUser" wx:if="{{roleObj[ROLE_MANAGER]}}">
-        <view class="circle">
-          <view class="icon iconfont icon-xinzengyonghu"></view>
-          <view class="title">新增业务员</view>
-        </view>
-      </view>
 
-      <navigator class="item" url="/pages/finance_account/finance_account?type=0" wx:if="{{roleObj[ROLE_FINANCE]}}">
-        <view class="circle">
-          <view class="icon iconfont icon-yijieshu"></view>
-          <view class="title">账期列表</view>
-        </view>
-      </navigator>
+        <navigator class="item" url="/pages/finance_account/finance_account?type=0" wx:if="{{roleObj[ROLE_FINANCE]}}">
+          <button class="reset-btn" formType="submit">
+            <view class="circle">
+              <view class="icon iconfont icon-yijieshu"></view>
+              <view class="title">账期列表</view>
+            </view>
+          </button>
+        </navigator>
 
-      <navigator class="item" url="/pages/store_remain/store_remain" wx:if="{{roleObj[ROLE_WAREHOUSE]}}">
-        <view class="circle">
-          <view class="icon iconfont icon-kucun"></view>
-          <view class="title">商品库存</view>
-        </view>
-      </navigator>
-    </view>
+        <navigator class="item" url="/pages/store_remain/store_remain" wx:if="{{roleObj[ROLE_WAREHOUSE]}}">
+          <button class="reset-btn" formType="submit">
+            <view class="circle">
+              <view class="icon iconfont icon-kucun"></view>
+              <view class="title">商品库存</view>
+            </view>
+          </button>
+        </navigator>
+      </view>
+    </form>
 
     <view class="add-customer" wx:if="{{addUserToggle}}" bindtap="addUser">
       <view class="content animated {{addUserToggle ? 'bounceIn' : 'bounceOut'}}">

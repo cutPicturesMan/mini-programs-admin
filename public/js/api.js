@@ -37,6 +37,8 @@ let api = {
 
   // 财务 账期列表
   finance_collect: '/api/finance/',
+  // 财务 更新单个账期
+  finance_collect_logs: '/api/finance/logs',
 
   // 登录
   login: '/wx/login',

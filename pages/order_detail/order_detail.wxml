@@ -92,9 +92,10 @@
           </view>
         </view>
       </block>
+
       <!--只有业务员，才可以填写备注信息；如果是仓管，则把物流单号, 司机，司机手机号放入备注信息中-->
       <block wx:if="{{order.status.type === PENDING_SALEMAN}}">
-        <view class="line-cell plr20" catchtap="switchRemark">
+        <view class="line-cell plr20 mt20" catchtap="switchRemark">
           <view class="cell-title mr20">备注信息</view>
           <view class="cell-content">
             {{order.remarks}}
@@ -103,42 +104,50 @@
         </view>
       </block>
       <block wx:else>
-        <view class="line-cell bb plr20">
+        <view class="line-cell bb plr20 mt20">
           <view class="cell-title mr20">备注信息</view>
           <view class="cell-content">
             {{order.remarks || '暂无'}}
           </view>
         </view>
       </block>
-
-      <!--如果是仓管，需要填写物流单号, 司机，司机手机号，提交时放入备注信息中-->
-      <block wx:if="{{order.status.type === EXAMINE_FINANCE}}">
-        <view class="line-cell bb">
-          <view class="cell-title mr20">物流单号</view>
-          <view class="cell-content">
-            <input type="text" class="input"
-                      value="{{logisticNum}}"
-                      bindinput="inputLogisticNum"/>
-          </view>
-        </view>
-        <view class="line-cell bb">
-          <view class="cell-title mr20">司机姓名</view>
-          <view class="cell-content">
-            <input type="text" class="input"
-                   value="{{driverName}}"
-                   bindinput="inputDriverName"/>
-          </view>
-        </view>
-        <view class="line-cell bb">
-          <view class="cell-title mr20">司机手机号</view>
-          <view class="cell-content">
-            <input type="text" class="input"
-                   value="{{driverPhone}}"
-                   bindinput="inputDriverPhone"/>
-          </view>
-        </view>
-      </block>
     </view>
+
+    <!--如果是仓管，需要填写物流单号, 司机，司机手机号，提交时放入备注信息中-->
+    <block wx:if="{{order.status.type === EXAMINE_FINANCE}}">
+      <view class="line-cell bb mt20">
+        <view class="cell-title mr20">物流单号</view>
+        <view class="cell-content">
+          <input type="text" class="input"
+                 value="{{logisticNum}}"
+                 bindinput="inputLogisticNum"/>
+        </view>
+      </view>
+      <view class="line-cell bb">
+        <view class="cell-title mr20">司机姓名</view>
+        <view class="cell-content">
+          <input type="text" class="input"
+                 value="{{driverName}}"
+                 bindinput="inputDriverName"/>
+        </view>
+      </view>
+      <view class="line-cell bb">
+        <view class="cell-title mr20">司机手机号</view>
+        <view class="cell-content">
+          <input type="text" class="input"
+                 value="{{driverPhone}}"
+                 bindinput="inputDriverPhone"/>
+        </view>
+      </view>
+    </block>
+    <block wx:else>
+      <view class="line-cell bb plr20">
+        <view class="cell-title mr20">物流信息</view>
+        <view class="cell-content">
+          {{order.logistics || '暂无'}}
+        </view>
+      </view>
+    </block>
 
     <!--订单状态是退货中 && 用户角色列表中有相应的角色 => 显示退货按钮-->
     <block wx:if="{{order.status.type === BACKING && isInRoles}}">

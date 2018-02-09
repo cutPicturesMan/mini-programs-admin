@@ -1,31 +1,25 @@
-<block wx:if="{{isLoaded}}">
-  <!--有数据的情况-->
-  <block wx:if="{{list.length !== 0}}">
-    <view class="line-cell bb-e5" wx:for="{{list}}" wx:key="{{id}}">
-      <view class="cell-title">{{item.name}}</view>
-      <view class="cell-content">
-        <view class="opera-btns">
-          <view class="reduce-btn" data-index="{{index}}" bindtap="reduce">
-            <image src="../../icons/icon-reduce.jpg"></image>
-          </view>
-          <input class="count" type="number" value="{{item.qtyAvailable}}" data-index="{{index}}" bindinput="inputNumber"/>
-          <view class="add-btn" data-index="{{index}}" bindtap="add">
-            <image src="../../icons/icon-add1.jpg"></image>
-          </view>
+<scroll-view
+        class="scroll-view"
+        scroll-y="true"
+        enable-back-to-top="true"
+        bindscrolltolower="loadmore">
+  <view class="line-cell bb-e5" wx:for="{{list}}" wx:key="{{id}}">
+    <view class="cell-ico">
+      <image class="img" mode="aspectFill" src="{{item.skuMedia.primary ? (item.skuMedia.primary.url + '?imageView/2/1/w/200/h/200') : '../../icons/img-none.png'}}"></image>
+    </view>
+    <view class="cell-title">{{item.name}}</view>
+    <view class="cell-content">
+      <view class="opera-btns">
+        <view class="reduce-btn" data-index="{{index}}" bindtap="reduce">
+          <image src="../../icons/icon-reduce.jpg"></image>
+        </view>
+        <input class="count" type="number" value="{{item.qtyAvailable}}" data-index="{{index}}" bindinput="inputNumber"/>
+        <view class="add-btn" data-index="{{index}}" bindtap="add">
+          <image src="../../icons/icon-add1.jpg"></image>
         </view>
       </view>
     </view>
-    <view class="btn btn-fixed fixed-bottom {{isSubmit ? 'btn-stable' : 'btn-energized-linear'}}" bindtap="submit">{{isSubmit ? '正在提交中' : '库存确认'}}</view>
-  </block>
-  <!--无数据的情况-->
-  <block wx:else>
-    <view class="empty-data">
-      <view class="p20 tac text-stable fs32">空空如也~</view>
-    </view>
-  </block>
-</block>
-
-
-
-
-
+  </view>
+  <view class="tac p20 text-stable fs20" wx:if="{{!isMore}}">没有更多了</view>
+</scroll-view>
+<view class="btn btn-fixed fixed-bottom {{isSubmit ? 'btn-stable' : 'btn-energized-linear'}}" bindtap="submit">{{isSubmit ? '正在提交中' : '库存确认'}}</view>

@@ -1,39 +1,44 @@
-<view class="list-section mt18" wx:for="{{list}}" wx:key="{{item.id}}">
-  <view class="label-act bb">
-    <view class="title">
-      <text class="pr20 pl15">订单编号</text>
-    </view>
-    <view class="arrow">{{item.orderNumber}}</view>
+<view class="each-section mt18" wx:for="{{list}}" wx:key="{{item.id}}" data-index="{{index}}" bindtap="addToEditArr">
+  <view class="sel">
+    <image src="{{item.isSelected ? '../../icons/icon-radio-selected.png' : '../../icons/icon-radio.png'}}"></image>
   </view>
-  <view class="list-item bb" wx:for="{{item.orderItems}}" wx:for-item="sku" wx:key="{{sku.id}}"
-        url="/pages/product/index?id={{item.id}}">
-    <view class="item-img">
-      <image
-        src="{{item.orderItems[0].skuMedia.primary.url ? (item.orderItems[0].skuMedia.primary.url + '?imageView/2/1/w/260/h/260') : '../../icons/img-none.png'}}"></image>
+  <view class="list-section">
+    <view class="label-act bb">
+      <view class="title">
+        <text class="pr20 pl15">订单编号</text>
+      </view>
+      <view class="arrow">{{item.orderNumber}}</view>
     </view>
-    <view class="content">
-      <view class="title" url="/pages/product/index">{{sku.name}}</view>
-      <view class="descrip-container">
-        <view class="descrip-list">
-          <view class="intro">数量：{{sku.quantity}}</view>
-          <!--<view class="intro">单价：￥{{sku.amount}}</view>-->
-          <view class="intro" wx:for="{{sku.productOption}}" wx:key="{{sku.attributeName}}">
-            {{item.attributeName}}：{{item.attributeValue}}
+    <view class="list-item bb" wx:for="{{item.orderItems}}" wx:for-item="sku" wx:key="{{sku.id}}"
+          url="/pages/product/index?id={{item.id}}">
+      <view class="item-img">
+        <image mode="aspectFill" src="{{item.orderItems[0].skuMedia.primary.url ? (item.orderItems[0].skuMedia.primary.url + '?imageView/2/1/w/260/h/260') : '../../icons/img-none.png'}}"></image>
+      </view>
+      <view class="content">
+        <view class="title" url="/pages/product/index">{{sku.name}}</view>
+        <view class="descrip-container">
+          <view class="descrip-list">
+            <view class="intro">数量：{{sku.quantity}}</view>
+            <!--<view class="intro">单价：￥{{sku.amount}}</view>-->
+            <view class="intro" wx:for="{{sku.productOption}}" wx:key="{{sku.attributeName}}">
+              {{item.attributeName}}：{{item.attributeValue}}
+            </view>
           </view>
         </view>
       </view>
     </view>
-  </view>
-  <view class="label-act bb">
-    <view class="title"></view>
-    <view class="arrow">订单名称：{{item.name}}</view>
-  </view>
-  <view class="label-act bb">
-    <view class="title"></view>
-    <view class="arrow">订单金额：{{item.amount}}</view>
-  </view>
+    <view class="label-act bb">
+      <view class="title"></view>
+      <view class="arrow">订单名称：{{item.name}}</view>
+    </view>
+    <view class="label-act bb">
+      <view class="title"></view>
+      <view class="arrow">订单金额：{{item.amount}}</view>
+    </view>
 
+  </view>
 </view>
+
 <view class="p20 tac text-stable" wx:if="{{isLoaded && list.length == 0}}">暂无数据</view>
 
 <view class="btn btn-fixed fixed-bottom btn-energized-linear" bindtap="submit" wx:if="{{list.length != 0}}">销账</view>

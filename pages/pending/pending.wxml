@@ -5,48 +5,52 @@
     <block wx:if="{{isLoaded}}">
       <!--如果有数据-->
       <block wx:if="{{list.length !== 0}}">
-        <view wx:for="{{list}}" wx:key="{{item.id}}">
-          <view class="time-container ptb25 tac">
-            <text class="time">{{item.date}}</text>
-          </view>
-          <view class="order-item">
-            <navigator class="pl25" url="/pages/order_detail/order_detail?id={{item.id}}">
-              <view class="order-figure bb-e5" >
-                <image class="img"
-                       src="{{item.orderItems[0].skuMedia.alt1.url ? (item.orderItems[0].skuMedia.alt1.url + '?imageView/2/1/w/260/h/260') : '../../icons/img-none.png'}}"></image>
-                <view class="order-figcaption">
-                  <view class="p">订单编号：{{item.orderNumber}}</view>
-                  <view class="p">
-                    订单状态：<text class="text-energized">{{item.status.friendlyType}}</text>
-                  </view>
-                  <view class="p">商品名称：{{item.name}}</view>
-                  <view class="p">订单总计：￥{{item.amount}}</view>
-                  <view class="p">
-                    优惠后价格：
-                    <block wx:if="{{item.offerTotal}}">￥{{item.offerTotal}}</block>
-                    <block wx:else>暂无优惠</block>
-                  </view>
-                  <view class="p">公司名称：{{item.companyName}}</view>
-                  <view class="p">客户名称：{{item.customerName}}</view>
-                  <view class="p">联系方式：{{item.mobile}}</view>
-                </view>
-              </view>
-            </navigator>
-            <view class="label-line bb-e5 ml20">
-              <view class="r mr20">
-                商品总价：<text class="text-energized">￥{{item.amount}}</text>
-              </view>
+        <form bindsubmit="sendTemplateMsg" report-submit="true">
+          <view wx:for="{{list}}" wx:key="{{item.id}}">
+            <view class="time-container ptb25 tac">
+              <text class="time">{{item.date}}</text>
             </view>
-            <block>
-              <view class="label-line mlr20">
-                <view class="l mr20">备注信息</view>
-                <view class="r">
-                  {{item.remarks || '暂无'}}
+            <view class="order-item">
+              <navigator class="pl25" url="/pages/order_detail/order_detail?id={{item.id}}">
+                <button class="reset-btn" formType="submit">
+                  <view class="order-figure bb-e5" >
+                    <image class="img"
+                           src="{{item.orderItems[0].skuMedia.alt1.url ? (item.orderItems[0].skuMedia.alt1.url + '?imageView/2/1/w/260/h/260') : '../../icons/img-none.png'}}"></image>
+                    <view class="order-figcaption">
+                      <view class="p">订单编号：{{item.orderNumber}}</view>
+                      <view class="p">
+                        订单状态：<text class="text-energized">{{item.status.friendlyType}}</text>
+                      </view>
+                      <view class="p">商品名称：{{item.name}}</view>
+                      <view class="p">订单总计：￥{{item.amount}}</view>
+                      <view class="p">
+                        优惠后价格：
+                        <block wx:if="{{item.offerTotal}}">￥{{item.offerTotal}}</block>
+                        <block wx:else>暂无优惠</block>
+                      </view>
+                      <view class="p">公司名称：{{item.companyName}}</view>
+                      <view class="p">客户名称：{{item.customerName}}</view>
+                      <view class="p">联系方式：{{item.mobile}}</view>
+                    </view>
+                  </view>
+                </button>
+              </navigator>
+              <view class="label-line bb-e5 ml20">
+                <view class="r mr20">
+                  商品总价：<text class="text-energized">￥{{item.amount}}</text>
                 </view>
               </view>
-            </block>
+              <block>
+                <view class="label-line mlr20">
+                  <view class="l mr20">备注信息</view>
+                  <view class="r">
+                    {{item.remarks || '暂无'}}
+                  </view>
+                </view>
+              </block>
+            </view>
           </view>
-        </view>
+        </form>
       </block>
       <!--如果没有数据-->
       <block wx:else>

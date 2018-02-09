@@ -16,16 +16,16 @@
       <image class="img" src="{{avatarUrl}}"></image>
       <view class="title">昵称：{{nickName}}</view>
     </view>
-    <view class="line-cell bb-e5 mt18">
+    <view class="line-cell bb-e5 mt18" bindtap="bindNameTap">
       <view class="cell-title">真实姓名：</view>
       <view class="cell-content">
-        <input type="text" placeholder="请输入" maxlength="20" bindinput="bindNameInput"/>
+        <input type="text" placeholder="请输入" maxlength="20" bindinput="bindNameInput" focus="{{isNameFocus}}"/>
       </view>
     </view>
-    <view class="line-cell bb-e5">
+    <view class="line-cell bb-e5" bindtap="bindPhoneTap">
       <view class="cell-title">电话：</view>
       <view class="cell-content">
-        <input type="number" placeholder="请输入" maxlength="11" bindinput="bindPhoneInput"/>
+        <input type="number" placeholder="请输入" maxlength="11" bindinput="bindPhoneInput" focus="{{isPhoneFocus}}"/>
       </view>
     </view>
 

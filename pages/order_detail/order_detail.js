@@ -224,7 +224,24 @@ Page({
       deliveryDate: e.detail.value
     })
   },
-
+  // 输入物流单号
+  inputLogisticNum (e) {
+      this.setData({
+          logisticNum: e.detail.value
+      })
+  },
+  // 输入司机姓名
+  inputDriverName (e) {
+      this.setData({
+          driverName: e.detail.value
+      })
+  },
+  // 输入司机手机号
+  inputDriverPhone (e) {
+      this.setData({
+          driverPhone: e.detail.value
+      })
+  },
   // 发送模板消息
   sendTemplateMsg(e) {
     http.request({
@@ -649,32 +666,24 @@ Page({
       driverPhone
     } = this.data;
 
-    try {
-      // 如果物流单号未填写
-      if (!logisticNum) {
-        throw new Error('请填写物流单号');
-      }
-      // 如果司机姓名未填写
-      if (!driverName) {
-        throw new Error('请填写司机姓名');
-      }
-      // 如果司机手机号未填写
-      if (!driverPhone) {
-        throw new Error('请填写司机手机号');
-      }
-    } catch (e) {
-      return wx.showToast({
-        title: e.message,
-        image: '../../icons/close-circled.png',
-        duration: 4000
-      })
-    }
-
-    let logistics = `物流单号：${logisticNum}; 司机姓名：${driverName}; 司机手机号：${driverPhone}`;
+    let logistics = '';
 
     this.setData({
       isSubmit: true
     });
+
+    // 如果填写了物流单号
+    if (logisticNum) {
+        logistics += `物流单号：${logisticNum}；`;
+    }
+    // 如果填写了司机姓名
+    if (driverName) {
+        logistics += `司机姓名：${driverName}；`;
+    }
+    // 如果填写了司机手机号
+    if (driverPhone) {
+        logistics += `司机手机号：${driverPhone}；`;
+    }
 
     wx.showLoading();
     http.request({
