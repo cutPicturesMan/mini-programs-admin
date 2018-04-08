@@ -8,18 +8,20 @@
       <view wx:for="{{list}}" wx:key="{{id}}">
         <!--新增的客户-->
         <view class="role-container mb20" wx:if="{{item.status.id === 2}}">
-          <navigator url="/pages/customer_setting/customer_setting?id={{item.id}}">
+          <!--<navigator url="/pages/customer_setting/customer_setting?id={{item.id}}">-->
+          <view>
             <view class="role-title tac">新增客户信息</view>
             <view class="role-info mb15">
               <image class="image" src="{{item.avatar ? item.avatar : '../../icons/img-none.png'}}"></image>
-              <view class="name tac">昵称：{{item.nick}}</view>
             </view>
             <view class="info">公司名称：{{item.companyName}}</view>
             <view class="info">门店名称：{{item.shopName}}</view>
-            <view class="info">联系人：{{item.name}}</view>
+            <view class="info">联系人：
+              <input type="text" value="{{item.name}}" placeholder="请输入姓名" maxlength="20" data-index="{{index}}" bindinput="bindNameInput"/>（点击即可修改）</view>
             <view class="info">电话：{{item.mobile}}</view>
             <view class="info mb10">地址：{{item.address}}</view>
-          </navigator>
+          <!--</navigator>-->
+          </view>
           <view class="btns-prompt mt20" wx:if="{{roleObj[ROLE_MANAGER]}}">
             <view class="each-item {{item.isRejecting ? 'reject' : 'cancel'}}"
                   data-pass="{{0}}"

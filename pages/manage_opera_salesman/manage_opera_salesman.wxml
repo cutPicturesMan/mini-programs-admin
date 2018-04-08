@@ -44,7 +44,7 @@
                 <view class="btn btn-energized" wx:if="{{item.isEdit}}" data-index="{{index}}" catchtap="endEdit">完成</view>
               </view>
             </view>
-            <view class="role-list bg-light" wx:if="{{item.allRoles.length != 0}}">
+            <view class="role-list bg-light">
               <view class="label-act bb"
                     wx:for="{{ROLE}}"
                     wx:key="{{index}}"
@@ -60,7 +60,6 @@
                 </view>
               </view>
             </view>
-            <view class="p20 tac fs32 text-stable" wx:else>暂无角色数据</view>
           </view>
           <view class="del"
                 data-id="{{item.id}}"

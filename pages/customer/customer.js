@@ -17,6 +17,14 @@ Page({
     // 数据是否加载完毕
     isLoaded: false,
   },
+  // 输入姓名
+  bindNameInput (e) {
+    let index = e.currentTarget.dataset.index;
+
+    this.setData({
+      [`list[${index}].name`]: e.detail.value
+    })
+  },
   // 发送模板消息
   sendTemplateMsg(e) {
     http.request({
@@ -45,6 +53,8 @@ Page({
           item.isRejecting = false;
           // 正在解除关系
           item.isRemoving = false;
+          // 修改前用户的名称
+          item.originName = item.name;
         });
 
         this.setData({
@@ -58,34 +68,51 @@ Page({
   judge (e) {
     let list = this.data.list;
     let { pass, id, index } = e.currentTarget.dataset;
+    let item = list[index];
 
-    // 如果正在发送数据，则返回
-    if(list[index].isPassing || list[index].isRejecting){
-      wx.showToast({
-        title: '数据提交中，请稍后...',
-        image: '../../icons/close-circled.png'
+    try {
+      // 如果正在发送数据，则返回
+      if(item.isPassing || item.isRejecting){
+        throw new Error('数据提交中，请稍后...');
+      }
+
+      // 如果没有输入姓名，则提示
+      if(!item.name){
+        throw new Error('请输入姓名');
+      }
+    } catch (e) {
+      return wx.showToast({
+        title: e.message,
+        image: '../../icons/close-circled.png',
+        duration: 4000
       })
-      return ;
     }
 
     // 根据通过、拒绝进行按钮禁用
     if(pass === 1){
-      list[index].isPassing = true;
+      item.isPassing = true;
     }else{
-      list[index].isRejecting = true;
+      item.isRejecting = true;
     }
 
     this.setData({
-      list: list
+      list
     });
+
+    let data = {
+      pass
+    };
+
+    // 如果修改了姓名，则发送姓名字段
+    if(item.name != item.originName){
+      data.name = item.name;
+    }
 
     wx.showLoading();
     http.request({
       url: `${api.customer}${id}`,
       method: 'PUT',
-      data: {
-        pass
-      }
+      data,
     }).then((res) => {
       wx.hideLoading();
 
@@ -93,9 +120,30 @@ Page({
         wx.showToast({
           title: res.moreInfo
         });
+
         setTimeout(() => {
           this.getData();
         }, 1500);
+      } else {
+        if(res.errorCode == 13001){
+          res.moreInfo = '该姓名已被占用';
+        }
+
+        // 根据通过、拒绝进行按钮禁用
+        if(pass === 1){
+          item.isPassing = false;
+        }else{
+          item.isRejecting = false;
+        }
+
+        wx.showToast({
+          title: res.moreInfo,
+          image: '../../icons/close-circled.png'
+        })
+
+        this.setData({
+          list
+        })
       }
     })
   },

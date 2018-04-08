@@ -104,4 +104,13 @@
 .label-item {
   background-color: #fff; }
 
+.text-gray {
+  color: #666; }
+
+.role-container .info {
+  line-height: 50rpx; }
+  .role-container .info input {
+    display: inline-block;
+    vertical-align: middle; }
+
 /*# sourceMappingURL=customer.wxss.map */

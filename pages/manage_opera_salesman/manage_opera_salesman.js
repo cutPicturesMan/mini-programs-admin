@@ -122,6 +122,19 @@ Page({
         wx.hideLoading();
 
         if (res.errorCode === 200) {
+          let newRoleArr = [];
+
+          for(var key in roleObj){
+            // 过滤出已选择的角色
+            if(roleObj[key]){
+              newRoleArr.push(ROLE[key]);
+            }
+          }
+
+          this.setData({
+            [`list[${index}].allRoles`]: newRoleArr
+          });
+
           wx.showToast({
             title: res.moreInfo || '恭喜你，修改成功'
           });

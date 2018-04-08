@@ -73,8 +73,16 @@
       </view>
     </view>
     <view class="mt20">
-      <!--只有业务员、经理，才需要选择收货日期和物流方式-->
+      <!--只有业务员、经理，才需要选择支付方式、物流方式、收货日期-->
       <block wx:if="{{order.status.type == PENDING_SALEMAN || order.status.type == EXAMINE_MANAGER}}">
+        <view class="line-cell bb">
+          <view class="cell-title">支付方式</view>
+          <view class="cell-content">
+            <picker bindchange="bindPayTypeChange" value="{{payIndex}}" range="{{payType}}" range-key="friendlyType">
+              <view>{{payType[payIndex].friendlyType || '请选择支付方式'}}</view>
+            </picker>
+          </view>
+        </view>
         <view class="line-cell bb">
           <view class="cell-title">物流方式</view>
           <view class="cell-content">
@@ -93,7 +101,7 @@
         </view>
       </block>
 
-      <!--只有业务员，才可以填写备注信息；如果是仓管，则把物流单号, 司机，司机手机号放入备注信息中-->
+      <!--只有业务员，才可以填写备注信息-->
       <block wx:if="{{order.status.type === PENDING_SALEMAN}}">
         <view class="line-cell plr20 mt20" catchtap="switchRemark">
           <view class="cell-title mr20">备注信息</view>
@@ -112,6 +120,16 @@
         </view>
       </block>
     </view>
+
+    <!--如果是财务、仓管，则需要显示支付方式-->
+    <block wx:if="{{((order.status.type === PAID || order.status.type === SUBMITTED) || order.status.type === EXAMINE_FINANCE) && order.payments.length > 0}}">
+      <view class="line-cell bb">
+        <view class="cell-title mr20">支付方式</view>
+        <view class="cell-content">
+          {{order.payments[0].gatewayType.friendlyType}}
+        </view>
+      </view>
+    </block>
 
     <!--如果是仓管，需要填写物流单号, 司机，司机手机号，提交时放入备注信息中-->
     <block wx:if="{{order.status.type === EXAMINE_FINANCE}}">
@@ -195,7 +213,7 @@
     </block>
 
     <!--订单状态是待财务处理 && 用户角色列表中有财务的角色 => 显示修改按钮-->
-    <block wx:if="{{order.status.type === PAID && isInRoles}}">
+    <block wx:if="{{(order.status.type === PAID || order.status.type === SUBMITTED) && isInRoles}}">
       <view class="btns-prompt fixed-bottom">
         <button class="each-item reset-btn cancel"
                 data-type="{{0}}"

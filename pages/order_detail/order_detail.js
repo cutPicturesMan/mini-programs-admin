@@ -23,6 +23,10 @@ Page({
     remarks: '',
     // 订单数据
     order: {},
+    // 默认选择的支付方式
+    payIndex: '',
+    // 支付类型
+    payType: [],
     // 物流方式列表
     logisticList: [],
     // 选中的物流方式
@@ -43,6 +47,8 @@ Page({
     isInRoles: false,
     // 数据是否加载完毕
     isLoaded: false,
+    // 支付方式是否加载完毕
+    isPayLoaded: false,
     // 物流方式是否加载完毕
     isLogisticed: false,
     // 是否正在通过提交中
@@ -52,7 +58,7 @@ Page({
   },
    // 当前订单的角色，是否在用户的角色列表中
   judgeRole (role) {
-    let { userInfo,  PENDING_SALEMAN, EXAMINE_MANAGER, PAID, EXAMINE_FINANCE  } = this.data;
+    let { userInfo,  PENDING_SALEMAN, EXAMINE_MANAGER, PAID, SUBMITTED, EXAMINE_FINANCE  } = this.data;
     let id = 0;
 
     switch(role){
@@ -63,6 +69,9 @@ Page({
         id = 3;
         break;
       case PAID: 
+        id = 4;
+        break;
+      case SUBMITTED:
         id = 4;
         break;
       case EXAMINE_FINANCE: 
@@ -104,8 +113,9 @@ Page({
           isLoaded: true
         });
 
-        // 如果订单状态是业务员审核、经理审核，则需要去请求物流数据
+        // 如果订单状态是业务员审核、经理审核，则需要去请求支付方式和物流数据
         if (order.status.type == PENDING_SALEMAN || order.status.type == EXAMINE_MANAGER) {
+          this.getPayType(id);
           this.getlogisticList();
         }
       }
@@ -176,6 +186,18 @@ Page({
       order
     });
   },
+  // 获取所有支付方式
+  getPayType (id) {
+    http.request({
+      url: `${api.pay}${id}`
+    }).then((res) => {
+      this.setData({
+        isPayLoaded: true,
+        payIndex: 0,
+        payType: res.data
+      });
+    });
+  },
   // 获取物流方式列表
   getlogisticList () {
     let { order } = this.data;
@@ -216,6 +238,12 @@ Page({
   bindLogisticChange (e) {
     this.setData({
       logisticIndex: e.detail.value
+    })
+  },
+  // 选择支付方式
+  bindPayTypeChange (e) {
+    this.setData({
+      payIndex: e.detail.value
     })
   },
   // 选择交货日期
@@ -309,34 +337,38 @@ Page({
   },
   // 业务员提交
   confirmOrder () {
-    let { order, totalPrice, remarks, logisticList, logisticIndex, deliveryDate, isLogisticed } = this.data;
+    let { order, totalPrice, remarks, payIndex, payType, logisticList, logisticIndex, deliveryDate, isPayLoaded, isLogisticed } = this.data;
 
     try {
+      // 支付方式列表未加载完毕
+      if (!isPayLoaded) {
+        throw new Error('正在加载支付方式中，请稍后');
+      }
       // 物流列表未加载完毕
       if (!isLogisticed) {
         throw new Error('正在加载配送方式中，请稍后');
       }
-      // 如果价格未填写
-      if (!totalPrice) {
-        throw new Error('请填写商品总价');
-      }
-      // 如果价格未填写
-      if (!totalPrice) {
-        throw new Error('请填写商品总价');
+      // 无支付方式
+      if (payType.length == 0) {
+        throw new Error('暂无可选支付方式，无法下单');
       }
       // 无物流
       if (logisticList.length == 0) {
         throw new Error('暂无可选物流方式，无法下单');
+      }
+      // 如果价格未填写
+      if (totalPrice === '') {
+        throw new Error('请填写商品总价');
       }
       // 未选择交货日期
       if (!deliveryDate) {
         throw new Error('请选择交货日期');
       }
       order.orderItems.forEach((item) => {
-        if (!(item.quantity * 1)) {
+        if (item.quantity === '') {
           throw new Error('请填写商品数量');
         }
-        if (!(item.buyprice * 1)) {
+        if (item.buyprice === '') {
           throw new Error('请填写商品单价');
         }
       });
@@ -374,6 +406,7 @@ Page({
       data: {
         price: totalPrice,
         ...skus,
+        payType: payType[payIndex].type,
         fulFillType,
         deliveryDate,
         remarks: remarks ? remarks : order.remarks
@@ -476,30 +509,38 @@ Page({
   // 经理通过
   passOrder (e) {
     let { id } = e.currentTarget.dataset;
-    let { order, totalPrice, remarks, logisticList, logisticIndex, deliveryDate, isLogisticed } = this.data;
+    let { order, totalPrice, remarks, payIndex, payType, logisticList, logisticIndex, deliveryDate, isPayLoaded, isLogisticed } = this.data;
 
     try {
+      // 支付方式列表未加载完毕
+      if (!isPayLoaded) {
+        throw new Error('正在加载支付方式中，请稍后');
+      }
       // 物流列表未加载完毕
       if (!isLogisticed) {
         throw new Error('正在加载配送方式中，请稍后');
       }
-      // 如果价格未填写
-      if (!totalPrice) {
-        throw new Error('请填写商品总价');
+      // 无支付方式
+      if (payType.length == 0) {
+        throw new Error('暂无可选支付方式，无法下单');
       }
-      // 无物流
+      // 无物流方式
       if (logisticList.length == 0) {
         throw new Error('暂无可选物流方式，无法下单');
+      }
+      // 如果价格未填写
+      if (totalPrice === '') {
+        throw new Error('请填写商品总价');
       }
       // 未选择交货日期
       if (!deliveryDate) {
         throw new Error('请选择交货日期');
       }
       order.orderItems.forEach((item) => {
-        if (!(item.quantity * 1)) {
+        if (item.quantity === '') {
           throw new Error('请填写商品数量');
         }
-        if (!(item.buyprice * 1)) {
+        if (item.buyprice === '') {
           throw new Error('请填写商品单价');
         }
       });
@@ -538,6 +579,7 @@ Page({
         adopt: 1,
         price: totalPrice,
         ...skus,
+        payType: payType[payIndex].type,
         fulFillType,
         deliveryDate,
         remarks: remarks ? remarks : order.remarks
@@ -612,7 +654,7 @@ Page({
 
     try {
       // 如果价格未填写
-      if (!totalPrice) {
+      if (totalPrice === '') {
         throw new Error('请填写商品总价');
       }
     } catch (e) {
