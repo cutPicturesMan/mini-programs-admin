@@ -4,13 +4,19 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    .icon{
+      width: 100rpx;
+      height: 100rpx;
+    }
     .title{
-      width: 50%;
+      width: 30%;
       white-space: nowrap;
       text-overflow: ellipsis;
       overflow: hidden;
       font-size: 28rpx;
       color: #333;
+      display: flex;
+      align-items: center;
     }
     .content{
       text-align: right;

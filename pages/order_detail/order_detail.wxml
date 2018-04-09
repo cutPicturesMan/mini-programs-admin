@@ -35,12 +35,16 @@
     <view class="product-section mt20 bb-e5" wx:for="{{order.orderItems}}" wx:key="{{index}}">
       <view class="product-item">
         <view class="item-label">
-          <view class="title">{{item.name}}</view>
+          <view class="">{{item.name}}</view>
           <view class="content"></view>
         </view>
-        <view class="item-label">
-          <view class="title">
-            <block wx:for="{{item.productOption}}" wx:key="{{index}}">{{item.attributeName}}：{{item.attributeValue}}</block>
+        <view class="item-label mt10">
+          <view>
+            <image class="icon" src="{{item.skuMedia.primary.url}}" wx:if="{{item.skuMedia && item.skuMedia.primary}}"></image>
+          </view>
+          <view class="title ml20">
+            <block wx:for="{{item.productOption}}" wx:key="{{index}}">
+              {{item.attributeName}}：{{item.attributeValue}}</block>
             <block wx:if="{{item.productOption.length == 0}}">暂无规格</block>
           </view>
           <view class="content">
@@ -56,7 +60,7 @@
             </block>
           </view>
         </view>
-        <view class="item-label mt10">
+        <view class="item-label">
           <view class="content">
             <!--只有业务员、经理，才可以更改规格单价-->
             <block wx:if="{{order.status.type == PENDING_SALEMAN || order.status.type == EXAMINE_MANAGER}}">
