@@ -122,7 +122,7 @@
     </view>
 
     <!--如果是财务、仓管，则需要显示支付方式-->
-    <block wx:if="{{((order.status.type === PAID || order.status.type === SUBMITTED) || order.status.type === EXAMINE_FINANCE) && order.payments.length > 0}}">
+    <block wx:if="{{((order.status.type === PAID || order.status.type === EXAMINE_ACCOUNTANT || order.status.type === SUBMITTED) || order.status.type === EXAMINE_FINANCE) && order.payments.length > 0}}">
       <view class="line-cell bb">
         <view class="cell-title mr20">支付方式</view>
         <view class="cell-content">
@@ -213,7 +213,7 @@
     </block>
 
     <!--订单状态是待财务处理 && 用户角色列表中有财务的角色 => 显示修改按钮-->
-    <block wx:if="{{(order.status.type === PAID || order.status.type === SUBMITTED) && isInRoles}}">
+    <block wx:if="{{(order.status.type === PAID || order.status.type === EXAMINE_ACCOUNTANT || order.status.type === SUBMITTED) && isInRoles}}">
       <view class="btns-prompt fixed-bottom">
         <button class="each-item reset-btn cancel"
                 data-type="{{0}}"

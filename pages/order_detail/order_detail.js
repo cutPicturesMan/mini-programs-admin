@@ -58,7 +58,7 @@ Page({
   },
    // 当前订单的角色，是否在用户的角色列表中
   judgeRole (role) {
-    let { userInfo,  PENDING_SALEMAN, EXAMINE_MANAGER, PAID, SUBMITTED, EXAMINE_FINANCE  } = this.data;
+    let { userInfo,  PENDING_SALEMAN, EXAMINE_MANAGER, PAID, EXAMINE_ACCOUNTANT, SUBMITTED, EXAMINE_FINANCE  } = this.data;
     let id = 0;
 
     switch(role){
@@ -69,6 +69,9 @@ Page({
         id = 3;
         break;
       case PAID: 
+        id = 4;
+        break;
+      case EXAMINE_ACCOUNTANT:
         id = 4;
         break;
       case SUBMITTED:
