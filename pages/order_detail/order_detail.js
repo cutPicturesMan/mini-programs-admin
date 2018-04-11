@@ -17,6 +17,8 @@ Page({
     addToggle: false,
     // 用户角色列表
     userInfo: {},
+    // 优惠金额
+    cheapPrice: 0,
     // 订单总价
     totalPrice: '',
     // 备注框文字
@@ -164,9 +166,25 @@ Page({
     this.switchRemark();
   },
   // 输入总价
-  inputTotalPrice (e) {
+  inputCheapPrice (e) {
+    let { totalPrice } = this.data;
+    let cheapPrice = e.detail.value;
+
+    if(isNaN(cheapPrice) || cheapPrice === ''){
+      cheapPrice = 0;
+    }
+
+    if(totalPrice < cheapPrice){
+      cheapPrice = 0;
+
+      wx.showToast({
+        title: '优惠金额超出',
+        image: '../../icons/close-circled.png'
+      })
+    }
+
     this.setData({
-      totalPrice: e.detail.value
+      cheapPrice
     });
   },
   // 输入数量
