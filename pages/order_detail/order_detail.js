@@ -94,7 +94,7 @@ Page({
   },
   // 获取列表数据
   getData (id) {
-    let { PENDING_SALEMAN, EXAMINE_MANAGER } = this.data;
+    let { PENDING_SALEMAN, EXAMINE_MANAGER, EXAMINE_ACCOUNTANT, SUBMITTED } = this.data;
 
     wx.showLoading();
 
@@ -116,10 +116,14 @@ Page({
           isLoaded: true
         });
 
-        // 如果订单状态是业务员审核、经理审核，则需要去请求支付方式和物流数据
+        // 如果订单状态是业务员审核、经理审核，则需要去请求物流数据
         if (order.status.type == PENDING_SALEMAN || order.status.type == EXAMINE_MANAGER) {
-          this.getPayType(id);
           this.getlogisticList();
+        }
+
+        // 如果订单状态是业务员审核、经理审核、待财务确认、待财务审核，则需要去请求支付方式
+        if (order.status.type == PENDING_SALEMAN || order.status.type == EXAMINE_MANAGER || order.status.type === EXAMINE_ACCOUNTANT || order.status.type === SUBMITTED){
+          this.getPayType(id);
         }
       }
     })
@@ -653,9 +657,30 @@ Page({
   // 财务通过
   financePass (e) {
     let { id } = e.currentTarget.dataset;
-    let { order, totalPrice } = this.data;
+    let { EXAMINE_ACCOUNTANT, SUBMITTED, order, totalPrice, payIndex, payType, isPayLoaded } = this.data;
 
     try {
+      // 待财务审核、待财务确认，要加载支付方式
+      if(order.status.type === EXAMINE_ACCOUNTANT || order.status.type === SUBMITTED){
+        // 支付方式列表未加载完毕
+        if (!isPayLoaded) {
+          throw new Error('正在加载支付方式中，请稍后');
+        }
+        // 无支付方式
+        if (payType.length == 0) {
+          throw new Error('暂无可选支付方式，无法下单');
+        }
+      }
+
+      // 待财务确认，需要填写商品单价
+      if(order.status.type === SUBMITTED){
+        order.orderItems.forEach((item) => {
+          if (item.quantity === '') {
+            throw new Error('请填写商品数量');
+          }
+        });
+      }
+
       // 如果价格未填写
       if (totalPrice === '') {
         throw new Error('请填写商品总价');
@@ -672,13 +697,36 @@ Page({
       isSubmit: true
     });
 
+    let data = {
+      adopt: 1
+    }
+
+    // 待财务审核、待财务确认，要附带上支付方式参数
+    if(order.status.type === EXAMINE_ACCOUNTANT || order.status.type === SUBMITTED){
+      data.payType = payType[payIndex].type;
+    }
+
+    // 待财务确认，要附带上单价修改参数
+    if(order.status.type === SUBMITTED){
+      // 数据转化格式，然后提交
+      let keys = [];
+      let values = [];
+      order.orderItems.forEach((item, index) => {
+        keys.push(`skus[${index}].skuId`, `skus[${index}].num`, `skus[${index}].price`);
+        values.push(item.skuId, item.quantity, item.buyprice);
+      });
+
+      let skus = {};
+      keys.forEach((item, index) => {
+        data[item] = values[index];
+      });
+    }
+
     wx.showLoading();
     http.request({
       url: `${api.finance_put_order}${id}`,
       method: 'POST',
-      data: {
-        adopt: 1
-      }
+      data,
     }).then((res) => {
       // 提交成功
       if (res.errorCode === 200) {

@@ -58,13 +58,15 @@
     display: flex;
     justify-content: center;
     align-items: center; }
+    .product-item .item-label .icon {
+      width: 100rpx;
+      height: 100rpx; }
     .product-item .item-label .title {
       width: 50%;
-      white-space: nowrap;
-      text-overflow: ellipsis;
-      overflow: hidden;
       font-size: 28rpx;
-      color: #333; }
+      color: #333;
+      display: flex;
+      align-items: center; }
     .product-item .item-label .content {
       text-align: right;
       display: flex;
