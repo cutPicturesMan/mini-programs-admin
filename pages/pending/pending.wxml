@@ -15,7 +15,7 @@
                 <button class="reset-btn" formType="submit">
                   <view class="order-figure bb-e5" >
                     <image class="img"
-                           src="{{item.orderItems[0].skuMedia.alt1.url ? (item.orderItems[0].skuMedia.alt1.url + '?imageView/2/1/w/260/h/260') : '../../icons/img-none.png'}}"></image>
+                           src="{{item.orderItems[0].skuMedia.alt1 ? (item.orderItems[0].skuMedia.alt1.url + '?imageView/2/1/w/260/h/260') : (item.orderItems[0].skuMedia.primary ? (item.orderItems[0].skuMedia.primary.url + '?imageView/2/1/w/260/h/260') : '../../icons/img-none.png')}}"></image>
                     <view class="order-figcaption">
                       <view class="p">订单编号：{{item.orderNumber}}</view>
                       <view class="p">订单状态：<text class="text-energized">{{item.status.friendlyType}}</text></view>

@@ -3,7 +3,7 @@
     <view class="order-item">
       <view class="order-figure bb-e5 ml25">
         <image class="img"
-               src="{{order.orderItems[0].skuMedia.alt1.url ? (order.orderItems[0].skuMedia.alt1.url + '?imageView/2/1/w/260/h/260') : '../../icons/img-none.png'}}"></image>
+               src="{{order.orderItems[0].skuMedia.alt1 ? (order.orderItems[0].skuMedia.alt1.url + '?imageView/2/1/w/260/h/260') : (order.orderItems[0].skuMedia.primary ? (order.orderItems[0].skuMedia.primary.url + '?imageView/2/1/w/260/h/260') : '../../icons/img-none.png')}}"></image>
         <view class="order-figcaption">
           <view class="p">订单编号：{{order.orderNumber}}</view>
           <view class="p">
