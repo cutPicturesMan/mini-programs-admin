@@ -20,6 +20,8 @@ Page({
     // 优惠金额
     cheapPrice: 0,
     // 订单总价
+    originPrice: '',
+    // 减去优惠金额之后的订单总价
     totalPrice: '',
     // 备注框文字
     remarks: '',
@@ -105,14 +107,16 @@ Page({
     }).then((res) => {
       wx.hideLoading();
 
-      let order = res.data;
-      order.date = utils.formatDate(new Date(order.updatedAt), 'YYYY-MM-DD HH:mm:ss');
-      let deliveryDate = utils.formatDate(order.deliveryDate ? new Date(order.deliveryDate) : undefined, 'YYYY-MM-DD');
+      if (res.errorCode === 200 && res.data) {
+        let order = res.data;
+        order.date = utils.formatDate(new Date(order.updatedAt), 'YYYY-MM-DD HH:mm:ss');
+        let deliveryDate = utils.formatDate(order.deliveryDate ? new Date(order.deliveryDate) : undefined, 'YYYY-MM-DD');
+        let originPrice =  order.offerTotal || order.amount;
 
-      if (res.errorCode === 200) {
         this.setData({
           deliveryDate,
-          totalPrice: order.offerTotal || order.amount,
+          originPrice,
+          totalPrice: originPrice,
           order: order,
           isInRoles: this.judgeRole(order.status.type),
           isLoaded: true
@@ -125,8 +129,36 @@ Page({
 
         // 如果订单状态是业务员审核、经理审核、待财务确认、待财务审核，则需要去请求支付方式
         if (order.status.type == PENDING_SALEMAN || order.status.type == EXAMINE_MANAGER || order.status.type === EXAMINE_ACCOUNTANT || order.status.type === SUBMITTED){
-          this.getPayType(id);
+          this.getPayType(id).then((payType)=>{
+            // 默认的支付方式
+            let payIndex = 0;
+
+            // 如果原本的订单已经选择了支付方式，则找出这个方式
+            if(order.payments && order.payments.length){
+              if(order.payments[0].gatewayType && order.payments[0].gatewayType.type){
+                payType.some((item, index)=>{
+                  if(item.type == order.payments[0].gatewayType.type){
+                    payIndex = index;
+                    return true;
+                  } else {
+                    return false;
+                  }
+                });
+              }
+            }
+
+            this.setData({
+              isPayLoaded: true,
+              payIndex,
+              payType
+            });
+          });
         }
+      } else {
+        wx.showToast({
+            title: '未查到该订单',
+            image: '../../icons/close-circled.png'
+        })
       }
     })
   },
@@ -165,16 +197,29 @@ Page({
 
     this.switchRemark();
   },
-  // 输入总价
+  /**
+   * 输入总价
+   * 1、防止
+  */
   inputCheapPrice (e) {
-    let { totalPrice } = this.data;
+    let { originPrice, totalPrice } = this.data;
     let cheapPrice = e.detail.value;
 
+    // 如果输入非数字 || 输入为''
     if(isNaN(cheapPrice) || cheapPrice === ''){
-      cheapPrice = 0;
+      cheapPrice = '0';
     }
 
-    if(totalPrice < cheapPrice){
+    // '01'、'01.'、'01.01'
+    let price = cheapPrice.split('.');
+    // 如果有小数点，如'01.'、'01.01'，则要在去掉前导0之后加上小数点
+    if(price.length == 2){
+      cheapPrice = parseInt(price[0]) + '.' + price[1];
+    } else {
+      cheapPrice = parseInt(price[0]);
+    }
+
+    if(originPrice < cheapPrice){
       cheapPrice = 0;
 
       wx.showToast({
@@ -183,8 +228,11 @@ Page({
       })
     }
 
+    totalPrice = parseFloat(originPrice - cheapPrice).toFixed(2);
+
     this.setData({
-      cheapPrice
+      cheapPrice,
+      totalPrice
     });
   },
   // 输入数量
@@ -213,15 +261,21 @@ Page({
   },
   // 获取所有支付方式
   getPayType (id) {
-    http.request({
-      url: `${api.pay}${id}`
-    }).then((res) => {
-      this.setData({
-        isPayLoaded: true,
-        payIndex: 0,
-        payType: res.data
+    let p = new Promise((resolve, reject)=>{
+      http.request({
+        url: `${api.pay}${id}`
+      }).then((res) => {
+        if(res.errorCode == 200 && res.data && res.data.length){
+          resolve(res.data);
+        } else {
+          reject();
+        }
+      }, (err)=>{
+        reject();
       });
     });
+
+    return p;
   },
   // 获取物流方式列表
   getlogisticList () {

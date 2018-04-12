@@ -28,7 +28,7 @@
       </view>
       <view class="label-line small bb-e5">
         <view class="r mr20">
-          商品总价：￥{{totalPrice - cheapPrice}}
+          商品总价：￥{{totalPrice}}
         </view>
       </view>
     </view>
