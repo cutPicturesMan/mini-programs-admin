@@ -33,7 +33,7 @@
     </view>
     <view class="label-act bb">
       <view class="title"></view>
-      <view class="arrow">订单金额：{{item.amount}}</view>
+      <view class="arrow">订单总价：{{item.amount}}</view>
     </view>
 
   </view>

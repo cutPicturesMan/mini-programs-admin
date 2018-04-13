@@ -545,8 +545,7 @@ Page({
       url: `${api.manage_put_order}${id}`,
       method: 'POST',
       data: {
-        adopt: 0,
-        price: this.data.order.offerTotal
+        adopt: 0
       }
     }).then((res) => {
       if (res.errorCode === 200) {
