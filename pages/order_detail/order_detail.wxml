@@ -22,8 +22,8 @@
         <view class="r mr20">
           优惠金额：￥<input class="input-price tac text-energized"
                       type="digit"
-                      value="{{cheapPrice}}"
-                      bindinput="inputCheapPrice"/>
+                      value="{{offerTotal}}"
+                      bindinput="inputOfferTotal"/>
         </view>
       </view>
       <view class="label-line small bb-e5">
