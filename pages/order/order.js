@@ -44,7 +44,7 @@ Page({
           item.isConfirming = false;
           // 后台没有返回备注，在此模拟一个备注接口
           // 总价
-          item.totalPrice = item.offerTotal;
+          item.totalPrice = item.amount;
           item.date = utils.formatDate(new Date(item.updatedAt), 'YYYY/MM/DD HH:mm:ss');
         });
 

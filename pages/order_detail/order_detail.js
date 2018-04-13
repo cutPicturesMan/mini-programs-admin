@@ -111,7 +111,7 @@ Page({
         let order = res.data;
         order.date = utils.formatDate(new Date(order.updatedAt), 'YYYY-MM-DD HH:mm:ss');
         let deliveryDate = utils.formatDate(order.deliveryDate ? new Date(order.deliveryDate) : undefined, 'YYYY-MM-DD');
-        let originPrice =  order.offerTotal || order.amount;
+        let originPrice =  order.subtotal;
 
         this.setData({
           deliveryDate,
@@ -564,8 +564,7 @@ Page({
       url: `${api.manage_put_order}${id}`,
       method: 'POST',
       data: {
-        adopt: 0,
-        price: this.data.order.offerTotal
+        adopt: 0
       }
     }).then((res) => {
       if (res.errorCode === 200) {
