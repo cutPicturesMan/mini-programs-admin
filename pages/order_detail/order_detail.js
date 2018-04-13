@@ -110,7 +110,7 @@ Page({
 
         this.setData({
           deliveryDate,
-          totalPrice: order.offerTotal || order.amount,
+          totalPrice: order.subtotal,
           order: order,
           isInRoles: this.judgeRole(order.status.type),
           isLoaded: true
