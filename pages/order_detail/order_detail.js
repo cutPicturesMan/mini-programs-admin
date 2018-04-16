@@ -18,11 +18,7 @@ Page({
     // 用户角色列表
     userInfo: {},
     // 优惠金额
-    cheapPrice: 0,
-    // 订单总价
-    originPrice: '',
-    // 减去优惠金额之后的订单总价
-    totalPrice: '',
+    offerTotal: 0,
     // 备注框文字
     remarks: '',
     // 订单数据
@@ -111,12 +107,10 @@ Page({
         let order = res.data;
         order.date = utils.formatDate(new Date(order.updatedAt), 'YYYY-MM-DD HH:mm:ss');
         let deliveryDate = utils.formatDate(order.deliveryDate ? new Date(order.deliveryDate) : undefined, 'YYYY-MM-DD');
-        let originPrice =  order.offerTotal || order.amount;
 
         this.setData({
           deliveryDate,
-          originPrice,
-          totalPrice: originPrice,
+          totalPrice: order.amount,
           order: order,
           isInRoles: this.judgeRole(order.status.type),
           isLoaded: true
@@ -201,38 +195,25 @@ Page({
    * 输入总价
    * 1、防止
   */
-  inputCheapPrice (e) {
-    let { originPrice, totalPrice } = this.data;
-    let cheapPrice = e.detail.value;
+  inputOfferTotal (e) {
+    let offerTotal = e.detail.value;
 
     // 如果输入非数字 || 输入为''
-    if(isNaN(cheapPrice) || cheapPrice === ''){
-      cheapPrice = '0';
+    if(isNaN(offerTotal) || offerTotal === ''){
+      offerTotal = '0';
     }
 
     // '01'、'01.'、'01.01'
-    let price = cheapPrice.split('.');
+    let price = offerTotal.split('.');
     // 如果有小数点，如'01.'、'01.01'，则要在去掉前导0之后加上小数点
     if(price.length == 2){
-      cheapPrice = parseInt(price[0]) + '.' + price[1];
+      offerTotal = parseInt(price[0]) + '.' + price[1];
     } else {
-      cheapPrice = parseInt(price[0]);
+      offerTotal = parseInt(price[0]);
     }
-
-    if(originPrice < cheapPrice){
-      cheapPrice = 0;
-
-      wx.showToast({
-        title: '优惠金额超出',
-        image: '../../icons/close-circled.png'
-      })
-    }
-
-    totalPrice = parseFloat(originPrice - cheapPrice).toFixed(2);
 
     this.setData({
-      cheapPrice,
-      totalPrice
+      offerTotal
     });
   },
   // 输入数量
@@ -416,7 +397,7 @@ Page({
   },
   // 业务员提交
   confirmOrder () {
-    let { order, totalPrice, remarks, payIndex, payType, logisticList, logisticIndex, deliveryDate, isPayLoaded, isLogisticed } = this.data;
+    let { order, offerTotal, remarks, payIndex, payType, logisticList, logisticIndex, deliveryDate, isPayLoaded, isLogisticed } = this.data;
 
     try {
       // 支付方式列表未加载完毕
@@ -436,8 +417,8 @@ Page({
         throw new Error('暂无可选物流方式，无法下单');
       }
       // 如果价格未填写
-      if (totalPrice === '') {
-        throw new Error('请填写商品总价');
+      if (offerTotal === '') {
+        throw new Error('请填写优惠金额');
       }
       // 未选择交货日期
       if (!deliveryDate) {
@@ -483,7 +464,7 @@ Page({
       url: `${api.salesman_put_order}${order.id}`,
       method: 'POST',
       data: {
-        price: totalPrice,
+        offerTotal,
         ...skus,
         payType: payType[payIndex].type,
         fulFillType,
@@ -564,8 +545,7 @@ Page({
       url: `${api.manage_put_order}${id}`,
       method: 'POST',
       data: {
-        adopt: 0,
-        price: this.data.order.offerTotal
+        adopt: 0
       }
     }).then((res) => {
       if (res.errorCode === 200) {
@@ -588,7 +568,7 @@ Page({
   // 经理通过
   passOrder (e) {
     let { id } = e.currentTarget.dataset;
-    let { order, totalPrice, remarks, payIndex, payType, logisticList, logisticIndex, deliveryDate, isPayLoaded, isLogisticed } = this.data;
+    let { order, offerTotal, remarks, payIndex, payType, logisticList, logisticIndex, deliveryDate, isPayLoaded, isLogisticed } = this.data;
 
     try {
       // 支付方式列表未加载完毕
@@ -608,8 +588,8 @@ Page({
         throw new Error('暂无可选物流方式，无法下单');
       }
       // 如果价格未填写
-      if (totalPrice === '') {
-        throw new Error('请填写商品总价');
+      if (offerTotal === '') {
+        throw new Error('请填写优惠金额');
       }
       // 未选择交货日期
       if (!deliveryDate) {
@@ -656,7 +636,7 @@ Page({
       method: 'POST',
       data: {
         adopt: 1,
-        price: totalPrice,
+        offerTotal,
         ...skus,
         payType: payType[payIndex].type,
         fulFillType,
@@ -729,7 +709,7 @@ Page({
   // 财务通过
   financePass (e) {
     let { id } = e.currentTarget.dataset;
-    let { EXAMINE_ACCOUNTANT, SUBMITTED, order, totalPrice, payIndex, payType, isPayLoaded } = this.data;
+    let { EXAMINE_ACCOUNTANT, SUBMITTED, order, offerTotal, payIndex, payType, isPayLoaded } = this.data;
 
     try {
       // 待财务审核、待财务确认，要加载支付方式
@@ -754,8 +734,8 @@ Page({
       }
 
       // 如果价格未填写
-      if (totalPrice === '') {
-        throw new Error('请填写商品总价');
+      if (offerTotal === '') {
+        throw new Error('请填写优惠金额');
       }
     } catch (e) {
       return wx.showToast({
@@ -825,7 +805,6 @@ Page({
   storePass (e) {
     let {
       order,
-      totalPrice,
       logisticNum,
       driverName,
       driverPhone

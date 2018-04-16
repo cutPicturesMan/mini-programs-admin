@@ -48,7 +48,7 @@ new WXPage({
           item.isCanceling = false;
           item.isConfirming = false;
           // 总价
-          item.totalPrice = item.offerTotal;
+          item.totalPrice = item.amount;
           item.date = utils.formatDate(new Date(item.updatedAt), 'YYYY/MM/DD HH:mm:ss');
         });
 

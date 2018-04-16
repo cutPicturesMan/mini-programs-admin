@@ -10,7 +10,7 @@
             订单状态：<text class="text-energized">{{order.status.friendlyType}}</text>
           </view>
           <view class="p">商品名称：{{order.name}}</view>
-          <view class="p">订单总计：￥{{order.amount}}</view>
+          <view class="p">订单小计：￥{{order.subtotal}}</view>
           <view class="p">公司名称：{{order.companyName}}</view>
           <view class="p">客户姓名：{{order.customerName}}</view>
           <view class="p">联系方式：{{order.mobile}}</view>
@@ -22,8 +22,8 @@
         <view class="r mr20">
           优惠金额：￥<input class="input-price tac text-energized"
                       type="digit"
-                      value="{{cheapPrice}}"
-                      bindinput="inputCheapPrice"/>
+                      value="{{offerTotal}}"
+                      bindinput="inputOfferTotal"/>
         </view>
       </view>
       <view class="label-line small bb-e5">
