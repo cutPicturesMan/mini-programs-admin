@@ -3,11 +3,12 @@ import api from '../../public/js/api.js';
 import { ROLE_LIST } from '../../public/js/role.js';
 import STATUS from '../../public/js/status.js';
 import utils from '../../public/js/utils.js';
+import WXPage from '../Page';
 
 let app = getApp();
 let beginDateMillion = new Date().getTime();
 
-Page({
+new WXPage({
   data: {
     // 管理员角色列表
     ...ROLE_LIST,
@@ -149,9 +150,8 @@ Page({
           });
         }
       } else {
-        wx.showToast({
-            title: '未查到该订单',
-            image: '../../icons/close-circled.png'
+        this.toast.error({
+          content: '未查到该订单'
         })
       }
     })
@@ -287,9 +287,8 @@ Page({
         });
       } else {
         // 获取失败，则提示
-        wx.showToast({
-          title: res.moreInfo,
-          image: '../../icons/close-circled.png'
+        this.toast.error({
+          content: res.moreInfo
         })
       }
     })
@@ -381,17 +380,16 @@ Page({
       wx.hideLoading();
 
       if (res.errorCode === 200) {
-        wx.showToast({
-          title: res.moreInfo
-        });
+        this.toast.success({
+          content: res.moreInfo
+        })
         wx.navigateBack({
           delta: 1,
         })
       } else {
-        wx.showToast({
-          title: res.moreInfo || '删除失败',
-          image: '../../icons/close-circled.png'
-        });
+        this.toast.error({
+          content: res.moreInfo || '删除失败'
+        })
       }
     })
   },
@@ -433,9 +431,8 @@ Page({
         }
       });
     } catch (e) {
-      return wx.showToast({
-        title: e.message,
-        image: '../../icons/close-circled.png',
+      return this.toast.error({
+        content: e.message,
         duration: 4000
       })
     }
@@ -476,8 +473,8 @@ Page({
 
       // 提交成功，则跳转到待处理页面
       if (res.errorCode === 200) {
-        wx.showToast({
-          title: res.moreInfo
+        this.toast.success({
+          content: res.moreInfo
         })
         setTimeout(() => {
           wx.navigateBack({
@@ -486,9 +483,8 @@ Page({
         }, 1500)
       } else {
         // 提交失败，则提示
-        wx.showToast({
-          title: res.moreInfo,
-          image: '../../icons/close-circled.png'
+        this.toast.error({
+          content: res.moreInfo
         })
 
         setTimeout(() => {
@@ -512,14 +508,13 @@ Page({
       wx.hideLoading();
 
       if (res.errorCode === 200) {
-        wx.showToast({
-          title: res.moreInfo
-        });
+        this.toast.success({
+          content: res.moreInfo
+        })
       } else {
-        wx.showToast({
-          title: res.moreInfo || '退货失败',
-          image: '../../icons/close-circled.png'
-        });
+        this.toast.error({
+          content: res.moreInfo || '退货失败'
+        })
       }
     })
   },
@@ -549,19 +544,18 @@ Page({
       }
     }).then((res) => {
       if (res.errorCode === 200) {
-        wx.showToast({
-          title: res.moreInfo
-        });
+        this.toast.success({
+          content: res.moreInfo
+        })
         setTimeout(() => {
           wx.navigateBack({
             delta: 1
           });
         }, 1500)
       } else {
-        wx.showToast({
-          title: res.moreInfo || '拒绝失败',
-          image: '../../icons/close-circled.png'
-        });
+        this.toast.error({
+          content: res.moreInfo || '拒绝失败'
+        })
       }
     })
   },
@@ -604,9 +598,8 @@ Page({
         }
       });
     } catch (e) {
-      return wx.showToast({
-        title: e.message,
-        image: '../../icons/close-circled.png',
+      return this.toast.error({
+        content: e.message,
         duration: 4000
       })
     }
@@ -646,8 +639,8 @@ Page({
     }).then((res) => {
       // 提交成功
       if (res.errorCode === 200) {
-        wx.showToast({
-          title: res.moreInfo
+        this.toast.success({
+          content: res.moreInfo
         })
 
         setTimeout(() => {
@@ -657,9 +650,8 @@ Page({
         }, 1500)
       } else {
         // 提交失败，则提示
-        wx.showToast({
-          title: res.moreInfo,
-          image: '../../icons/close-circled.png'
+        this.toast.error({
+          content: res.moreInfo
         })
       }
     })
@@ -690,19 +682,18 @@ Page({
       }
     }).then((res) => {
       if (res.errorCode === 200) {
-        wx.showToast({
-          title: res.moreInfo
-        });
+        this.toast.success({
+          content: res.moreInfo
+        })
         setTimeout(() => {
           wx.navigateBack({
             delta: 1
           });
         }, 1500)
       } else {
-        wx.showToast({
-          title: res.moreInfo || '拒绝失败',
-          image: '../../icons/close-circled.png'
-        });
+        this.toast.error({
+          content: res.moreInfo || '拒绝失败'
+        })
       }
     })
   },
@@ -738,9 +729,8 @@ Page({
         throw new Error('请填写优惠金额');
       }
     } catch (e) {
-      return wx.showToast({
-        title: e.message,
-        image: '../../icons/close-circled.png',
+      return this.toast.error({
+        content: e.message,
         duration: 4000
       })
     }
@@ -782,8 +772,8 @@ Page({
     }).then((res) => {
       // 提交成功
       if (res.errorCode === 200) {
-        wx.showToast({
-          title: res.moreInfo
+        this.toast.success({
+          content: res.moreInfo
         })
 
         setTimeout(() => {
@@ -793,9 +783,8 @@ Page({
         }, 1500)
       } else {
         // 提交失败，则提示
-        wx.showToast({
-          title: res.moreInfo,
-          image: '../../icons/close-circled.png'
+        this.toast.error({
+          content: res.moreInfo
         })
       }
     })
@@ -839,8 +828,8 @@ Page({
     }).then((res) => {
       // 提交成功
       if (res.errorCode === 200) {
-        wx.showToast({
-          title: res.moreInfo
+        this.toast.success({
+          content: res.moreInfo
         })
 
         setTimeout(() => {
@@ -855,9 +844,8 @@ Page({
         }, 1500)
       } else {
         // 提交失败，则提示
-        wx.showToast({
-          title: res.moreInfo,
-          image: '../../icons/close-circled.png'
+        this.toast.error({
+          content: res.moreInfo,
         })
       }
     })
@@ -870,10 +858,9 @@ Page({
       });
       this.getData(params.id);
     } else {
-      wx.showToast({
-        title: '订单id不存在',
-        image: '../../icons/close-circled.png'
-      });
+      this.toast.error({
+        content: '订单id不存在',
+      })
     }
   }
 })

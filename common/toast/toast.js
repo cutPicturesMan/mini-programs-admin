@@ -2,6 +2,32 @@
  * 自定义的toast 提示浮层
  */
 
+function show(opt, icon = 'ERROR'){
+  if (opt.page) {
+    this.page = opt.page
+  } else {
+    const pages = getCurrentPages()
+    this.page = pages[pages.length - 1]
+  }
+
+  this.page && this.page.setData({ toast: {} })
+  clearTimeout(this.timeoutId)
+
+  this.page.setData({
+    toast: {
+      icon: opt.icon || toast.ICON[icon],
+      content: opt.content,
+      isShowToast: true
+    }
+  })
+
+  if (typeof opt.duration == 'undefined')
+    opt.duration = 1500
+
+  if (opt.duration > 0)
+    this.timeoutId = setTimeout(this.hide.bind(this), opt.duration)
+}
+
 const toast = {
 	/**
 	 * 显示提示浮层
@@ -15,38 +41,31 @@ const toast = {
 	 *   }
 	 */
 	show(opt = {}) {
-		if (!opt.content) return;
-
-		if (opt.page) {
-			this.page = opt.page
-		} else {
-			const pages = getCurrentPages()
-			this.page = pages[pages.length - 1]
-		}
-
-		this.page && this.page.setData({ toast: {} })
-		clearTimeout(this.timeoutId)
-
-		this.page.setData({
-			toast: {
-				icon: opt.icon || toast.ICON.ERROR,
-				content: opt.content
-			}
-		})
-
-		if (typeof opt.duration == 'undefined')
-			opt.duration = 1500
-
-		if (opt.duration > 0)
-			this.timeoutId = setTimeout(this.hide.bind(this), opt.duration)
+		show.call(this, opt, 'SUCCESS')
 	},
+
+	success(opt = {}) {
+    show.call(this, opt, 'SUCCESS')
+  },
+
+	error(opt = {}) {
+    show.call(this, opt)
+	},
+
+  loading(opt = {}) {
+    show.call(this, opt, 'LOADING')
+  },
 
 	/**
 	 * 隐藏提示浮层
 	 */
 	hide() {
 		clearTimeout(this.timeoutId)
-		this.page && this.page.setData({ toast: {} })
+		this.page && this.page.setData({
+      toast: {
+        isShowToast: false
+      }
+		})
 		delete this.page
 	}
 }
@@ -56,7 +75,7 @@ const toast = {
  */
 toast.ICON = {
 	SUCCESS : 'success_circle',
-	LOADING : 'waiting_circle',
+	LOADING : 'waiting',
 	INFO    : 'info',
 	SEARCH  : 'search',
 	WARNING : 'warn',

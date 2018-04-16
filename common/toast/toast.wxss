@@ -1,9 +1,12 @@
 .toast {
+  min-width: 250rpx;
+  max-width: 400rpx;
+  min-height: 200rpx;
   position: fixed;
-  left: 175rpx;
+  left: 50%;
   top: 50%;
-  -webkit-transform: translateY(-61.8%);
-          transform: translateY(-61.8%);
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
   z-index: 100;
   display: -webkit-box;
   display: -webkit-flex;
@@ -12,17 +15,46 @@
   -webkit-box-direction: normal;
   -webkit-flex-direction: column;
           flex-direction: column;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+          justify-content: center;
   -webkit-box-align: center;
   -webkit-align-items: center;
           align-items: center;
   box-sizing: border-box;
   padding: 15px;
-  width: 400rpx;
   border-radius: 5px;
   background: rgba(0, 0, 0, 0.7); }
-  .toast icon {
-    margin-bottom: 10px; }
+  .toast .loading {
+    margin-top: 15px;
+    height: 15px;
+    width: 30px;
+    border: 2px solid #fff;
+    border-top: 0;
+    border-radius: 0 0 15px 15px;
+    -webkit-transform-origin: top center;
+            transform-origin: top center;
+    box-sizing: border-box;
+    -webkit-animation: spin .75s linear infinite;
+            animation: spin .75s linear infinite; }
   .toast text {
+    margin-top: 10px;
     word-break: break-all;
     font-size: 14px;
     color: #fff; }
+
+@-webkit-keyframes spin {
+  from {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg); }
+  to {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg); } }
+
+@keyframes spin {
+  from {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg); }
+  to {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg); } }
