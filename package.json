@@ -1,0 +1,27 @@
+{
+  "name": "mini-programs-admin",
+  "version": "1.0.0",
+  "description": "the admin of mini-programs",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cutPicturesMan/mini-programs-admin.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/cutPicturesMan/mini-programs-admin/issues"
+  },
+  "homepage": "https://github.com/cutPicturesMan/mini-programs-admin#readme",
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-autoprefixer": "^5.0.0",
+    "gulp-rename": "^1.2.2",
+    "gulp-sass": "^4.0.1",
+    "gulp-util": "^3.0.8",
+    "stream-combiner2": "^1.1.1"
+  }
+}

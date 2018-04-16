@@ -22,6 +22,8 @@
   background-color: #fff; }
   .order-item .order-figure {
     padding: 25rpx 0 20rpx 0;
+    display: -webkit-box;
+    display: -webkit-flex;
     display: flex; }
     .order-item .order-figure .img {
       width: 130rpx;
@@ -29,7 +31,9 @@
       border: 1rpx solid #e8e8e8;
       margin-right: 22rpx; }
     .order-item .order-figure .order-figcaption {
-      flex: 1;
+      -webkit-box-flex: 1;
+      -webkit-flex: 1;
+              flex: 1;
       padding: 7rpx 0; }
       .order-item .order-figure .order-figcaption .p {
         line-height: 40rpx;
@@ -45,5 +49,3 @@
 .order-item {
   margin: 0 24rpx;
   border-radius: 10rpx; }
-
-/*# sourceMappingURL=store_send.wxss.map */

@@ -3,10 +3,11 @@ import api from '../../public/js/api.js';
 import { ROLE_LIST } from '../../public/js/role.js';
 import utils from '../../public/js/utils.js';
 import STATUS from '../../public/js/status.js';
+import WXPage from '../Page';
 
 let app = getApp();
 
-Page({
+new WXPage({
   data: {
     // 用户信息
     userInfo: {},

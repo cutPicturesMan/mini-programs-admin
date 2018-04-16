@@ -10,6 +10,8 @@
 .collect-item {
   padding: 20rpx;
   background-color: #fff;
+  display: -webkit-box;
+  display: -webkit-flex;
   display: flex; }
   .collect-item .img {
     width: 130rpx;
@@ -17,7 +19,9 @@
     margin-right: 20rpx;
     border: 1px solid #e8e8e8; }
   .collect-item .item-main {
-    flex: 1; }
+    -webkit-box-flex: 1;
+    -webkit-flex: 1;
+            flex: 1; }
     .collect-item .item-main .title {
       font-size: 28rpx;
       margin-bottom: 10rpx; }
@@ -29,5 +33,3 @@
       line-height: 42rpx;
       font-size: 24rpx;
       color: #999; }
-
-/*# sourceMappingURL=finance_collect.wxss.map */
