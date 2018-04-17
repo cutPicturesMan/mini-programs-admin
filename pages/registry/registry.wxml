@@ -1,3 +1,6 @@
+<import src="../../common/toast/toast.wxml"/>
+<template is="toast" data="{{ ...toast }}"/>
+
 <!--如果扫码出现错误-->
 <view class="empty-data" wx:if="{{isScanError}}">
   <view class="p20 tac fs32 text-stable">扫码出错，该二维码无经理adminId参数</view>

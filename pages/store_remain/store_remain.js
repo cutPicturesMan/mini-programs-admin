@@ -1,7 +1,8 @@
 import http from '../../public/js/http.js';
 import api from '../../public/js/api.js';
+import WXPage from '../Page';
 
-Page({
+new WXPage({
   data: {
     // 订单列表
     list: [],
@@ -149,9 +150,8 @@ Page({
         throw new Error('您未修改任何商品');
       }
     } catch (e) {
-      return wx.showToast({
-        title: e.message,
-        image: '../../icons/close-circled.png',
+      return this.toast.error({
+        content: e.message,
         duration: 4000
       })
     }
@@ -181,10 +181,12 @@ Page({
         ...skus
       }
     }).then((res) => {
+      wx.hideLoading();
+
       // 提交成功，则跳转到待处理页面
       if (res.errorCode === 200) {
-        wx.showToast({
-          title: res.moreInfo || '提交成功'
+        this.toast.success({
+          content: res.moreInfo || '提交成功'
         })
 
         setTimeout(() => {
@@ -202,9 +204,8 @@ Page({
         }, 1500)
       } else {
         // 提交失败，则提示
-        wx.showToast({
-          title: res.moreInfo,
-          image: '../../icons/close-circled.png'
+        this.toast.error({
+          content: res.moreInfo
         })
 
         setTimeout(() => {

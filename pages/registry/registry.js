@@ -2,11 +2,12 @@ import http from '../../public/js/http.js';
 import api from '../../public/js/api.js';
 import Auth from '../../public/js/auth.js';
 import utils from '../../public/js/utils.js';
+import WXPage from '../Page';
 
 let app = getApp();
 let auth = new Auth();
 
-Page({
+new WXPage({
   data: {
     // 用户信息
     info: {},
@@ -87,9 +88,8 @@ Page({
         throw new Error('请填写电话');
       }
     } catch (e) {
-      return wx.showToast({
-        title: e.message,
-        image: '../../icons/close-circled.png',
+      return this.toast.error({
+        content: e.message,
         duration: 4000
       })
     }
@@ -112,13 +112,15 @@ Page({
         adminId
       }
     }).then((res) => {
+      wx.hideLoading();
+
       // 提交成功，则跳转到待处理页面
       if (res.errorCode === 200) {
         // 从后台进入前台时，刷新当前用户信息
         app.userInfo = null;
 
-        wx.showToast({
-          title: res.moreInfo || '提交成功'
+        this.toast.success({
+          content: res.moreInfo || '提交成功'
         })
 
         setTimeout(() => {
@@ -128,9 +130,8 @@ Page({
         }, 1500)
       } else {
         // 提交失败，则提示
-        wx.showToast({
-          title: res.moreInfo,
-          image: '../../icons/close-circled.png'
+        this.toast.error({
+          content: res.moreInfo
         })
 
         setTimeout(() => {
@@ -167,9 +168,8 @@ Page({
     app.getUserInfo()
       .then((res) => {
         if (res.status && res.status.id == 1) {
-          wx.showToast({
-            title: '您已注册，自动跳转中',
-            image: '../../icons/close-circled.png'
+          this.toast.error({
+            content: '您已注册，自动跳转中'
           })
 
           setTimeout(() => {

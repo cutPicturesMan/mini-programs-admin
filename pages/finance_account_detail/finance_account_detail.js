@@ -1,8 +1,9 @@
 import http from '../../public/js/http.js';
 import api from '../../public/js/api.js';
 import utils from '../../public/js/utils.js';
+import WXPage from '../Page';
 
-Page({
+new WXPage({
   data: {
     id: 0,
     date: utils.formatDate(new Date(), 'YYYY-MM'),
@@ -69,15 +70,13 @@ Page({
       }
 
       if (ids.length === 0) {
-        return wx.showToast({
-          image: '../../icons/close-circled.png',
-          title: '请至少选择一个订单'
+        return this.toast.error({
+          content: '请至少选择一个订单'
         })
       }
     } catch (e) {
-      return wx.showToast({
-        title: e.message,
-        image: '../../icons/close-circled.png',
+      return this.toast.error({
+        content: e.message,
         duration: 4000
       })
     }
@@ -95,17 +94,17 @@ Page({
         ids: ids.join(',')
       }
     }).then((res) => {
-      if (res.errorCode === 200) {
-        wx.showToast({
-          title: res.moreInfo || '销账成功'
+      wx.hideLoading();
+
+      if(res.errorCode === 200) {
+        this.toast.success({
+          content: res.moreInfo || '销账成功'
         })
 
         setTimeout(()=>{
           this.getData();
         }, 1500);
       } else {
-        wx.hideLoading();
-
         wx.showModal({
           title: '提示',
           content: '销账失败，请重试'

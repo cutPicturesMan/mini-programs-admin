@@ -1,5 +1,6 @@
 import http from '../../public/js/http.js';
 import api from '../../public/js/api.js';
+import WXPage from '../Page';
 
 let days = [];
 
@@ -7,7 +8,7 @@ for(let i = 1; i <= 31; i++){
   days.push(i);
 }
 
-Page({
+new WXPage({
   data: {
     id: 0,
     avatar: '',
@@ -71,9 +72,8 @@ Page({
       //   throw new Error('客户折扣未填写');
       // }
     } catch (e) {
-      return wx.showToast({
-        title: e.message,
-        image: '../../icons/close-circled.png',
+      return this.toast.error({
+        content: e.message,
         duration: 4000
       })
     }
@@ -96,8 +96,8 @@ Page({
 
       // 提交成功，则返回上一层
       if (res.errorCode === 200) {
-        wx.showToast({
-          title: res.moreInfo
+        this.toast.success({
+          content: res.moreInfo || '提交成功'
         })
 
         this.setData({
@@ -105,9 +105,8 @@ Page({
         });
       } else {
         // 提交失败，则提示
-        wx.showToast({
-          title: res.moreInfo,
-          image: '../../icons/close-circled.png'
+        this.toast.error({
+          content: res.moreInfo
         })
 
         setTimeout(() => {

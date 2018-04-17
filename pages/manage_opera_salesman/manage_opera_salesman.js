@@ -1,8 +1,9 @@
 import http from '../../public/js/http.js';
 import api from '../../public/js/api.js';
 import { ROLE, ROLE_LIST } from '../../public/js/role.js';
+import WXPage from '../Page';
 
-Page({
+new WXPage({
   data: {
     ROLE,
     // 客户列表
@@ -64,12 +65,11 @@ Page({
 
     // 非编辑模式下，提示
     if(!isEdit){
-        wx.showToast({
-            title: '请点击编辑按钮',
-            image: '../../icons/close-circled.png'
-        });
+      this.toast.error({
+        content: '请点击编辑按钮'
+      })
 
-        return false;
+      return false;
     }
 
     roleObj[code] = !roleObj[code];
@@ -105,10 +105,9 @@ Page({
       });
 
       if(isSame){
-        wx.showToast({
-            title: '您没有做出任何修改',
-            image: '../../icons/close-circled.png'
-        });
+        this.toast.error({
+          content: '您没有做出任何修改'
+        })
       }
     } else {
       wx.showLoading();
@@ -135,14 +134,13 @@ Page({
             [`list[${index}].allRoles`]: newRoleArr
           });
 
-          wx.showToast({
-            title: res.moreInfo || '恭喜你，修改成功'
-          });
+          this.toast.success({
+            content: res.moreInfo || '恭喜你，修改成功'
+          })
         } else {
-          wx.showToast({
-            image: '../../icons/close-circled.png',
-            title: '修改失败，请重试'
-          });
+          this.toast.error({
+            content: '修改失败，请重试'
+          })
         }
       })
     }
@@ -158,11 +156,10 @@ Page({
 
     // 如果正在发送数据，则返回
     if (list[index].isPassing || list[index].isRejecting) {
-      wx.showToast({
-        title: '数据提交中，请稍后...',
-        image: '../../icons/close-circled.png'
+      this.toast.error({
+        content: '数据提交中，请稍后...'
       })
-      return;
+      return false;
     }
 
     // 根据通过、拒绝进行按钮禁用
@@ -187,17 +184,16 @@ Page({
       wx.hideLoading();
 
       if (res.errorCode === 200) {
-        wx.showToast({
-          title: res.moreInfo
-        });
+        this.toast.success({
+          content: res.moreInfo
+        })
         setTimeout(() => {
           this.getData();
         }, 1500);
       } else {
-        wx.showToast({
-          title: res.moreInfo,
-          image: '../../icons/close-circled.png'
-        });
+        this.toast.error({
+          content: res.moreInfo
+        })
 
         setTimeout(() => {
           // 根据通过、拒绝进行按钮解除禁用
@@ -246,11 +242,11 @@ Page({
 
     // 如果正在发送数据，则返回
     if (list[index].isRemoving) {
-      wx.showToast({
-        title: '数据提交中，请稍后...',
-        image: '../../icons/close-circled.png'
+      this.toast.error({
+        content: '数据提交中，请稍后...'
       })
-      return;
+
+      return false;
     }
 
     // 进行按钮禁用
@@ -268,9 +264,9 @@ Page({
       wx.hideLoading();
 
       if (res.errorCode === 200) {
-        wx.showToast({
-          title: res.moreInfo
-        });
+        this.toast.success({
+          content: res.moreInfo
+        })
         setTimeout(() => {
           this.getData();
         }, 1500);

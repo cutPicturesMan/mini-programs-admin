@@ -543,6 +543,8 @@ new WXPage({
         adopt: 0
       }
     }).then((res) => {
+      wx.hideLoading();
+
       if (res.errorCode === 200) {
         this.toast.success({
           content: res.moreInfo
@@ -637,6 +639,8 @@ new WXPage({
         remarks: remarks ? remarks : order.remarks
       }
     }).then((res) => {
+      wx.hideLoading();
+
       // 提交成功
       if (res.errorCode === 200) {
         this.toast.success({
@@ -681,6 +685,8 @@ new WXPage({
         adopt: 0
       }
     }).then((res) => {
+      wx.hideLoading();
+
       if (res.errorCode === 200) {
         this.toast.success({
           content: res.moreInfo
@@ -770,6 +776,8 @@ new WXPage({
       method: 'POST',
       data,
     }).then((res) => {
+      wx.hideLoading();
+
       // 提交成功
       if (res.errorCode === 200) {
         this.toast.success({
@@ -826,6 +834,8 @@ new WXPage({
         logistics
       }
     }).then((res) => {
+      wx.hideLoading();
+
       // 提交成功
       if (res.errorCode === 200) {
         this.toast.success({

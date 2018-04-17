@@ -1,3 +1,6 @@
+<import src="../../common/toast/toast.wxml"/>
+<template is="toast" data="{{ ...toast }}"/>
+
 <scroll-view
         class="scroll-view"
         scroll-y="true"

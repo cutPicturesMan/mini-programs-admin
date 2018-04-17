@@ -1,10 +1,11 @@
 import http from '../../public/js/http.js';
 import api from '../../public/js/api.js';
 import { ROLE_LIST } from '../../public/js/role.js';
+import WXPage from '../Page';
 
 let app = getApp();
 
-Page({
+new WXPage({
   data: {
     // 用户信息
     userInfo: {},
@@ -81,9 +82,8 @@ Page({
         throw new Error('请输入姓名');
       }
     } catch (e) {
-      return wx.showToast({
-        title: e.message,
-        image: '../../icons/close-circled.png',
+      return this.toast.error({
+        content: e.message,
         duration: 4000
       })
     }
@@ -117,9 +117,9 @@ Page({
       wx.hideLoading();
 
       if (res.errorCode === 200) {
-        wx.showToast({
-          title: res.moreInfo
-        });
+        this.toast.success({
+          content: res.moreInfo
+        })
 
         setTimeout(() => {
           this.getData();
@@ -136,9 +136,8 @@ Page({
           item.isRejecting = false;
         }
 
-        wx.showToast({
-          title: res.moreInfo,
-          image: '../../icons/close-circled.png'
+        this.toast.error({
+          content: res.moreInfo
         })
 
         this.setData({
@@ -168,11 +167,10 @@ Page({
 
     // 如果正在发送数据，则返回
     if(list[index].isRemoving){
-      wx.showToast({
-        title: '数据提交中，请稍后...',
-        image: '../../icons/close-circled.png'
+      this.toast.error({
+        content: '数据提交中，请稍后...'
       })
-      return ;
+      return false;
     }
 
     // 进行按钮禁用
@@ -190,9 +188,9 @@ Page({
       wx.hideLoading();
 
       if (res.errorCode === 200) {
-        wx.showToast({
-          title: res.moreInfo
-        });
+        this.toast.success({
+          content: res.moreInfo
+        })
         setTimeout(() => {
           this.getData();
         }, 1500);

@@ -1,3 +1,6 @@
+<import src="../../common/toast/toast.wxml"/>
+<template is="toast" data="{{ ...toast }}"/>
+
 <view class="each-section mt18" wx:for="{{list}}" wx:key="{{item.id}}" data-index="{{index}}" bindtap="addToEditArr">
   <view class="sel">
     <image src="{{item.isSelected ? '../../icons/icon-radio-selected.png' : '../../icons/icon-radio.png'}}"></image>

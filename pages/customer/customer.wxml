@@ -1,3 +1,6 @@
+<import src="../../common/toast/toast.wxml"/>
+<template is="toast" data="{{ ...toast }}"/>
+
 <view class="time-container ptb25 tac">
   <text class="time">点击客户信息即可进入账期设置</text>
 </view>
