@@ -3545,14 +3545,14 @@
   border-color: #ff5000 transparent transparent transparent; }
 
 .toast {
-  min-width: 250rpx;
-  max-width: 400rpx;
-  min-height: 200rpx;
+  min-width: 140px;
+  max-width: 200px;
+  min-height: 120px;
   position: fixed;
   left: 50%;
   top: 50%;
-  -webkit-transform: translate(-50%, -61.8%);
-          transform: translate(-50%, -61.8%);
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
   z-index: 100;
   display: -webkit-box;
   display: -webkit-flex;
@@ -3568,7 +3568,7 @@
   -webkit-align-items: center;
           align-items: center;
   box-sizing: border-box;
-  padding: 15px;
+  padding: 10px 15px;
   border-radius: 5px;
   background: rgba(0, 0, 0, 0.7); }
   .toast .loading {
