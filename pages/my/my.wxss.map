@@ -1,7 +1,0 @@
-{
-"version": 3,
-"mappings": ";AAEA,YAAY;AAcZ;;;;;;GAMG;ACtBH,UAAU;EACR,MAAM,EAAE,MAAM;EACd,gBAAgB,EAAE,IAAI;EACtB,OAAO,EAAE,IAAI;EACb,eAAe,EAAE,MAAM;EACvB,WAAW,EAAE,MAAM;EACnB,cAAc,EAAE,MAAM;EACtB,eAAI;IACF,KAAK,EAAE,MAAM;IACb,MAAM,EAAE,MAAM;IACd,MAAM,EAAE,kBAAkB;EAE5B,iBAAM;IACJ,UAAU,EAAE,KAAK;IACjB,SAAS,EAAE,KAAK",
-"sources": ["../../public/css/_mixin.scss","../../public/css/_user_info.scss"],
-"names": [],
-"file": "my.wxss"
-}
