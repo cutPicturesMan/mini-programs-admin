@@ -1,0 +1,27 @@
+<!-- <view class="procurement">
+  <view class="procurement-information">
+    <view>
+      <image src=""></image>
+    </view>
+    <view>公司名称：</view>
+    <view>{{company}}</view>
+    <view>客户姓名：</view>
+    <view>{{name}}</view>
+    <view>电话：</view>
+    <view>{{phone}}</view>
+    <view>地址：</view>
+    <view>{{adress}}</view>
+    <view>最近下单：</view>
+    <view>{{lastTime}}</view>
+  </view>
+  <view class="procurement-chart">
+    <ec-canvas id="procurement-chart" canvas-id="procurement-chart" ec="{{ ec }}"></ec-canvas>
+  </view>
+  <view class="container">
+    <ec-canvas id="mychart-dom-bar" canvas-id="mychart-bar" ec="{{ ec }}"></ec-canvas>
+  </view>
+</view> -->
+
+<view class="container">
+  <ec-canvas id="mychart-dom-bar" canvas-id="mychart-bar" ec="{{ ec }}"></ec-canvas>
+</view>

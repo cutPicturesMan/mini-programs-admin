@@ -1,0 +1,41 @@
+.indicators{
+  margin: 30rpx 40rpx 0rpx;
+}
+
+.indicators-head{
+  display: flex;
+  flex-wrap:wrap;
+}
+
+.indicators-head-item{
+  width:310rpx;
+  margin:10rpx;
+}
+
+.indicators-salesman, .indicators-customer{
+  display: flex;
+  justify-content:space-around;
+  align-items: center;
+}
+
+.indicators-salesman:not(:last-of-type), .indicators-customer:not(:last-of-type){
+  border-bottom: 2rpx #C2C2C2 solid; 
+}
+
+.indicators-salesman-table, .indicators-customer-table{
+  margin: 50rpx 0;
+}
+
+.indicators-rank{
+  display:flex;
+  justify-content:space-between;
+}
+.indicators-rank-text{
+  font-size: 36rpx;
+}
+
+.indicators-rank-button{
+  width: 180rpx;
+  height: 58rpx;
+  margin-right:0;
+}

@@ -1,0 +1,40 @@
+.modified{
+  margin: 30rpx 40rpx 0rpx;
+}
+
+button{
+  margin: 0;
+}
+
+.modified-button, .modified-goal, .modified-date{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.modified-goal, .modified-date{
+  font-size: 40rpx;
+  margin: 34rpx 0;
+}
+.modified-date-picker{
+  border: 2rpx #999 solid;
+}
+.modified-date-picker-item{
+  width: 400rpx;
+  height: 56rpx;
+}
+
+.modified-task-table{
+  margin: 100rpx;
+}
+.modified-task{
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  border-bottom: 2rpx #C2C2C2 solid;
+}
+
+.modified-task-input{
+  text-align: center;
+  border: 2rpx #999 solid;
+}

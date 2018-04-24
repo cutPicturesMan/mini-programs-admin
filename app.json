@@ -25,7 +25,13 @@
     "pages/store_remain/store_remain",
 
     "pages/registry/registry",
-    "pages/prompt_page/prompt_page"
+    "pages/prompt_page/prompt_page",
+
+    "pages/indicators/index/index",
+    "pages/indicators/modified/modified",
+    "pages/indicators/procurement/procurement",
+
+    "pages/bar/index"
   ],
   "window":{
     "backgroundColor":"#f2f2f2",
@@ -48,6 +54,11 @@
       "iconPath": "icons/tabs-opera.png",
       "selectedIconPath": "icons/tabs-opera-active.png"
     }, {
+      "pagePath": "pages/indicators/index/index",
+      "text": "考核指标",
+      "iconPath": "icons/indicators.png",
+      "selectedIconPath": "icons/indicators-active.png"
+    },{
       "pagePath": "pages/order/order",
       "text": "订单列表",
       "iconPath": "icons/tabs-order.png",

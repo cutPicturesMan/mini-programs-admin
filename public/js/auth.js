@@ -4,15 +4,13 @@ import api from './api.js';
 class Auth {
   // 登录接口
   login () {
-    let p = new Promise((resolve, rejcet)=>{
+    let p = new Promise((resolve, rejcet) => {
       wx.login({
         success: (res) => {
           if (res.code) {
             wx.request({
               url: api.login,
-              data: {
-                code: res.code
-              },
+              data: { code: res.code },
               success: (res) => {
                 // 登录成功，则设置sessionId
                 if (res.data.errorCode === 200) {

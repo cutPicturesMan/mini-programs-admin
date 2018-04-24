@@ -35,16 +35,28 @@ const utils = {
    * @param mark  查询字符串的分隔符
    * @returns {}  对象
    */
-  parseQueryString(queryStr = '', mark = '&'){
+  parseQueryString (queryStr = '', mark = '&') {
     let queryList = decodeURIComponent(queryStr).split(mark);
     let queryObj = {};
 
-    queryList.forEach((item)=>{
+    queryList.forEach((item) => {
       let arr = item.split('=');
       queryObj[arr[0]] = arr[1];
     });
 
     return queryObj;
+  },
+  /**
+   * @description 如果头像为空，则赋予默认头像
+   * @param {String} args 属性名的字符串，仅限data.args
+   */
+  defaultProfile (args) {
+    this.data[args].forEach(e => {
+      if (!e.profile) {
+        e.profile = '/icons/profile.png'
+      }
+    });
+    this.setData({ [args]: this.data[args] })
   }
 }
 

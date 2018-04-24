@@ -1,7 +1,7 @@
 import Auth from './auth.js';
 
 class Http extends Auth {
-  constructor () {
+  constructor() {
     super();
     // 错误次数
     this.errorCount = 0;

@@ -28,7 +28,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": -1,
+			"current": 13,
 			"list": [
 				{
 					"id": 0,
@@ -89,6 +89,29 @@
 					"name": "员工管理",
 					"pathName": "pages/manage_opera_salesman/manage_opera_salesman",
 					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "考核指标",
+					"pathName": "pages/indicators/index/index",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "考核指标-修改",
+					"pathName": "pages/indicators/modified/modified",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "考核指标-客户采购统计",
+					"pathName": "pages/indicators/procurement/procurement",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "bar",
+					"pathName": "pages/bar/index"
 				}
 			]
 		}

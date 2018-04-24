@@ -1,0 +1,34 @@
+<form bindsubmit="formSubmit" bindreset="formReset">
+  <view class="modified">
+    <view class="modified-button">
+      <button size="mini">取消</button>
+      <button size="mini">保存</button>
+    </view>
+    <view class="modified-goal">
+      <view>总指标：{{totalGoal}}</view>
+      <view>未分配：{{unallocatedGoal}}</view>
+    </view>
+    <view class="modified-date">
+      <view>开始日期</view>
+      <picker mode="date" value="{{startTime}}" class="modified-date-picker" bindchange="bindStartChange">
+        <view class="modified-date-picker-item">{{startTime}}</view>
+      </picker>
+    </view>
+    <view class="modified-date">
+      <view>结束日期</view>
+      <picker mode="date" value="{{endTime}}" class="modified-date-picker" bindchange="bindEndChange">
+        <view class="modified-date-picker-item">{{endTime}}</view>
+      </picker>
+    </view>
+    <view class="modified-task-table"></view>
+    <view class="modified-task" wx:for="{{task}}" wx:key="item">
+      <view>
+        <image style="width: 62rpx; height: 62rpx;" src="{{item.profile}}" mode="aspectFit"></image>
+      </view>
+      <view>{{item.name}}</view>
+      <input class="modified-task-input" type="number" placeholder="分配指标" value="{{item.task}}">
+        {{item.task}}
+      </input>
+    </view>
+  </view>
+</form>
