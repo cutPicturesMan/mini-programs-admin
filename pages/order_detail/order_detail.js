@@ -37,6 +37,9 @@ new WXPage({
     // 交货日期
     deliveryDate: '',
 
+    // 最后支付方式
+    gatewayType: '',
+
     // 物流单号
     logisticNum: '',
     // 司机名称
@@ -57,19 +60,19 @@ new WXPage({
     // 是否正在拒绝提交中
     isConfirming: false,
   },
-   // 当前订单的角色，是否在用户的角色列表中
+  // 当前订单的角色，是否在用户的角色列表中
   judgeRole (role) {
-    let { userInfo,  PENDING_SALEMAN, EXAMINE_MANAGER, PAID, EXAMINE_ACCOUNTANT, SUBMITTED, EXAMINE_FINANCE  } = this.data;
+    let { userInfo, PENDING_SALEMAN, EXAMINE_MANAGER, PAID, EXAMINE_ACCOUNTANT, SUBMITTED, EXAMINE_FINANCE } = this.data;
     let id = 0;
 
-    switch(role){
-      case PENDING_SALEMAN: 
+    switch (role) {
+      case PENDING_SALEMAN:
         id = 2;
         break;
-      case EXAMINE_MANAGER: 
+      case EXAMINE_MANAGER:
         id = 3;
         break;
-      case PAID: 
+      case PAID:
         id = 4;
         break;
       case EXAMINE_ACCOUNTANT:
@@ -78,15 +81,15 @@ new WXPage({
       case SUBMITTED:
         id = 4;
         break;
-      case EXAMINE_FINANCE: 
+      case EXAMINE_FINANCE:
         id = 5;
         break;
     }
 
-    let result = userInfo.roles.some((item)=>{
-      if(item.id == id){
+    let result = userInfo.roles.some((item) => {
+      if (item.id == id) {
         return true;
-      }else{
+      } else {
         return false;
       }
     });
@@ -123,23 +126,35 @@ new WXPage({
         }
 
         // 如果订单状态是业务员审核、经理审核、待财务确认、待财务审核，则需要去请求支付方式
-        if (order.status.type == PENDING_SALEMAN || order.status.type == EXAMINE_MANAGER || order.status.type === EXAMINE_ACCOUNTANT || order.status.type === SUBMITTED){
-          this.getPayType(id).then((payType)=>{
+        if (order.status.type == PENDING_SALEMAN || order.status.type == EXAMINE_MANAGER || order.status.type === EXAMINE_ACCOUNTANT || order.status.type === SUBMITTED) {
+          this.getPayType(id).then((payType) => {
             // 默认的支付方式
-            let payIndex = 0;
+            let payIndex = null;
 
             // 如果原本的订单已经选择了支付方式，则找出这个方式
-            if(order.payments && order.payments.length){
-              if(order.payments[0].gatewayType && order.payments[0].gatewayType.type){
-                payType.some((item, index)=>{
-                  if(item.type == order.payments[0].gatewayType.type){
-                    payIndex = index;
-                    return true;
-                  } else {
-                    return false;
-                  }
-                });
-              }
+            // if(order.payments && order.payments.length){
+            //   if(order.payments[0].gatewayType && order.payments[0].gatewayType.type){
+            //     payType.some((item, index)=>{
+            //       if(item.type == order.payments[0].gatewayType.type){
+            //         payIndex = index;
+            //         return true;
+            //       } else {
+            //         return false;
+            //       }
+            //     });
+            //   }
+            // }
+
+            // 新的接口 设置最后支付方式
+            if (!!order.gatewayType) {
+              payType.some((item, index) => {
+                if (item.friendlyType.indexOf(order.gatewayType)) {
+                  payIndex = index
+                  return true
+                } else {
+                  return false
+                }
+              })
             }
 
             this.setData({
@@ -199,14 +214,14 @@ new WXPage({
     let offerTotal = e.detail.value;
 
     // 如果输入非数字 || 输入为''
-    if(isNaN(offerTotal) || offerTotal === ''){
+    if (isNaN(offerTotal) || offerTotal === '') {
       offerTotal = '0';
     }
 
     // '01'、'01.'、'01.01'
     let price = offerTotal.split('.');
     // 如果有小数点，如'01.'、'01.01'，则要在去掉前导0之后加上小数点
-    if(price.length == 2){
+    if (price.length == 2) {
       offerTotal = parseInt(price[0]) + '.' + price[1];
     } else {
       offerTotal = parseInt(price[0]);
@@ -242,16 +257,16 @@ new WXPage({
   },
   // 获取所有支付方式
   getPayType (id) {
-    let p = new Promise((resolve, reject)=>{
+    let p = new Promise((resolve, reject) => {
       http.request({
         url: `${api.pay}${id}`
       }).then((res) => {
-        if(res.errorCode == 200 && res.data && res.data.length){
+        if (res.errorCode == 200 && res.data && res.data.length) {
           resolve(res.data);
         } else {
           reject();
         }
-      }, (err)=>{
+      }, (err) => {
         reject();
       });
     });
@@ -269,9 +284,9 @@ new WXPage({
         let logisticList = res.data;
         let logisticIndex = 0;
 
-        if(order.orderFulFillType){
+        if (order.orderFulFillType) {
           logisticList.some((item, index) => {
-            if(item.type == order.orderFulFillType.type){
+            if (item.type == order.orderFulFillType.type) {
               logisticIndex = index;
               return true;
             } else {
@@ -313,24 +328,24 @@ new WXPage({
   },
   // 输入物流单号
   inputLogisticNum (e) {
-      this.setData({
-          logisticNum: e.detail.value
-      })
+    this.setData({
+      logisticNum: e.detail.value
+    })
   },
   // 输入司机姓名
   inputDriverName (e) {
-      this.setData({
-          driverName: e.detail.value
-      })
+    this.setData({
+      driverName: e.detail.value
+    })
   },
   // 输入司机手机号
   inputDriverPhone (e) {
-      this.setData({
-          driverPhone: e.detail.value
-      })
+    this.setData({
+      driverPhone: e.detail.value
+    })
   },
   // 发送模板消息
-  sendTemplateMsg(e) {
+  sendTemplateMsg (e) {
     http.request({
       url: `${api.template_msg}`,
       method: 'POST',
@@ -710,7 +725,7 @@ new WXPage({
 
     try {
       // 待财务审核、待财务确认，要加载支付方式
-      if(order.status.type === EXAMINE_ACCOUNTANT || order.status.type === SUBMITTED){
+      if (order.status.type === EXAMINE_ACCOUNTANT || order.status.type === SUBMITTED) {
         // 支付方式列表未加载完毕
         if (!isPayLoaded) {
           throw new Error('正在加载支付方式中，请稍后');
@@ -722,7 +737,7 @@ new WXPage({
       }
 
       // 待财务确认，需要填写商品单价
-      if(order.status.type === SUBMITTED){
+      if (order.status.type === SUBMITTED) {
         order.orderItems.forEach((item) => {
           if (item.quantity === '') {
             throw new Error('请填写商品数量');
@@ -750,12 +765,12 @@ new WXPage({
     }
 
     // 待财务审核、待财务确认，要附带上支付方式参数
-    if(order.status.type === EXAMINE_ACCOUNTANT || order.status.type === SUBMITTED){
+    if (order.status.type === EXAMINE_ACCOUNTANT || order.status.type === SUBMITTED) {
       data.payType = payType[payIndex].type;
     }
 
     // 待财务确认，要附带上单价修改参数
-    if(order.status.type === SUBMITTED){
+    if (order.status.type === SUBMITTED) {
       // 数据转化格式，然后提交
       let keys = [];
       let values = [];
@@ -815,15 +830,15 @@ new WXPage({
 
     // 如果填写了物流单号
     if (logisticNum) {
-        logistics += `物流单号：${logisticNum}；`;
+      logistics += `物流单号：${logisticNum}；`;
     }
     // 如果填写了司机姓名
     if (driverName) {
-        logistics += `司机姓名：${driverName}；`;
+      logistics += `司机姓名：${driverName}；`;
     }
     // 如果填写了司机手机号
     if (driverPhone) {
-        logistics += `司机手机号：${driverPhone}；`;
+      logistics += `司机手机号：${driverPhone}；`;
     }
 
     wx.showLoading();
