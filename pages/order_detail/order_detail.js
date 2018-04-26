@@ -59,6 +59,9 @@ new WXPage({
     isCanceling: false,
     // 是否正在拒绝提交中
     isConfirming: false,
+
+    // 是否是从消息模版进入，需要返回首页按钮
+    isBack: false
   },
   // 当前订单的角色，是否在用户的角色列表中
   judgeRole (role) {
@@ -876,11 +879,45 @@ new WXPage({
     })
   },
   onLoad (params) {
+    // 从消息模版进入则显示返回首页按钮
+    getCurrentPages().length == 1 ? this.setData({ isBack: true }) : 0
+
     // 如果订单id存在，则请求数据
     if (params.id) {
-      this.setData({
-        userInfo: app.userInfo
-      });
+      if (app.userInfo) {
+        this.setData({
+          userInfo: app.userInfo
+        })
+      } else {
+        app.getUserInfo()
+          .then((res) => {
+            // 如果用户审核通过(1)，则进入系统
+            if (res.status.id == 1) {
+              let roleObj = {};
+              res.roles.forEach((item) => {
+                roleObj[item.name] = true;
+              });
+
+              this.setData({
+                roleObj
+              });
+            } else if (res.status.id == 2) {
+              // 如果正在审核中(2)、则页面显示正在审核，不进入系统
+            } else if (res.status.id == -1 || res.status.id == 0) {
+              // 如果用户未审核(-1)、审核拒绝(0)，则提示扫码注册
+              wx.showModal({
+                title: '提示',
+                content: '对不起，您还未注册，请扫码注册'
+              })
+            }
+
+            // 不论status.id为什么状态，都要设置当前页面的用户信息
+            this.setData({
+              userInfo: res,
+              roleCode: app.roleCode
+            });
+          }, () => { });
+      }
       this.getData(params.id);
     } else {
       this.toast.error({

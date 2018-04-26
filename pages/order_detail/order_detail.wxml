@@ -1,16 +1,15 @@
-<import src="../../common/toast/toast.wxml"/>
+<import src="../../common/toast/toast.wxml" />
 <template is="toast" data="{{ ...toast }}" />
-
+<navigator url="../../pages/pending/pending" open-type="switchTab" wx:if="{{isBack}}" style="margin: 10rpx;">返回首页</navigator>
 <form bindsubmit="sendTemplateMsg" report-submit="true">
   <block wx:if="{{isLoaded}}">
     <view class="order-item">
       <view class="order-figure bb-e5 ml25">
-        <image class="img"
-               src="{{order.orderItems[0].skuMedia.alt1 ? (order.orderItems[0].skuMedia.alt1.url + '?imageView/2/1/w/260/h/260') : (order.orderItems[0].skuMedia.primary ? (order.orderItems[0].skuMedia.primary.url + '?imageView/2/1/w/260/h/260') : '../../icons/img-none.png')}}"></image>
+        <image class="img" src="{{order.orderItems[0].skuMedia.alt1 ? (order.orderItems[0].skuMedia.alt1.url + '?imageView/2/1/w/260/h/260') : (order.orderItems[0].skuMedia.primary ? (order.orderItems[0].skuMedia.primary.url + '?imageView/2/1/w/260/h/260') : '../../icons/img-none.png')}}"></image>
         <view class="order-figcaption">
           <view class="p">订单编号：{{order.orderNumber}}</view>
-          <view class="p">
-            订单状态：<text class="text-energized">{{order.status.friendlyType}}</text>
+          <view class="p"> 订单状态：
+            <text class="text-energized">{{order.status.friendlyType}}</text>
           </view>
           <view class="p">商品名称：{{order.name}}</view>
           <view class="p">订单小计：￥{{order.subtotal}}</view>
@@ -22,17 +21,11 @@
       </view>
       <!--只有业务员、经理，才可以更改总价-->
       <view class="label-line small bb-e5" wx:if="{{order.status.type == PENDING_SALEMAN || order.status.type == EXAMINE_MANAGER}}">
-        <view class="r mr20">
-          优惠金额：￥<input class="input-price tac text-energized"
-                      type="digit"
-                      value="{{offerTotal}}"
-                      bindinput="inputOfferTotal"/>
-        </view>
+        <view class="r mr20"> 优惠金额：￥
+          <input class="input-price tac text-energized" type="digit" value="{{offerTotal}}" bindinput="inputOfferTotal" /> </view>
       </view>
       <view class="label-line small bb-e5">
-        <view class="r mr20">
-          商品总价：￥{{totalPrice}}
-        </view>
+        <view class="r mr20"> 商品总价：￥{{totalPrice}} </view>
       </view>
     </view>
     <view class="product-section mt20 bb-e5" wx:for="{{order.orderItems}}" wx:key="{{index}}">
@@ -46,35 +39,22 @@
             <image class="icon" src="{{item.skuMedia.primary.url}}" wx:if="{{item.skuMedia && item.skuMedia.primary}}"></image>
           </view>
           <view class="title ml20">
-            <block wx:for="{{item.productOption}}" wx:key="{{index}}">
-              {{item.attributeName}}：{{item.attributeValue}}</block>
+            <block wx:for="{{item.productOption}}" wx:key="{{index}}"> {{item.attributeName}}：{{item.attributeValue}}</block>
             <block wx:if="{{item.productOption.length == 0}}">暂无规格</block>
           </view>
           <view class="content">
             <!--只有业务员、经理、待财务确认，才可以更改规格数量-->
-            <block wx:if="{{order.status.type == PENDING_SALEMAN || order.status.type == EXAMINE_MANAGER || order.status.type === SUBMITTED}}">
-              数量：<input type="text" class="input"
-                     value="{{item.quantity}}"
-                     data-index="{{index}}"
-                     bindinput="inputQuantity"/>
-            </block>
-            <block wx:else>
-              数量：{{item.quantity}}
-            </block>
+            <block wx:if="{{order.status.type == PENDING_SALEMAN || order.status.type == EXAMINE_MANAGER || order.status.type === SUBMITTED}}"> 数量：
+              <input type="text" class="input" value="{{item.quantity}}" data-index="{{index}}" bindinput="inputQuantity" /> </block>
+            <block wx:else> 数量：{{item.quantity}} </block>
           </view>
         </view>
         <view class="item-label">
           <view class="content">
             <!--只有业务员、经理，才可以更改规格单价-->
-            <block wx:if="{{order.status.type == PENDING_SALEMAN || order.status.type == EXAMINE_MANAGER}}">
-              单价：<input type="text" class="input"
-                        value="{{item.buyprice}}"
-                        data-index="{{index}}"
-                        bindinput="inputPrice"/>
-            </block>
-            <block wx:else>
-              单价：{{item.buyprice}}
-            </block>
+            <block wx:if="{{order.status.type == PENDING_SALEMAN || order.status.type == EXAMINE_MANAGER}}"> 单价：
+              <input type="text" class="input" value="{{item.buyprice}}" data-index="{{index}}" bindinput="inputPrice" /> </block>
+            <block wx:else> 单价：{{item.buyprice}} </block>
           </view>
         </view>
       </view>
@@ -91,12 +71,8 @@
           </view>
         </view>
         <view class="tar plr20 mb10 text-stable">
-          <block wx:if="{{payType[payIndex].type == 'PTPAY_GATEWAY' && payType[payIndex].maps.info}}">
-            余额剩余：{{ payType[payIndex].maps.info }}
-          </block>
-          <block wx:if="{{payType[payIndex].type == 'CYCLE_GATEWAY' && payType[payIndex].maps.info}}">
-            账期到期时间：{{ payType[payIndex].maps.info }}
-          </block>
+          <block wx:if="{{payType[payIndex].type == 'PTPAY_GATEWAY' && payType[payIndex].maps.info}}"> 余额剩余：{{ payType[payIndex].maps.info }} </block>
+          <block wx:if="{{payType[payIndex].type == 'CYCLE_GATEWAY' && payType[payIndex].maps.info}}"> 账期到期时间：{{ payType[payIndex].maps.info }} </block>
         </view>
       </block>
       <!--只有业务员、经理，才需要选择物流方式、收货日期-->
@@ -118,13 +94,11 @@
           </view>
         </view>
       </block>
-
       <!--只有业务员，才可以填写备注信息-->
       <block wx:if="{{order.status.type === PENDING_SALEMAN}}">
         <view class="line-cell plr20 mt20" catchtap="switchRemark">
           <view class="cell-title mr20">备注信息</view>
-          <view class="cell-content">
-            {{order.remarks}}
+          <view class="cell-content"> {{order.remarks}}
             <text class="text-stable" wx:if="{{!order.remarks}}">请输入</text>
           </view>
         </view>
@@ -132,135 +106,80 @@
       <block wx:else>
         <view class="line-cell bb plr20 mt20">
           <view class="cell-title mr20">备注信息</view>
-          <view class="cell-content">
-            {{order.remarks || '暂无'}}
-          </view>
+          <view class="cell-content"> {{order.remarks || '暂无'}} </view>
         </view>
       </block>
     </view>
-
     <!--如果是财务已确认、仓管，则需要显示支付方式-->
     <block wx:if="{{(order.status.type === PAID || order.status.type === EXAMINE_FINANCE) && order.payments.length > 0}}">
       <view class="line-cell bb">
         <view class="cell-title mr20">支付方式</view>
-        <view class="cell-content">
-          {{order.payments[0].gatewayType.friendlyType}}
-        </view>
+        <view class="cell-content"> {{order.payments[0].gatewayType.friendlyType}} </view>
       </view>
     </block>
-
     <!--如果是仓管，需要填写物流单号, 司机，司机手机号，提交时放入备注信息中-->
     <block wx:if="{{order.status.type === EXAMINE_FINANCE}}">
       <view class="line-cell bb mt20">
         <view class="cell-title mr20">物流单号</view>
         <view class="cell-content">
-          <input type="text" class="input"
-                 value="{{logisticNum}}"
-                 bindinput="inputLogisticNum"/>
-        </view>
+          <input type="text" class="input" value="{{logisticNum}}" bindinput="inputLogisticNum" /> </view>
       </view>
       <view class="line-cell bb">
         <view class="cell-title mr20">司机姓名</view>
         <view class="cell-content">
-          <input type="text" class="input"
-                 value="{{driverName}}"
-                 bindinput="inputDriverName"/>
-        </view>
+          <input type="text" class="input" value="{{driverName}}" bindinput="inputDriverName" /> </view>
       </view>
       <view class="line-cell bb">
         <view class="cell-title mr20">司机手机号</view>
         <view class="cell-content">
-          <input type="text" class="input"
-                 value="{{driverPhone}}"
-                 bindinput="inputDriverPhone"/>
-        </view>
+          <input type="text" class="input" value="{{driverPhone}}" bindinput="inputDriverPhone" /> </view>
       </view>
     </block>
     <block wx:else>
       <view class="line-cell bb plr20">
         <view class="cell-title mr20">物流信息</view>
-        <view class="cell-content">
-          {{order.logistics || '暂无'}}
-        </view>
+        <view class="cell-content"> {{order.logistics || '暂无'}} </view>
       </view>
     </block>
-
     <!--订单状态是退货中 && 用户角色列表中有相应的角色 => 显示退货按钮-->
     <block wx:if="{{order.status.type === BACKING && isInRoles}}">
       <view class="btns-prompt fixed-bottom">
-        <button class="each-item reset-btn cancel"
-              data-type="{{0}}"
-              data-id="{{order.id}}"
-              formType="submit"
-              bindtap="backOrderPopup">拒绝退货</button>
-        <button class="each-item reset-btn confirm"
-              data-type="{{1}}"
-              data-id="{{order.id}}"
-              formType="submit"
-              bindtap="backOrderPopup">同意退货</button>
+        <button class="each-item reset-btn cancel" data-type="{{0}}" data-id="{{order.id}}" formType="submit" bindtap="backOrderPopup">拒绝退货</button>
+        <button class="each-item reset-btn confirm" data-type="{{1}}" data-id="{{order.id}}" formType="submit" bindtap="backOrderPopup">同意退货</button>
       </view>
     </block>
-
     <!--订单状态是待业务员处理 && 用户角色列表中有业务员的角色 => 显示修改按钮-->
     <block wx:if="{{order.status.type === PENDING_SALEMAN && isInRoles}}">
       <view class="btns-prompt fixed-bottom">
-        <button class="each-item reset-btn cancel"
-                data-id="{{order.id}}"
-                formType="submit"
-                bindtap="cancelOrderPopup">取消订单</button>
-        <button class="each-item reset-btn confirm"
-                formType="submit"
-                bindtap="confirmOrder">提交订单</button>
+        <button class="each-item reset-btn cancel" data-id="{{order.id}}" formType="submit" bindtap="cancelOrderPopup">取消订单</button>
+        <button class="each-item reset-btn confirm" formType="submit" bindtap="confirmOrder">提交订单</button>
       </view>
     </block>
-
     <!--订单状态是待经理处理 && 用户角色列表中有经理的角色 => 显示修改按钮-->
     <block wx:if="{{order.status.type === EXAMINE_MANAGER && isInRoles}}">
       <view class="btns-prompt fixed-bottom">
-        <button class="each-item reset-btn cancel"
-                data-type="{{0}}"
-                data-id="{{order.id}}"
-                formType="submit"
-                catchtap="rejectOrderPopup">拒绝</button>
-        <button class="each-item reset-btn confirm"
-                data-type="{{1}}"
-                data-id="{{order.id}}"
-                formType="submit"
-                catchtap="passOrder">通过</button>
+        <button class="each-item reset-btn cancel" data-type="{{0}}" data-id="{{order.id}}" formType="submit" catchtap="rejectOrderPopup">拒绝</button>
+        <button class="each-item reset-btn confirm" data-type="{{1}}" data-id="{{order.id}}" formType="submit" catchtap="passOrder">通过</button>
       </view>
     </block>
-
     <!--订单状态是财务 && 用户角色列表中有财务的角色 => 显示修改按钮-->
     <block wx:if="{{(order.status.type === PAID || order.status.type === EXAMINE_ACCOUNTANT || order.status.type === SUBMITTED) && isInRoles}}">
       <view class="btns-prompt fixed-bottom">
-        <button class="each-item reset-btn cancel"
-                data-type="{{0}}"
-                data-id="{{order.id}}"
-                formType="submit"
-                catchtap="financeRejectPopup">拒绝</button>
-        <button class="each-item reset-btn confirm"
-                data-type="{{1}}"
-                data-id="{{order.id}}"
-                formType="submit"
-                catchtap="financePass">通过</button>
+        <button class="each-item reset-btn cancel" data-type="{{0}}" data-id="{{order.id}}" formType="submit" catchtap="financeRejectPopup">拒绝</button>
+        <button class="each-item reset-btn confirm" data-type="{{1}}" data-id="{{order.id}}" formType="submit" catchtap="financePass">通过</button>
       </view>
     </block>
-
     <!--订单状态是待仓管处理 && 用户角色列表中有仓管的角色 => 显示修改按钮-->
     <block wx:if="{{order.status.type === EXAMINE_FINANCE && isInRoles}}">
-      <button class="reset-btn btn btn-fixed fixed-bottom btn-energized-linear"
-              formType="submit"
-              bindtap="storePass">确认发货</button>
+      <button class="reset-btn btn btn-fixed fixed-bottom btn-energized-linear" formType="submit" bindtap="storePass">确认发货</button>
     </block>
   </block>
-
   <!--备注提示框-->
   <view class="remark-add" wx:if="{{addToggle}}">
     <view class="add-container animated {{addToggle ? 'bounceIn' : 'bounceOut'}}">
       <view class="title">备注信息</view>
       <view class="content">
-        <textarea bindinput="inputRemark" value="{{remarks}}"></textarea>
-      </view>
+        <textarea bindinput="inputRemark" value="{{remarks}}"></textarea> </view>
       <view class="btns-prompt bt">
         <view class="each-item cancel" bindtap="switchRemark">取消</view>
         <view class="each-item confirm" bindtap="confirmRemark">确认</view>
