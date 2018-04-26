@@ -44,3 +44,9 @@ the admin of mini-programs
 └── testimg
 
 ```
+
+TODO
+- 封一个表格组件
+- 封一个层层跳转back的hash页面
+- mpvue重写小程序
+- [先上redux顶一下](https://github.com/charleyw/wechat-weapp-redux)

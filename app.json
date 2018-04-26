@@ -30,8 +30,7 @@
     "pages/indicators/index/index",
     "pages/indicators/modified/modified",
     "pages/indicators/procurement/procurement",
-
-    "pages/bar/index"
+    "pages/indicators/person/index"
   ],
   "window":{
     "backgroundColor":"#f2f2f2",

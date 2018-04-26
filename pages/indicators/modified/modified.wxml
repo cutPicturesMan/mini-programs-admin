@@ -1,8 +1,8 @@
 <form bindsubmit="formSubmit" bindreset="formReset">
   <view class="modified">
     <view class="modified-button">
-      <button size="mini">取消</button>
-      <button size="mini">保存</button>
+      <button size="mini" bindtap="cancel">取消</button>
+      <button size="mini" bindtap="save">保存</button>
     </view>
     <view class="modified-goal">
       <view>总指标：{{totalGoal}}</view>

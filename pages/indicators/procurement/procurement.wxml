@@ -1,27 +1,37 @@
-<!-- <view class="procurement">
+<view class="procurement">
   <view class="procurement-information">
-    <view>
-      <image src=""></image>
+    <view style="flex-grow:1">
+      <image style="width: 102rpx; height: 102rpx; margin-right: 62rpx" src="{{profile}}"></image>
     </view>
-    <view>公司名称：</view>
-    <view>{{company}}</view>
-    <view>客户姓名：</view>
-    <view>{{name}}</view>
-    <view>电话：</view>
-    <view>{{phone}}</view>
-    <view>地址：</view>
-    <view>{{adress}}</view>
-    <view>最近下单：</view>
-    <view>{{lastTime}}</view>
+    <view style="flex-grow:2">
+      <view class="procurement-information-item">
+        <view class="procurement-information-label">公司名称</view>
+        <i>：</i>
+        <view class="procurement-information-name">{{company}}</view>
+      </view>
+      <view class="procurement-information-item">
+        <view class="procurement-information-label">客户姓名</view>
+        <i>：</i>
+        <view class="procurement-information-name">{{name}}</view>
+      </view>
+      <view class="procurement-information-item">
+        <view class="procurement-information-label">电话</view>
+        <i>：</i>
+        <view class="procurement-information-name">{{phone}}</view>
+      </view>
+      <view class="procurement-information-item">
+        <view class="procurement-information-label">地址</view>
+        <i>：</i>
+        <view class="procurement-information-name">{{adress}}</view>
+      </view>
+      <view class="procurement-information-item">
+        <view class="procurement-information-label">最近下单</view>
+        <i>：</i>
+        <view class="procurement-information-name">{{lastTime}}</view>
+      </view>
+    </view>
   </view>
   <view class="procurement-chart">
     <ec-canvas id="procurement-chart" canvas-id="procurement-chart" ec="{{ ec }}"></ec-canvas>
   </view>
-  <view class="container">
-    <ec-canvas id="mychart-dom-bar" canvas-id="mychart-bar" ec="{{ ec }}"></ec-canvas>
-  </view>
-</view> -->
-
-<view class="container">
-  <ec-canvas id="mychart-dom-bar" canvas-id="mychart-bar" ec="{{ ec }}"></ec-canvas>
 </view>

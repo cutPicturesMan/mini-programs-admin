@@ -10,3 +10,4 @@ selenium-debug.log
 .idea
 .vscode
 typings
+jsconfig.json

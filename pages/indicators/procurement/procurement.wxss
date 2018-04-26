@@ -1,19 +1,37 @@
+.procurement{
+  margin: 30rpx 40rpx 0rpx;
+}
+.procurement-information{
+  display: flex;
+  /* flex-wrap: wrap; */
+  justify-content: space-between;
+  font-size: 32rpx;
+}
+
+.procurement-information-item{
+  display: flex;
+}
+
+.procurement-information-label{
+  min-width: 140rpx ;
+  text-align-last: justify;
+}
+
+.procurement-information-item:nth-of-type(3),
+.procurement-information-item:nth-of-type(4){
+  text-align: justify;
+}
+
+.procurement-information-name{
+  flex-wrap: wrap;
+}
+.procurement-chart{
+  display: flex;
+  justify-content: center;
+  height: 800rpx;
+}
+
 ec-canvas {
   width: 100%;
   height: 100%;
 }
-
-.container {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
-  box-sizing: border-box;
-} 
-  
