@@ -12,6 +12,10 @@ new WXPage({
     page: 0,
     // 一页显示的数量
     size: 30,
+    // 库存搜索关键字
+    key: '',
+    // 最后一次搜索关键字
+    lastKey: '',
     // 是否还有更多数据，默认是；当返回的分类数据小于this.data.size时，表示没有更多数据了
     isMore: true,
     // 是否正在加载更多数据
@@ -20,24 +24,38 @@ new WXPage({
     isSubmit: false
   },
   // 加载下一页
-  loadmore () {
+  loadmore (e) {
     let {
       page,
       size,
+      key,
       isMore,
       isLoading,
       list,
       numList
     } = this.data;
 
+    // 如果有搜索关键字
+    if (e) {
+      if (e.detail.value) {
+        key = e.detail.value
+        this.setData({ key })
+      }
+      // 第一次搜索
+      if (this.data.lastKey != key) {
+        page = 0, key = e.detail.value
+        this.setData({ page: 0, list: [], numList: [], lastKey: key })
+      }
+    }
+    console.info(page, 'page')
     // 如果没有更多数据，则不执行操作
     if (!isMore) {
-        return false;
+      return false;
     }
 
     // 如果正在加载中，则不执行操作
     if (isLoading) {
-        return false;
+      return false;
     }
 
     this.data.isLoading = true;
@@ -48,6 +66,7 @@ new WXPage({
       data: {
         page,
         size,
+        key
       }
     }).then((res) => {
       wx.hideLoading();
@@ -71,7 +90,6 @@ new WXPage({
           isMore,
           list: list.concat(data),
           numList,
-
         });
       }
     })

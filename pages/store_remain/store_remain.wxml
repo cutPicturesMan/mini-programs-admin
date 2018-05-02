@@ -1,11 +1,7 @@
-<import src="../../common/toast/toast.wxml"/>
-<template is="toast" data="{{ ...toast }}"/>
-
-<scroll-view
-        class="scroll-view"
-        scroll-y="true"
-        enable-back-to-top="true"
-        bindscrolltolower="loadmore">
+<import src="../../common/toast/toast.wxml" />
+<template is="toast" data="{{ ...toast }}" />
+<input class="toast-qurey" placeholder="请输入查询关键字" confirm-type="search" value="{{key}}" bindconfirm="loadmore"/>
+<scroll-view class="scroll-view" scroll-y="true" enable-back-to-top="true" bindscrolltolower="loadmore">
   <view class="line-cell bb-e5" wx:for="{{list}}" wx:key="{{id}}">
     <view class="cell-ico">
       <image class="img" mode="aspectFill" src="{{item.skuMedia.primary ? (item.skuMedia.primary.url + '?imageView/2/1/w/200/h/200') : '../../icons/img-none.png'}}"></image>
@@ -16,7 +12,7 @@
         <view class="reduce-btn" data-index="{{index}}" bindtap="reduce">
           <image src="../../icons/icon-reduce.jpg"></image>
         </view>
-        <input class="count" type="number" value="{{item.qtyAvailable}}" data-index="{{index}}" bindinput="inputNumber"/>
+        <input class="count" type="number" value="{{item.qtyAvailable}}" data-index="{{index}}" bindinput="inputNumber" />
         <view class="add-btn" data-index="{{index}}" bindtap="add">
           <image src="../../icons/icon-add1.jpg"></image>
         </view>

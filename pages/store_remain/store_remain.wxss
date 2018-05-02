@@ -104,3 +104,11 @@ page {
 
 .scroll-view {
   height: 100%; }
+
+  .toast-qurey{
+    margin: 20rpx 50rpx;
+    font-size: 36rpx;
+    text-align: center;
+    border: #e5e5e5 2rpx solid;
+    border-radius: 10rpx; 
+  }

@@ -20,15 +20,15 @@ Page({
     addUserToggle: false,
   },
   // 发送模板消息
-  sendTemplateMsg(e) {
+  sendTemplateMsg (e) {
     http.request({
-        url: `${api.template_msg}`,
-        method: 'POST',
-        data: {
-            formIds: e.detail.formId
-        }
+      url: `${api.template_msg}`,
+      method: 'POST',
+      data: {
+        formIds: e.detail.formId
+      }
     }).then((res) => {
-        console.log(res);
+      console.log(res);
     })
   },
   // 添加用户
@@ -40,12 +40,12 @@ Page({
     let scene = `adminId=${userInfo.id}`;
     let twoCodeUrl = '';
 
-    if(type == 1){
+    if (type == 1) {
       twoCodeUrl = `${api.site_twocode}?scene=${scene}&page=pages/registry/registry`
     } else {
       twoCodeUrl = `${api.admin_twocode}?scene=${scene}&page=pages/registry/registry`
     }
-
+    console.info(twoCodeUrl)
     this.setData({
       twoCodeUrl,
       addUserToggle: !this.data.addUserToggle
@@ -67,7 +67,7 @@ Page({
         // 如果用户审核通过(1)，则进入系统
         if (res.status.id == 1) {
           let roleObj = {};
-          res.roles.forEach((item)=>{
+          res.roles.forEach((item) => {
             roleObj[item.name] = true;
           });
 
@@ -76,7 +76,7 @@ Page({
           });
         } else if (res.status.id == 2) {
           // 如果正在审核中(2)、则页面显示正在审核，不进入系统
-        } else if (res.status.id == -1 || res.status.id == 0){
+        } else if (res.status.id == -1 || res.status.id == 0) {
           // 如果用户未审核(-1)、审核拒绝(0)，则提示扫码注册
           wx.showModal({
             title: '提示',
@@ -89,6 +89,6 @@ Page({
           userInfo: res,
           roleCode: app.roleCode
         });
-      }, () => {});
+      }, () => { });
   }
 })
