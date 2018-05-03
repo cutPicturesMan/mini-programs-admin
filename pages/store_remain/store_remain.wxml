@@ -1,6 +1,6 @@
 <import src="../../common/toast/toast.wxml" />
 <template is="toast" data="{{ ...toast }}" />
-<input class="toast-qurey" placeholder="请输入查询关键字" confirm-type="search" value="{{key}}" bindconfirm="loadmore"/>
+<input class="toast-qurey" placeholder="请输入查询关键字" confirm-type="search" value="{{key}}" bindblur="loadmore"/>
 <scroll-view class="scroll-view" scroll-y="true" enable-back-to-top="true" bindscrolltolower="loadmore">
   <view class="line-cell bb-e5" wx:for="{{list}}" wx:key="{{id}}">
     <view class="cell-ico">
@@ -21,4 +21,4 @@
   </view>
   <view class="tac p20 text-stable fs20" wx:if="{{!isMore}}">没有更多了</view>
 </scroll-view>
-<view class="btn btn-fixed fixed-bottom {{isSubmit ? 'btn-stable' : 'btn-energized-linear'}}" bindtap="submit">{{isSubmit ? '正在提交中' : '库存确认'}}</view>
+<view class="btn btn-fixed fixed-bottom {{isSubmit ? 'btn-stable' : 'btn-energized-linear'}}" bindtap="submit" style="left: auto;">{{isSubmit ? '正在提交中' : '库存确认'}}</view>
