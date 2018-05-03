@@ -1,6 +1,9 @@
 <import src="../../common/toast/toast.wxml" />
 <template is="toast" data="{{ ...toast }}" />
-<navigator url="../../pages/pending/pending" open-type="switchTab" wx:if="{{isBack}}" style="margin: 10rpx;">返回首页</navigator>
+<navigator url="../../pages/pending/pending" open-type="switchTab" wx:if="{{isBack}}" class="navBack">
+  <image src="../../icons/icon-back.png" style="width: 26rpx; height: 26rpx;"></image>
+  返回首页
+</navigator>
 <form bindsubmit="sendTemplateMsg" report-submit="true">
   <block wx:if="{{isLoaded}}">
     <view class="order-item">
@@ -13,6 +16,7 @@
           </view>
           <view class="p">商品名称：{{order.name}}</view>
           <view class="p">订单小计：￥{{order.subtotal}}</view>
+          <view class="p">优惠金额：￥{{order.offerTotal}}</view>
           <view class="p">公司名称：{{order.companyName}}</view>
           <view class="p">客户姓名：{{order.customerName}}</view>
           <view class="p">联系方式：{{order.mobile}}</view>
@@ -45,7 +49,7 @@
           <view class="content">
             <!--只有业务员、经理、待财务确认，才可以更改规格数量-->
             <block wx:if="{{order.status.type == PENDING_SALEMAN || order.status.type == EXAMINE_MANAGER || order.status.type === SUBMITTED}}"> 数量：
-              <input type="text" class="input" value="{{item.quantity}}" data-index="{{index}}" bindinput="inputQuantity" /> </block>
+              <input type="number" class="input" value="{{item.quantity}}" data-index="{{index}}" bindinput="inputQuantity" /> </block>
             <block wx:else> 数量：{{item.quantity}} </block>
           </view>
         </view>
@@ -53,7 +57,7 @@
           <view class="content">
             <!--只有业务员、经理，才可以更改规格单价-->
             <block wx:if="{{order.status.type == PENDING_SALEMAN || order.status.type == EXAMINE_MANAGER}}"> 单价：
-              <input type="text" class="input" value="{{item.buyprice}}" data-index="{{index}}" bindinput="inputPrice" /> </block>
+              <input type="digit" class="input" value="{{item.buyprice}}" data-index="{{index}}" bindinput="inputPrice" /> </block>
             <block wx:else> 单价：{{item.buyprice}} </block>
           </view>
         </view>
@@ -66,11 +70,11 @@
           <view class="cell-title">支付方式</view>
           <view class="cell-content">
             <picker bindchange="bindPayTypeChange" value="{{payIndex}}" range="{{payType}}" range-key="friendlyType">
-              <view>{{payType[payIndex].friendlyType || '请选择支付方式'}}</view>
+              <view class="picker-view">{{payType[payIndex].friendlyType || '请选择物流方式'}}</view>
             </picker>
           </view>
         </view>
-        <view class="tar plr20 mb10 text-stable">
+        <view class="tar plr20 mb10 text-stable order-color">
           <block wx:if="{{payType[payIndex].type == 'PTPAY_GATEWAY' && payType[payIndex].maps.info}}"> 余额剩余：{{ payType[payIndex].maps.info }} </block>
           <block wx:if="{{payType[payIndex].type == 'CYCLE_GATEWAY' && payType[payIndex].maps.info}}"> 账期到期时间：{{ payType[payIndex].maps.info }} </block>
         </view>
@@ -81,7 +85,7 @@
           <view class="cell-title">物流方式</view>
           <view class="cell-content">
             <picker bindchange="bindLogisticChange" value="{{logisticIndex}}" range="{{logisticList}}" range-key="friendlyType">
-              <view>{{logisticList[logisticIndex].friendlyType || '请选择物流方式'}}</view>
+              <view class="picker-view">{{logisticList[logisticIndex].friendlyType || '请选择物流方式'}}</view>
             </picker>
           </view>
         </view>
@@ -89,7 +93,7 @@
           <view class="cell-title">交货日期</view>
           <view class="cell-content">
             <picker mode="date" start="{{beginDate}}" value="{{deliveryDate}}" bindchange="changeDeliveryDate">
-              <view>{{deliveryDate || '请选择交货日期'}}</view>
+              <view class="picker-view">{{deliveryDate || '请填写交货日期'}}</view>
             </picker>
           </view>
         </view>
@@ -122,17 +126,17 @@
       <view class="line-cell bb mt20">
         <view class="cell-title mr20">物流单号</view>
         <view class="cell-content">
-          <input type="text" class="input" value="{{logisticNum}}" bindinput="inputLogisticNum" /> </view>
+          <input type="text" class="min-input border-bottom" value="{{logisticNum}}" bindinput="inputLogisticNum" /> </view>
       </view>
       <view class="line-cell bb">
         <view class="cell-title mr20">司机姓名</view>
         <view class="cell-content">
-          <input type="text" class="input" value="{{driverName}}" bindinput="inputDriverName" /> </view>
+          <input type="text" class="min-input border-bottom" value="{{driverName}}" bindinput="inputDriverName" /> </view>
       </view>
       <view class="line-cell bb">
         <view class="cell-title mr20">司机手机号</view>
         <view class="cell-content">
-          <input type="text" class="input" value="{{driverPhone}}" bindinput="inputDriverPhone" /> </view>
+          <input type="number" class="min-input border-bottom" value="{{driverPhone}}" bindinput="inputDriverPhone" /> </view>
       </view>
     </block>
     <block wx:else>

@@ -61,7 +61,7 @@ new WXPage({
     isConfirming: false,
 
     // 是否是从消息模版进入，需要返回首页按钮
-    isBack: false
+    isBack: false,
   },
   // 当前订单的角色，是否在用户的角色列表中
   judgeRole (role) {
@@ -91,9 +91,11 @@ new WXPage({
 
     let result = userInfo.roles.some((item) => {
       if (item.id == id) {
-        return true;
+        return true
+      } else if (id == 2 && item.id == 3) {
+        return true
       } else {
-        return false;
+        return false
       }
     });
 
@@ -115,7 +117,10 @@ new WXPage({
         order.date = utils.formatDate(new Date(order.updatedAt), 'YYYY-MM-DD HH:mm:ss');
         let deliveryDate = utils.formatDate(order.deliveryDate ? new Date(order.deliveryDate) : undefined, 'YYYY-MM-DD');
 
+        // offerTotal为null时设置为0
+        order.offerTotal ? '' : order.offerTotal = 0
         this.setData({
+          offerTotal: order.offerTotal,
           deliveryDate,
           totalPrice: order.amount,
           order: order,
@@ -149,9 +154,10 @@ new WXPage({
             // }
 
             // 新的接口 设置最后支付方式
+            console.info(order.gatewayType)
             if (!!order.gatewayType) {
               payType.some((item, index) => {
-                if (item.friendlyType.indexOf(order.gatewayType)) {
+                if (item.friendlyType.indexOf(order.gatewayType.friendlyType) != -1) {
                   payIndex = index
                   return true
                 } else {
@@ -159,7 +165,7 @@ new WXPage({
                 }
               })
             }
-
+            console.info(payIndex)
             this.setData({
               isPayLoaded: true,
               payIndex,
@@ -285,11 +291,13 @@ new WXPage({
     }).then((res) => {
       if (res.errorCode === 200) {
         let logisticList = res.data;
-        let logisticIndex = 0;
+        let logisticIndex = -1
 
+        console.info(order.orderFulFillType)
         if (order.orderFulFillType) {
           logisticList.some((item, index) => {
             if (item.type == order.orderFulFillType.type) {
+              console.info(item.type, order.orderFulFillType.type)
               logisticIndex = index;
               return true;
             } else {
@@ -439,6 +447,10 @@ new WXPage({
       // 未选择交货日期
       if (!deliveryDate) {
         throw new Error('请选择交货日期');
+      }
+      // 未选择支付方式
+      if (payIndex == null) {
+        throw new Error('请选择支付方式');
       }
       order.orderItems.forEach((item) => {
         if (item.quantity === '') {
@@ -769,7 +781,18 @@ new WXPage({
 
     // 待财务审核、待财务确认，要附带上支付方式参数
     if (order.status.type === EXAMINE_ACCOUNTANT || order.status.type === SUBMITTED) {
-      data.payType = payType[payIndex].type;
+      try {
+        if (payType[payIndex]) {
+          data.payType = payType[payIndex].type
+        } else {
+          throw new Error('请选择支付方式')
+        }
+      } catch (e) {
+        return this.toast.error({
+          content: e.message,
+          duration: 4000
+        })
+      }
     }
 
     // 待财务确认，要附带上单价修改参数
