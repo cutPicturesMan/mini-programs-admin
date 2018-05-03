@@ -17,7 +17,7 @@ button{
   margin: 34rpx 0;
 }
 .modified-date-picker{
-  border: 2rpx #999 solid;
+  border-bottom: 1rpx #888 solid;
 }
 .modified-date-picker-item{
   width: 400rpx;
@@ -36,5 +36,5 @@ button{
 
 .modified-task-input{
   text-align: center;
-  border: 2rpx #999 solid;
+  border-bottom: 1rpx #888 solid;
 }

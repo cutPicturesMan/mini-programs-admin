@@ -1,5 +1,10 @@
+import http from '../../../public/js/http'
+import api from '../../../public/js/api'
+import regeneratorRuntime from '../../../public/js/regenerator'
+
 Page({
   data: {
+    admin: '',
     headData: { name: '', num: '', goal: '', finish: '', startTime: '', endTime: '', timeProgress: '', goalProgress: '', rank: '' },
     salesman: [
       { profile: '', ranking: '1', name: '张先生', achievement: '10万', schedule: '20%' },
@@ -14,7 +19,21 @@ Page({
       // { profile: '', name: '', lastTime: '', orderWeek: '', orderMonth: '' }
     ]
   },
-  onLoad: function (option) {
+  async onLoad (option) {
+    let info = await getApp().getUserInfo()
+    let admin = info.id
+    // 考核指标头部信息
+    http.request({
+      url: api.indicatorsHead + admin
+    })
+    // 客户列表
+    http.request({
+      url: api.indicatorsTableCustomer + admin
+    })
+    // 业务员列表
+    http.request({
+      url: api.indicatorsTableSalesman + admin
+    })
   },
   onReady: function () {
     this.data.salesman.forEach(e => {

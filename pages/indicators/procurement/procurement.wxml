@@ -31,6 +31,20 @@
       </view>
     </view>
   </view>
+  <view class="procurement-chart-date">
+    <view class="procurement-chart-date-item">
+      <view class="procurement-chart-date-title">起始时间：</view>
+      <picker id="startTime" mode="date" value="{{startTime}}" bindchange="bindTimeChange">
+        <view class="procurement-chart-date-picker"> {{startTime || '请选择'}} </view>
+      </picker>
+    </view>
+    <view class="procurement-chart-date-item">
+      <view class="procurement-chart-date-title">终止时间：</view>
+      <picker id="endTime" mode="date" value="{{endTime}}" bindchange="bindTimeChange">
+        <view class="procurement-chart-date-picker"> {{endTime || '请选择'}} </view>
+      </picker>
+    </view>
+  </view>
   <view class="procurement-chart">
     <ec-canvas id="procurement-chart" canvas-id="procurement-chart" ec="{{ ec }}"></ec-canvas>
   </view>

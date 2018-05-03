@@ -25,7 +25,7 @@
             <view class="info mb10">地址：{{item.address}}</view>
           <!--</navigator>-->
           </view>
-          <view class="btns-prompt mt20" wx:if="{{roleObj[ROLE_MANAGER]}}">
+          <view class="btns-prompt mt20" wx:if="{{roleObj[ROLE_MANAGER] || roleObj[ROLE_SALESMAN]}}">
             <view class="each-item {{item.isRejecting ? 'reject' : 'cancel'}}"
                   data-pass="{{0}}"
                   data-id="{{item.id}}"

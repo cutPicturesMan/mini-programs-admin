@@ -1,72 +1,71 @@
 {
-  "pages":[
+  "pages": [
     "pages/pending/pending",
     "pages/opera/opera",
     "pages/order/order",
     "pages/my/my",
-
     "pages/order_detail/order_detail",
-
     "pages/finance_collect/finance_collect",
     "pages/finance_uncollect/finance_uncollect",
     "pages/finance_account/finance_account",
     "pages/finance_account_detail/finance_account_detail",
     "pages/finance_bill_detail/finance_bill_detail",
-
     "pages/manage_opera_salesman/manage_opera_salesman",
     "pages/manage_choose_salesman/manage_choose_salesman",
     "pages/manage_customer/manage_customer",
     "pages/product_setting/product_setting",
-
     "pages/customer/customer",
     "pages/customer_setting/customer_setting",
-
     "pages/store_send/store_send",
     "pages/store_remain/store_remain",
-
     "pages/registry/registry",
     "pages/prompt_page/prompt_page",
-
     "pages/indicators/index/index",
     "pages/indicators/modified/modified",
     "pages/indicators/procurement/procurement",
     "pages/indicators/person/index"
   ],
-  "window":{
-    "backgroundColor":"#f2f2f2",
-    "backgroundTextStyle":"light",
+  "window": {
+    "backgroundColor": "#f2f2f2",
+    "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#ff5000",
     "navigationBarTitleText": "管理中心",
-    "navigationBarTextStyle":"white"
+    "navigationBarTextStyle": "white"
   },
   "tabBar": {
     "backgroundColor": "#fff",
     "selectedColor": "#ff7000",
-    "list": [{
-      "pagePath": "pages/pending/pending",
-      "text": "待处理",
-      "iconPath": "icons/tabs-pending.png",
-      "selectedIconPath": "icons/tabs-pending-active.png"
-    }, {
-      "pagePath": "pages/opera/opera",
-      "text": "操作面板",
-      "iconPath": "icons/tabs-opera.png",
-      "selectedIconPath": "icons/tabs-opera-active.png"
-    }, {
-      "pagePath": "pages/indicators/index/index",
-      "text": "考核指标",
-      "iconPath": "icons/indicators.png",
-      "selectedIconPath": "icons/indicators-active.png"
-    },{
-      "pagePath": "pages/order/order",
-      "text": "订单列表",
-      "iconPath": "icons/tabs-order.png",
-      "selectedIconPath": "icons/tabs-order-active.png"
-    }, {
-      "pagePath": "pages/my/my",
-      "text": "个人中心",
-      "iconPath": "icons/tabs-my.png",
-      "selectedIconPath": "icons/tabs-my-active.png"
-    }]
+    "list": [
+      {
+        "pagePath": "pages/pending/pending",
+        "text": "待处理",
+        "iconPath": "icons/tabs-pending.png",
+        "selectedIconPath": "icons/tabs-pending-active.png"
+      },
+      {
+        "pagePath": "pages/opera/opera",
+        "text": "操作面板",
+        "iconPath": "icons/tabs-opera.png",
+        "selectedIconPath": "icons/tabs-opera-active.png"
+      },
+      {
+        "pagePath": "pages/indicators/index/index",
+        "text": "考核指标",
+        "iconPath": "icons/indicators.png",
+        "selectedIconPath": "icons/indicators-active.png"
+      },
+      {
+        "pagePath": "pages/order/order",
+        "text": "订单列表",
+        "iconPath": "icons/tabs-order.png",
+        "selectedIconPath": "icons/tabs-order-active.png"
+      },
+      {
+        "pagePath": "pages/my/my",
+        "text": "个人中心",
+        "iconPath": "icons/tabs-my.png",
+        "selectedIconPath": "icons/tabs-my-active.png"
+      }
+    ]
   }
 }

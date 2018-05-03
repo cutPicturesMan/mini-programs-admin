@@ -5,8 +5,8 @@
       <button size="mini" bindtap="save">保存</button>
     </view>
     <view class="modified-goal">
-      <view>总指标：{{totalGoal}}</view>
-      <view>未分配：{{unallocatedGoal}}</view>
+      <view>总指标：{{goal}}</view>
+      <view>未分配：{{unallocated}}</view>
     </view>
     <view class="modified-date">
       <view>开始日期</view>
@@ -26,7 +26,7 @@
         <image style="width: 62rpx; height: 62rpx;" src="{{item.profile}}" mode="aspectFit"></image>
       </view>
       <view>{{item.name}}</view>
-      <input class="modified-task-input" type="number" placeholder="分配指标" value="{{item.task}}">
+      <input class="modified-task-input" type="number" placeholder="分配指标" value="{{item.task}}" bindblur="changeTask" id="{{item.id}}">
         {{item.task}}
       </input>
     </view>

@@ -69,6 +69,17 @@ let api = {
   // // 获取收货地址
   // address: '/address',
   // // 获取默认收货地址
+
+  // 客户列表
+  indicatorsTableCustomer: '/api/indicators/table/customer/',
+  // 业务员列表
+  indicatorsTableSalesman: '/api/indicators/table/salesman/',
+  // 考核指标头部信息
+  indicatorsHead: '/api/indicators/head/',
+  // 客户采购统计
+  indicatorsProcurement: '/api/indicators/procurement/',
+  // 创建指标
+  indicators: '/api/indicators',
 }
 
 for (var attr in api) {

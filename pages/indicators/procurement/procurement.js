@@ -1,5 +1,37 @@
-import * as echarts from '../../../common/ec-canvas/echarts'
+// import * as echarts from '../../../common/ec-canvas/echarts'
+import http from '../../../public/js/http'
+import api from '../../../public/js/api'
+// import regeneratorRuntime from '../../../public/js/regenerator'
 var option
+Page({
+  data: {
+    ec: {
+      onInit: initChart
+    },
+    profile: null,
+    company: '中国XX有限公司',
+    name: '赵先生',
+    phone: '135XXXX1234',
+    adress: '中国河南省郑州市中原区科学大道100号 ',
+    lastTime: '2018-02-13',
+    chartData: null,
+    startTime: '',
+    endTime: ''
+  },
+  onLoad: function () {
+    if (!this.data.profile) {
+      this.setData({ profile: '/icons/profile.png' })
+    }
+  },
+  getProcurement () {
+
+  },
+  bindTimeChange (e) {
+    let id = e.currentTarget.id
+    let value = e.detail.value
+    this.setData({ [id]: value })
+  }
+})
 
 function initChart (canvas, width, height) {
   const chart = echarts.init(canvas, null, {
@@ -53,26 +85,3 @@ function initChart (canvas, width, height) {
   chart.setOption(option)
   return chart
 }
-
-Page({
-  data: {
-    ec: {
-      onInit: initChart
-    },
-    profile: null,
-    company: '中国XX有限公司',
-    name: '赵先生',
-    phone: '135XXXX1234',
-    adress: '中国河南省郑州市中原区科学大道100号 ',
-    lastTime: '2018-02-13',
-    chartData: null
-  },
-  onLoad: function () {
-    if (!this.data.profile) {
-      this.setData({ profile: '/icons/profile.png' })
-    }
-  },
-  getProcurement () {
-
-  }
-})

@@ -32,7 +32,7 @@
     </view>
     <view class="label-act bb">
       <view class="title"></view>
-      <view class="arrow">订单名称：{{item.name}}</view>
+      <view class="arrow">联系人：{{item.name}}</view>
     </view>
     <view class="label-act bb">
       <view class="title"></view>

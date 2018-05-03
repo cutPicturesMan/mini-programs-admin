@@ -16,7 +16,7 @@
     <button size="mini" class="indicators-rank-button" bindtap="moified">调整指标</button>
   </view>
   <view class="indicators-salesman-table">
-    <view class="indicators-salesman" wx:for="{{salesman}}" wx:key="item" bindtap="personIndicators">
+    <view class="indicators-salesman" wx:for="{{salesman}}" wx:key="item" bindtap="personIndicators" wx:if="{{salesman}}">
       <view>
         <image style="width: 62rpx; height: 62rpx;" src="{{item.profile}}" mode="aspectFit"></image>
       </view>
@@ -25,6 +25,7 @@
       <view>{{item.achievement}}</view>
       <view>{{item.schedule}}</view>
     </view>
+    <view class="indicators-salesman" wx:if="!{{salesman}}">暂无数据</view>
   </view>
   <view class="indicators-customer-table">
     <view class="indicators-customer" wx:for="{{customer}}" wx:key="item" bindtap="procurement">
@@ -36,5 +37,6 @@
       <view>{{item.orderWeek}}/周</view>
       <view>{{item.orderMonth}}/月</view>
     </view>
+    <view class="indicators-salesman" wx:if="!{{customer}}">暂无数据</view>
   </view>
 </view>

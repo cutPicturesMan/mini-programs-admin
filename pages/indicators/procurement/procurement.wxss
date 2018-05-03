@@ -26,12 +26,32 @@
   flex-wrap: wrap;
 }
 .procurement-chart{
-  display: flex;
-  justify-content: center;
+  /* display: flex; */
+  /* justify-content: center; */
   height: 800rpx;
 }
 
 ec-canvas {
   width: 100%;
   height: 100%;
+}
+
+/* 图表日期选择控件 */
+.procurement-chart-date{
+  margin-top: 30rpx;
+  display: flex;
+  justify-content: space-between;
+}
+
+.procurement-chart-date-item{
+  display: flex;
+  flex-direction: row;
+  font-size: 30rpx;
+}
+
+.procurement-chart-date-picker{
+  font-size: 30rpx;
+  height: 40rpx;
+  width: 180rpx;
+  border: #bbb 1rpx solid;
 }
