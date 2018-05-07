@@ -25,7 +25,7 @@ button{
 }
 
 .modified-task-table{
-  margin: 100rpx;
+  margin: 100rpx 0;
 }
 .modified-task{
   display: flex;

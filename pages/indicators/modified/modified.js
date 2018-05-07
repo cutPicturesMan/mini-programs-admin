@@ -2,30 +2,43 @@ import utils from "../../../public/js/utils"
 import http from '../../../public/js/http'
 import api from '../../../public/js/api'
 import regeneratorRuntime from '../../../public/js/regenerator'
+import WXPage from '../../Page'
 
-Page({
+new WXPage({
   data: {
-    goal: '100000',
-    unallocated: '10000',
+    isGeneralMangager: true,
+    goal: '',
+    unallocated: '',
     startTime: '',
     endTime: '',
-    task: [
-      { profile: '', name: '李业务', task: 0, id: 1 },
-      { profile: '', name: '李业务', task: 0, id: 2 }
-    ]
+    task: []
   },
   async onLoad () {
     // utils.defaultProfile.call(this, 'task')
     let info = await getApp().getUserInfo()
     let admin = info.id
+    let self = this
     // 考核指标头部信息
     http.request({
-      url: api.indicatorsHead + admin
+      url: api.indicatorsHead + admin,
+      success (res) {
+        let { startTime, endTime, goal } = res.data.data
+        startTime ? startTime = utils.formatDate(startTime, 'YYYY-MM-DD') : startTime = ''
+        endTime ? endTime = utils.formatDate(endTime, 'YYYY-MM-DD') : endTime = ''
+        self.setData({ startTime, endTime, goal })
+      }
     })
-    // 客户列表
+    // 业务员列表
     http.request({
-      url: api.indicatorsTableCustomer + admin
+      url: api.indicatorsTableSalesman + admin,
+      success (res) {
+        self.setData({ task: res.data.data })
+      }
     })
+  },
+  onReady () {
+    // 初始化未分配数值
+    this.changeTask()
   },
   bindStartChange: function (e) {
     this.setData({ startTime: e.detail.value })
@@ -34,33 +47,81 @@ Page({
     this.setData({ endTime: e.detail.value })
   },
   changeTask (e) {
-    let id = e.currentTarget.id
-    let value = parseInt(e.detail.value)
     let { task, goal, unallocated } = this.data
-    unallocated = goal
-    task.forEach(e => {
-      e.id == id ? e.task = value : ''
-      unallocated -= e.task
-    });
+    if (e) {
+      let adminId = e.currentTarget.id
+      let value = parseInt(e.detail.value)
+      unallocated = goal
+      task.forEach(e => {
+        e.adminId == adminId ? e.goal = value : ''
+        unallocated -= e.goal
+      })
+    } else {
+      // goal被修改
+      unallocated = goal
+      task.forEach(e => {
+        console.info(e, unallocated)
+        unallocated -= e.goal
+      });
+    }
     this.setData({ task, unallocated })
   },
   cancel () {
-    wx.navigateBack({
-      delta: 1, // 回退前 delta(默认为1) 页面
-    })
-  },
-  save () {
-    let { task, goal, unallocated } = this.data
-    // unallocated > 0 TODO
-
-    http.request({
-      url: api.indicators,
-      method: 'POST',
-      success () {
-        wx.navigateBack({
-          delta: 1, // 回退前 delta(默认为1) 页面
-        })
+    wx.showModal({
+      title: '确认取消修改',
+      content: '不保存修改，直接返回上级页面？',
+      confirmColor: '#FF0000',
+      success: function (res) {
+        if (res.confirm) {
+          wx.navigateBack({
+            delta: 1, // 回退前 delta(默认为1) 页面
+          })
+        }
       }
     })
+  },
+  formSubmit (e) {
+    let { task, goal, unallocated, startTime, endTime } = this.data
+
+    try {
+      if (!startTime) {
+        throw new Error('请填写起始时间')
+      } else if (!endTime) {
+        throw new Error('请填写终止时间')
+      } else if (unallocated < 0) {
+        throw new Error('分配金额超出目标金额')
+      }
+    } catch (e) {
+      return this.toast.error({
+        content: e.message,
+        duration: 4000
+      })
+    }
+
+    let startTs = new Date(startTime).getTime()
+    // 一般结束时间是指当天24点
+    let endTs = new Date(endTime).getTime() + 1000 * 60 * 60 * 24
+
+    let self = this
+    http.request({
+      url: api.indicators,
+      data: Object.assign({ totalIndex: goal, startTs, endTs }, e.detail.value),
+      method: 'POST',
+      success (res) {
+        self.toast.success({
+          content: res.data.moreInfo,
+          duration: 2000
+        })
+        setTimeout(() => {
+          wx.navigateBack({
+            delta: 1, // 回退前 delta(默认为1) 页面
+          })
+        }, 2000);
+      }
+    })
+  },
+  setGoal (e) {
+    this.setData({ goal: parseInt(e.detail.value) })
+    this.changeTask()
   }
 })

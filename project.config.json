@@ -28,7 +28,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 8,
+			"current": -1,
 			"list": [
 				{
 					"id": 0,
@@ -103,10 +103,10 @@
 					"query": ""
 				},
 				{
-					"id": -1,
+					"id": 12,
 					"name": "考核指标-客户采购统计",
 					"pathName": "pages/indicators/procurement/procurement",
-					"query": ""
+					"query": "&customerId=114"
 				},
 				{
 					"id": 13,

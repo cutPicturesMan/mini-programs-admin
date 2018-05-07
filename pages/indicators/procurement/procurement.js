@@ -1,7 +1,9 @@
-// import * as echarts from '../../../common/ec-canvas/echarts'
+import * as echarts from '../../../common/ec-canvas/echarts'
 import http from '../../../public/js/http'
 import api from '../../../public/js/api'
-// import regeneratorRuntime from '../../../public/js/regenerator'
+import regeneratorRuntime from '../../../public/js/regenerator'
+import utils from "../../../public/js/utils"
+
 var option
 Page({
   data: {
@@ -15,13 +17,26 @@ Page({
     adress: '中国河南省郑州市中原区科学大道100号 ',
     lastTime: '2018-02-13',
     chartData: null,
-    startTime: '',
-    endTime: ''
+    startTs: '',
+    endTs: '',
+    customerId: '',
+    // option:[]
   },
-  onLoad: function () {
-    if (!this.data.profile) {
-      this.setData({ profile: '/icons/profile.png' })
-    }
+  onLoad: function (option) {
+    let customerId = option.customerId
+    this.setData({ customerId })
+    this.setData({ endTs: utils.formatDate(new Date(), 'YYYY-MM-DD') })
+    this.setData({ startTs: utils.formatDate(new Date() - 1000 * 60 * 60 * 24 * 30, 'YYYY-MM-DD') })
+
+    let profile, company, name, phone, adress, lastTime
+    let self = this
+    http.request({
+      url: api.getProcurement + customerId,
+      success (res) {
+        ({ profile, company, name, phone, adress, lastTime } = res.data)
+        self.setData({ profile, company, name, phone, adress, lastTime })
+      }
+    })
   },
   getProcurement () {
 
@@ -30,6 +45,15 @@ Page({
     let id = e.currentTarget.id
     let value = e.detail.value
     this.setData({ [id]: value })
+
+    // GET客户采购统计
+    http.request({
+      url: api.getProcurement + customerId,
+      data: { startTs, endTs },
+      success (res) {
+        option.data = res.data.chartData
+      }
+    })
   }
 })
 
