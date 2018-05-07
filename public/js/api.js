@@ -77,7 +77,7 @@ let api = {
   // 考核指标头部信息
   indicatorsHead: '/api/indicators/head/',
   // 客户采购统计
-  indicatorsProcurement: '/api/indicators/procurement/',
+  getProcurement: '/api/indicators/procurement/',
   // 创建指标
   indicators: '/api/indicators',
 }

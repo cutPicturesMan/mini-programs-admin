@@ -4,6 +4,7 @@ import api from '../../../public/js/api'
 import regeneratorRuntime from '../../../public/js/regenerator'
 import utils from "../../../public/js/utils"
 
+// TODO set chartData
 var option
 Page({
   data: {
@@ -24,32 +25,33 @@ Page({
   },
   onLoad: function (option) {
     let customerId = option.customerId
+    console.log(customerId)
     this.setData({ customerId })
     this.setData({ endTs: utils.formatDate(new Date(), 'YYYY-MM-DD') })
     this.setData({ startTs: utils.formatDate(new Date() - 1000 * 60 * 60 * 24 * 30, 'YYYY-MM-DD') })
 
     let profile, company, name, phone, adress, lastTime
+    let { startTs, endTs } = this.data
     let self = this
     http.request({
       url: api.getProcurement + customerId,
+      data: { startTs: new Date(startTs).getTime(), endTs: new Date(endTs).getTime() },
       success (res) {
-        ({ profile, company, name, phone, adress, lastTime } = res.data)
+        ({ profile, company, name, phone, adress, lastTime } = res.data.data)
         self.setData({ profile, company, name, phone, adress, lastTime })
       }
     })
   },
-  getProcurement () {
-
-  },
   bindTimeChange (e) {
     let id = e.currentTarget.id
     let value = e.detail.value
+    let { customerId, startTs, endTs } = this.data
     this.setData({ [id]: value })
 
     // GET客户采购统计
     http.request({
       url: api.getProcurement + customerId,
-      data: { startTs, endTs },
+      data: { startTs: new Date(startTs).getTime(), endTs: new Date(endTs).getTime() },
       success (res) {
         option.data = res.data.chartData
       }
