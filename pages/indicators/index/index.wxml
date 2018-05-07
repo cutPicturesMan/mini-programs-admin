@@ -1,45 +1,42 @@
 <view class="indicators">
-  <view class="empty-data" wx:if="{{roles.indexOf(2) == -1 && roles.indexOf(3) == -1}}">
-    <view class="p20 tac fs32 text-stable">您暂无业绩考核需求</view>
-  </view>
   <view class="indicators-head">
-    <view class="indicators-head-item">负责人：{{headData.name || '暂无数据'}}</view>
-    <view class="indicators-head-item">下属人数：{{headData.num || '暂无数据'}}</view>
-    <view class="indicators-head-item">考核指标：{{headData.goal || '暂无数据'}}</view>
-    <view class="indicators-head-item">达成业绩：{{headData.finish || '暂无数据'}}</view>
-    <view class="indicators-head-item">开始时间：{{headData.startTime || '暂未设置'}}</view>
-    <view class="indicators-head-item">结束时间：{{headData.endTime || '暂未设置'}}</view>
+    <view class="indicators-head-item">负责人：王先生</view>
+    <view class="indicators-head-item">下属人数：14</view>
+    <view class="indicators-head-item">考核指标：20万</view>
+    <view class="indicators-head-item">达成业绩：13.6万</view>
+    <view class="indicators-head-item">开始时间：2017-9</view>
+    <view class="indicators-head-item">结束时间：2017-12</view>
   </view>
-  <view class="indicators-head-item">时间进度：{{headData.timeProgress ? headData.timeProgress + '%' : '暂无数据'}}</view>
-  <progress percent="{{headData.timeProgress}}" activeColor="red" />
-  <view class="indicators-head-item">达成进度：{{headData.goalProgress ? headData.goalProgress + '%' : '暂无数据'}}</view>
-  <progress percent="{{headData.goalProgress}}" activeColor="green" />
+  <view class="indicators-head-item">时间进度：20%</view>
+  <progress percent="20" activeColor="red" />
+  <view class="indicators-head-item">达成进度：50%</view>
+  <progress percent="50" activeColor="green" />
   <view class="indicators-rank">
-    <view class="indicators-rank-text">团队排名：{{headData.rank}}</view>
-    <button size="mini" class="indicators-rank-button" bindtap="moified" wx:if= "{{!!~roles.indexOf(3)}}">调整指标</button>
+    <view class="indicators-rank-text">团队排名：2</view>
+    <button size="mini" class="indicators-rank-button" bindtap="moified">调整指标</button>
   </view>
   <view class="indicators-salesman-table">
-    <view class="indicators-salesman" wx:for="{{salesman}}" wx:key="item" bindtap="personIndicators" data-adminId="{{item.adminId}}">
+    <view class="indicators-salesman" wx:for="{{salesman}}" wx:key="item" bindtap="personIndicators" wx:if="{{salesman}}">
       <view>
-        <image style="width: 62rpx; height: 62rpx;" src="{{item.avatar}}" mode="aspectFit"></image>
+        <image style="width: 62rpx; height: 62rpx;" src="{{item.profile}}" mode="aspectFit"></image>
       </view>
-      <view>{{item.ranking || '暂无排名'}}</view>
+      <view>{{item.ranking}}</view>
       <view>{{item.name}}</view>
-      <view>{{item.achievement || '暂未设置'}}</view>
-      <view>{{item.schedule || '暂未设置'}}</view>
+      <view>{{item.achievement}}</view>
+      <view>{{item.schedule}}</view>
     </view>
-    <view class="indicators-salesman" wx:if="{{salesman.length == 0}}">暂无数据业务员数据</view>
+    <view class="indicators-salesman" wx:if="!{{salesman}}">暂无数据</view>
   </view>
   <view class="indicators-customer-table">
-    <view class="indicators-customer" wx:for="{{customer}}" wx:key="item" bindtap="procurement" data-customerId="{{item.customerId}}">
+    <view class="indicators-customer" wx:for="{{customer}}" wx:key="item" bindtap="procurement">
       <view>
-        <image style="width: 62rpx; height: 62rpx;" src="{{item.avatar}}" mode="aspectFit"></image>
+        <image style="width: 62rpx; height: 62rpx;" src="{{item.profile}}" mode="aspectFit"></image>
       </view>
       <view>{{item.name}}</view>
       <view>{{item.lastTime}}</view>
-      <view>{{item.orderWeek ? item.orderWeek + '/周' : '暂无数据'}}</view>
-      <view>{{item.orderMonth ? item.orderMonth + '/月' : '暂无数据' }}</view>
+      <view>{{item.orderWeek}}/周</view>
+      <view>{{item.orderMonth}}/月</view>
     </view>
-    <view class="indicators-salesman" wx:if="{{customer.length == 0}}">暂无数据客户数据</view>
+    <view class="indicators-salesman" wx:if="!{{customer}}">暂无数据</view>
   </view>
 </view>

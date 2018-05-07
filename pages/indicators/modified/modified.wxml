@@ -1,17 +1,12 @@
-<import src="../../../common/toast/toast.wxml" />
-<template is="toast" data="{{ ...toast }}" />
-<view class="modified">
-  <form bindsubmit="formSubmit">
+<form bindsubmit="formSubmit" bindreset="formReset">
+  <view class="modified">
     <view class="modified-button">
       <button size="mini" bindtap="cancel">取消</button>
-      <button size="mini" formType="submit">保存</button>
-      <!-- <button size="mini" bindtap="formSubmit">保存</button> -->
+      <button size="mini" bindtap="save">保存</button>
     </view>
     <view class="modified-goal">
-      <view wx:if="{{isGeneralMangager}}"> 总指标：
-        <input type="number" value="{{goal}}" bindblur="setGoal" class="block-to-inline border-bottom" /> </view>
-      <view wx:if="{{!isGeneralMangager}}">总指标：{{goal}}</view>
-      <view>未分配：{{unallocated || '未设置'}}</view>
+      <view>总指标：{{goal}}</view>
+      <view>未分配：{{unallocated}}</view>
     </view>
     <view class="modified-date">
       <view>开始日期</view>
@@ -25,14 +20,15 @@
         <view class="modified-date-picker-item">{{endTime}}</view>
       </picker>
     </view>
-    <view class="modified-task-table">
-      <view class="modified-task" wx:for="{{task}}" wx:key="item" data-adminId="{{item.adminId}}">
-        <view>
-          <image style="width: 62rpx; height: 62rpx;" src="{{item.avatar}}" mode="aspectFit"></image>
-        </view>
-        <view>{{item.name}}</view>
-        <input name="indexDate[{{index}}].adminId" value="{{item.adminId}}" hidden="true" />
-        <input class="modified-task-input" type="number" placeholder="分配指标" value="{{item.goal}}" bindblur="changeTask" id="{{item.adminId}}" name="indexDate[{{index}}].index" /> </view>
+    <view class="modified-task-table"></view>
+    <view class="modified-task" wx:for="{{task}}" wx:key="item">
+      <view>
+        <image style="width: 62rpx; height: 62rpx;" src="{{item.profile}}" mode="aspectFit"></image>
+      </view>
+      <view>{{item.name}}</view>
+      <input class="modified-task-input" type="number" placeholder="分配指标" value="{{item.task}}" bindblur="changeTask" id="{{item.id}}">
+        {{item.task}}
+      </input>
     </view>
-  </form>
-</view>
+  </view>
+</form>

@@ -70,7 +70,7 @@
           <view class="cell-title">支付方式</view>
           <view class="cell-content">
             <picker bindchange="bindPayTypeChange" value="{{payIndex}}" range="{{payType}}" range-key="friendlyType">
-              <view class="picker-view">{{payType[payIndex].friendlyType || '请选择支付方式'}}</view>
+              <view class="picker-view">{{payType[payIndex].friendlyType || '请选择物流方式'}}</view>
             </picker>
           </view>
         </view>

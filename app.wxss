@@ -3614,9 +3614,3 @@ page {
   border:none;
   border-bottom: #888 1rpx solid;
 }
-
-.block-to-inline{
-  text-align: center;
-  display: inline-block;
-  vertical-align: middle;
-}

@@ -17,6 +17,7 @@ class Auth {
                   let sessionId = res.data.data;
                   wx.setStorageSync('sessionId', sessionId);
                 }
+
                 // 无论登录是否成功，都再次发起请求，把这个登录是否成功放到下次请求上验证
                 resolve(res);
               }

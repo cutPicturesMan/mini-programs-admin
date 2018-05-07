@@ -452,11 +452,6 @@ new WXPage({
       if (payIndex == null) {
         throw new Error('请选择支付方式');
       }
-      // 未选择物流方式
-      if (logisticList[logisticIndex] == null) {
-        throw new Error('请选择物流方式');
-      }
-
       order.orderItems.forEach((item) => {
         if (item.quantity === '') {
           throw new Error('请填写商品数量');

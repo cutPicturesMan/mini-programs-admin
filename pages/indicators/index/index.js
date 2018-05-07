@@ -1,64 +1,54 @@
 import http from '../../../public/js/http'
 import api from '../../../public/js/api'
 import regeneratorRuntime from '../../../public/js/regenerator'
-import utils from '../../../public/js/utils'
 
 Page({
   data: {
-    name: '',
-    headData: {},
-    salesman: [],
-    customer: [],
-    roles: [],
-    admin: ''
+    admin: '',
+    headData: { name: '', num: '', goal: '', finish: '', startTime: '', endTime: '', timeProgress: '', goalProgress: '', rank: '' },
+    salesman: [
+      { profile: '', ranking: '1', name: '张先生', achievement: '10万', schedule: '20%' },
+      { profile: '', ranking: '2', name: '张先生', achievement: '10万', schedule: '20%' },
+      { profile: '', ranking: '3', name: '张先生', achievement: '10万', schedule: '20%' },
+      // { profile: '', ranking: '', name: '', achievement: '', schedule: '' }
+    ],
+    customer: [
+      { profile: '', name: '王客户', lastTime: '2017-01-13', orderWeek: '333', orderMonth: '112' },
+      { profile: '', name: '王客户', lastTime: '2017-01-13', orderWeek: '333', orderMonth: '112' },
+      { profile: '', name: '王客户', lastTime: '2017-01-13', orderWeek: '333', orderMonth: '112' },
+      // { profile: '', name: '', lastTime: '', orderWeek: '', orderMonth: '' }
+    ]
   },
   async onLoad (option) {
     let info = await getApp().getUserInfo()
-    console.log(info)
     let admin = info.id
-    let roles = []
-    info.roles.forEach(e => {
-      roles.push(e.id)
-    })
-    this.setData({ admin, roles })
-    this.onShow(admin)
-  },
-  onShow (admin) {
-    let self = this
-    if (admin) {
-    } else if (this.data.admin) {
-      admin = this.data.admin
-    } else {
-      return
-    }
     // 考核指标头部信息
     http.request({
-      url: api.indicatorsHead + admin,
-      success (res) {
-        let headData = res.data.data
-        if (headData.startTime && headData.endTime) {
-          headData.timeProgress = ((headData.endTime - new Date()) / (headData.endTime - headData.startTime)).toPrecision(4) * 100
-          headData.startTime = utils.formatDate(headData.startTime, 'YYYY-MM-DD')
-          headData.endTime = utils.formatDate(headData.endTime, 'YYYY-MM-DD')
-        }
-        headData.goalProgress = (headData.finish / headData.goal).toPrecision(4) * 100
-        self.setData({ headData })
-      }
-    })
-    // 业务员列表
-    http.request({
-      url: api.indicatorsTableSalesman + admin,
-      success (res) {
-        self.setData({ salesman: res.data.data })
-      }
+      url: api.indicatorsHead + admin
     })
     // 客户列表
     http.request({
-      url: api.indicatorsTableCustomer + admin,
-      success (res) {
-        self.setData({ customer: res.data.data })
-      }
+      url: api.indicatorsTableCustomer + admin
     })
+    // 业务员列表
+    http.request({
+      url: api.indicatorsTableSalesman + admin
+    })
+  },
+  onReady: function () {
+    this.data.salesman.forEach(e => {
+      if (!e.profile) {
+        e.profile = '/icons/profile.png'
+      }
+    });
+    this.setData({ salesman: this.data.salesman })
+
+    this.data.customer.forEach(e => {
+      if (!e.profile) {
+        e.profile = '/icons/profile.png'
+      }
+    });
+    this.setData({ customer: this.data.customer })
   },
   moified: function () {
     wx.navigateTo({
@@ -66,15 +56,13 @@ Page({
     })
   },
   procurement: function () {
-    let customerId = e.currentTarget.dataset.customerId
     wx.navigateTo({
-      url: '../procurement/procurement?customerId=' + customerId
+      url: '../procurement/procurement'
     })
   },
-  personIndicators: function (e) {
-    let adminid = e.currentTarget.dataset.adminid
+  personIndicators: function () {
     wx.navigateTo({
-      url: '../person/index?adminid=' + adminid
+      url: '../person/index?id=13'
     })
   }
 })

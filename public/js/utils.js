@@ -6,7 +6,6 @@ const utils = {
    * @returns {string}
    */
   formatDate (time = new Date(), format = 'YYYY-MM-DD HH:mm:ss') {
-    time ? time = new Date(time) : time = new Date()
     var obj = {
       YYYY: time.getFullYear(),
       MM: ('0' + (time.getMonth() + 1)).slice(-2),
