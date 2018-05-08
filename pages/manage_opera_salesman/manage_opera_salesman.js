@@ -34,7 +34,7 @@ new WXPage({
           item.isEdit = false;
 
           let roleObj = {};
-          item.allRoles.forEach((item)=>{
+          item.allRoles.forEach((item) => {
             roleObj[item.name] = true;
           });
 
@@ -54,7 +54,7 @@ new WXPage({
     let { list } = this.data;
 
     this.setData({
-        [`list[${index}].isEdit`]: true
+      [`list[${index}].isEdit`]: true
     });
   },
   // 选择角色
@@ -64,7 +64,7 @@ new WXPage({
     let { roleObj, isEdit } = list[index];
 
     // 非编辑模式下，提示
-    if(!isEdit){
+    if (!isEdit) {
       this.toast.error({
         content: '请点击编辑按钮'
       })
@@ -84,31 +84,32 @@ new WXPage({
     let { id, roleObj, allRoles } = list[index];
     let roleArr = [];
 
-    for(var key in roleObj){
+    for (var key in roleObj) {
       // 过滤出已选择的角色
-      if(roleObj[key]){
+      if (roleObj[key]) {
         roleArr.push(key);
       }
     }
 
-    // 如果待修改的角色数量和原始角色相同
-    if(roleArr.length == allRoles.length){
-      // 如果内容完全一样，则不发送请求
-      let isSame = roleArr.every((rItem)=>{
-        return allRoles.some((aItem)=>{
-          if(rItem == aItem.name){
-            return true;
-          } else {
-            return false;
-          }
-        });
+    // 长度是否相同的判断
+    let isEqualLength = roleArr.length == allRoles.length
+    // 内容是否相同的判断
+    let isSame = roleArr.every((rItem) => {
+      return allRoles.some((aItem) => {
+        console.log(rItem, aItem)
+        if (rItem == aItem.name) {
+          return true;
+        } else {
+          return false;
+        }
       });
+    });
 
-      if(isSame){
-        this.toast.error({
-          content: '您没有做出任何修改'
-        })
-      }
+    if (isEqualLength && isSame) {
+      // 如果内容完全一样，则不发送请求
+      this.toast.error({
+        content: '您没有做出任何修改'
+      })
     } else {
       wx.showLoading();
       http.request({
@@ -123,9 +124,9 @@ new WXPage({
         if (res.errorCode === 200) {
           let newRoleArr = [];
 
-          for(var key in roleObj){
+          for (var key in roleObj) {
             // 过滤出已选择的角色
-            if(roleObj[key]){
+            if (roleObj[key]) {
               newRoleArr.push(ROLE[key]);
             }
           }
@@ -149,6 +150,7 @@ new WXPage({
       [`list[${index}].isEdit`]: false
     });
   },
+
   // 通过、拒绝业务员
   judge (e) {
     let list = this.data.list;
