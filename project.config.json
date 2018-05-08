@@ -106,7 +106,7 @@
 					"id": 12,
 					"name": "考核指标-客户采购统计",
 					"pathName": "pages/indicators/procurement/procurement",
-					"query": "customerId=111"
+					"query": "customerid=111"
 				},
 				{
 					"id": 13,

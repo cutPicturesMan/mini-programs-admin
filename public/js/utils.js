@@ -58,6 +58,17 @@ const utils = {
       }
     });
     this.setData({ [args]: this.data[args] })
+  },
+  /**
+   * @description 返回当天最后一秒
+   * @returns 时间戳
+   */
+  lastTime () {
+    var todayYear = (new Date()).getFullYear();
+    var todayMonth = (new Date()).getMonth();
+    var todayDay = (new Date()).getDate();
+    var todayTime = (new Date(todayYear, todayMonth, todayDay, '23', '59', '59')).getTime()
+    return todayTime
   }
 }
 

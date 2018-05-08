@@ -34,14 +34,14 @@
   <view class="procurement-chart-date">
     <view class="procurement-chart-date-item">
       <view class="procurement-chart-date-title">起始时间：</view>
-      <picker id="startTime" mode="date" value="{{startTs}}" bindchange="bindTimeChange">
+      <picker id="startTs" mode="date" value="{{startTs}}" bindchange="bindTimeChange">
         <view class="procurement-chart-date-picker"> {{startTs || '请选择'}} </view>
       </picker>
     </view>
     <view class="procurement-chart-date-item">
       <view class="procurement-chart-date-title">终止时间：</view>
-      <picker id="endTime" mode="date" value="{{startTs}}" bindchange="bindTimeChange">
-        <view class="procurement-chart-date-picker"> {{startTs || '请选择'}} </view>
+      <picker id="endTs" mode="date" value="{{endTs}}" bindchange="bindTimeChange">
+        <view class="procurement-chart-date-picker"> {{endTs || '请选择'}} </view>
       </picker>
     </view>
   </view>

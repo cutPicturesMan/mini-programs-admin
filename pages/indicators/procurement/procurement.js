@@ -4,12 +4,11 @@ import api from '../../../public/js/api'
 import regeneratorRuntime from '../../../public/js/regenerator'
 import utils from "../../../public/js/utils"
 
-// TODO set chartData
-var option
+// TODO 这里有一个需要封装的地方，图表懒加载在onReady()获取到图标进行实例化，而数据在Onload里拿到
 Page({
   data: {
     ec: {
-      onInit: initChart
+      lazyLoad: true
     },
     profile: null,
     company: '中国XX有限公司',
@@ -17,97 +16,95 @@ Page({
     phone: '135XXXX1234',
     adress: '中国河南省郑州市中原区科学大道100号 ',
     lastTime: '2018-02-13',
-    chartData: null,
+    // startTs: 1515104000000, endTs: 1526745600000,
     startTs: '',
     endTs: '',
-    customerId: '',
-    // option:[]
+    customerid: ''
   },
   onLoad: function (option) {
-    let customerId = option.customerId
-    console.log(customerId)
-    this.setData({ customerId })
-    this.setData({ endTs: utils.formatDate(new Date(), 'YYYY-MM-DD') })
-    this.setData({ startTs: utils.formatDate(new Date() - 1000 * 60 * 60 * 24 * 30, 'YYYY-MM-DD') })
+    let customerid = option.customerid
+    console.log(option)
+    this.setData({ customerid })
+    this.setData({ endTs: utils.formatDate(new Date().getTime() + 1000 * 60 * 60 * 24, 'YYYY-MM-DD') })
+    this.setData({ startTs: utils.formatDate(new Date().getTime() - 1000 * 60 * 60 * 24 * 30, 'YYYY-MM-DD') })
 
     let profile, company, name, phone, adress, lastTime
     let { startTs, endTs } = this.data
-    let self = this
     http.request({
-      url: api.getProcurement + customerId,
+      url: api.getProcurement + customerid,
       data: { startTs: new Date(startTs).getTime(), endTs: new Date(endTs).getTime() },
-      success (res) {
+      success: ((res) => {
         ({ profile, company, name, phone, adress, lastTime } = res.data.data)
-        self.setData({ profile, company, name, phone, adress, lastTime })
-      }
+        this.setData({ profile, company, name, phone, adress, lastTime })
+        this.ecComponent = this.selectComponent('#procurement-chart')
+        this.initChart(res.data.data.chartData)
+        // this.initChart([[1525615498000, 100], [1525675498000, 580], [1525761898000, 100], [1525848298000, 450]])
+      })
     })
   },
   bindTimeChange (e) {
     let id = e.currentTarget.id
     let value = e.detail.value
-    let { customerId, startTs, endTs } = this.data
+    let self = this
+    let { customerid, startTs, endTs } = this.data
     this.setData({ [id]: value })
 
     // GET客户采购统计
     http.request({
-      url: api.getProcurement + customerId,
-      data: { startTs: new Date(startTs).getTime(), endTs: new Date(endTs).getTime() },
-      success (res) {
-        option.data = res.data.chartData
-      }
+      url: api.getProcurement + customerid,
+      data: { startTs: new Date(this.data.startTs).getTime(), endTs: new Date(this.data.endTs).getTime() },
+      success: ((res) => {
+        this.initChart(res.data.data.chartData)
+        // option.series[0].data = res.data.data.chartData
+        // this.setData({ chartData: res.data.data.chartData })
+      })
+    })
+  },
+  initChart (data) {
+    this.ecComponent.init((canvas, width, height) => {
+      const chart = echarts.init(canvas, null, {
+        width: width,
+        height: height
+      })
+      setOption(chart, data)
+
+      this.chart = chart
+      return chart
     })
   }
 })
 
-function initChart (canvas, width, height) {
-  const chart = echarts.init(canvas, null, {
-    width: width,
-    height: height
-  })
-  canvas.setChart(chart)
-  // grid.containLabel: true
-  option = {
+function setOption (chart, data) {
+  // 转一下x轴和y轴 y轴是时间
+  for (let i = 0; i < data.length; i++) {
+    let c
+    c = data[i][0]
+    data[i][0] = data[i][1]
+    data[i][1] = c
+    // 顺便转一下时间戳
+    data[i][1] = utils.formatDate(data[i][1], 'YYYY-MM-DD')
+  }
+
+
+  const option = {
     xAxis: {
       type: 'value',
       splitNumber: 3
     },
     yAxis: {
-      type: 'time'
+      type: 'time',
+      minInterval: 3600 * 24 * 1000,
     },
     grid: {
       containLabel: true
     },
-    // dataZoom属性有bug，找到了issue，等官方库更新
-    // dataZoom: [
-    //   { type: 'slider', start: 10, end: 40 }, 
-    //   { type: 'inside', start: 0, end: 100 }
-    // ],
     series: [{
-      // type: 'line',
-      // data: [
-      //   ['2017-1-12', 30000],
-      //   ['2017-1-13', 45200],
-      //   ['2017-1-14', 20000],
-      //   ['2017-1-15', 60000],
-      //   ['2017-1-16', 23000],
-      //   ['2017-1-17', 11000],
-      //   ['2017-1-20', 54000]
-      // ],
       type: 'bar',
-      data: [
-        [30000, '2017-1-01'], [45200, '2017-1-02'], [20000, '2017-1-03'], [60000, '2017-1-04'], [23000, '2017-1-05'],
-        // [11000, '2017-1-06'], [30000, '2017-1-07'], [45200, '2017-1-08'], [20000, '2017-1-09'], [60000, '2017-1-10'],
-        // [23000, '2017-1-11'], [11000, '2017-1-12'], [45200, '2017-1-13'], [20000, '2017-1-14'], [60000, '2017-1-15'],
-        // [30000, '2017-1-16'], [45200, '2017-1-17'], [20000, '2017-1-18'], [60000, '2017-1-19'], [23000, '2017-1-20'], 
-        // [30000, '2017-1-21'], [45200, '2017-1-22'], [20000, '2017-1-23'], [60000, '2017-1-24'], [23000, '2017-1-25'], 
-        // [30000, '2017-1-26'], [45200, '2017-1-27'], [20000, '2017-1-28'], [60000, '2017-1-29'], [23000, '2017-1-30'], 
-      ],
       barCategoryGap: '50%',
       itemStyle: { normal: { label: { show: true } } },
       smooth: true,
+      data: data
     }]
   }
-
   chart.setOption(option)
-  return chart
 }

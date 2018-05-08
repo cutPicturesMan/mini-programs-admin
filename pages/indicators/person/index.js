@@ -49,6 +49,9 @@ Page({
     http.request({
       url: api.indicatorsTableCustomer + admin,
       success (res) {
+        res.data.data.forEach(e => {
+          e.lastTime = utils.formatDate(e.lastTime, 'YYYY-MM-DD')
+        })
         self.setData({ customer: res.data.data })
       }
     })
@@ -58,13 +61,13 @@ Page({
       url: '../modified/modified'
     })
   },
-  procurement: function () {
-    let customerId = e.currentTarget.dataset.customerId
+  procurement(e) {
+    let customerid = e.currentTarget.dataset.customerid
     wx.navigateTo({
-      url: '../procurement/procurement?customerId=' + customerId
+      url: '../procurement/procurement?customerid=' + customerid
     })
   },
-  personIndicators: function (e) {
+  personIndicators(e) {
     let adminid = e.currentTarget.dataset.adminid
     wx.navigateTo({
       url: '../person/index?adminid=' + adminid

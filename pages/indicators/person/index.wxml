@@ -30,10 +30,10 @@
   <view class="indicators-customer-table">
     <view class="indicators-customer" wx:for="{{customer}}" wx:key="item" bindtap="procurement" data-customerId="{{item.customerId}}">
       <view>
-        <image style="width: 62rpx; height: 62rpx;" src="{{item.avatar}}" mode="aspectFit"></image>
+        <image style="width: 62rpx; height: 62rpx;" src="{{item.profile}}" mode="aspectFit"></image>
       </view>
       <view>{{item.name}}</view>
-      <view>{{item.lastTime}}</view>
+      <view>{{item.lastTime || '暂无数据'}}</view>
       <view>{{item.orderWeek ? item.orderWeek + '/周' : '暂无数据'}}</view>
       <view>{{item.orderMonth ? item.orderMonth + '/月' : '暂无数据' }}</view>
     </view>
