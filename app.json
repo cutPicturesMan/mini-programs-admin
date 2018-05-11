@@ -2,8 +2,8 @@
   "pages": [
     "pages/pending/pending",
     "pages/opera/opera",
-    "pages/order/order",
     "pages/my/my",
+    "pages/order/order",
     "pages/order_detail/order_detail",
     "pages/finance_collect/finance_collect",
     "pages/finance_uncollect/finance_uncollect",

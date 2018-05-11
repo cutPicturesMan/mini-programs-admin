@@ -64,29 +64,29 @@ new WXPage({
     isBack: false,
   },
   // 当前订单的角色，是否在用户的角色列表中
-  judgeRole (role) {
+  judgeRole(role) {
     let { userInfo, PENDING_SALEMAN, EXAMINE_MANAGER, PAID, EXAMINE_ACCOUNTANT, SUBMITTED, EXAMINE_FINANCE } = this.data;
     let id = 0;
 
     switch (role) {
-      case PENDING_SALEMAN:
-        id = 2;
-        break;
-      case EXAMINE_MANAGER:
-        id = 3;
-        break;
-      case PAID:
-        id = 4;
-        break;
-      case EXAMINE_ACCOUNTANT:
-        id = 4;
-        break;
-      case SUBMITTED:
-        id = 4;
-        break;
-      case EXAMINE_FINANCE:
-        id = 5;
-        break;
+    case PENDING_SALEMAN:
+      id = 2;
+      break;
+    case EXAMINE_MANAGER:
+      id = 3;
+      break;
+    case PAID:
+      id = 4;
+      break;
+    case EXAMINE_ACCOUNTANT:
+      id = 4;
+      break;
+    case SUBMITTED:
+      id = 4;
+      break;
+    case EXAMINE_FINANCE:
+      id = 5;
+      break;
     }
 
     let result = userInfo.roles.some((item) => {
@@ -102,7 +102,7 @@ new WXPage({
     return result;
   },
   // 获取列表数据
-  getData (id) {
+  getData(id) {
     let { PENDING_SALEMAN, EXAMINE_MANAGER, EXAMINE_ACCOUNTANT, SUBMITTED } = this.data;
 
     wx.showLoading();
@@ -197,7 +197,7 @@ new WXPage({
     })
   },
   // 输入备注框
-  inputRemark (e) {
+  inputRemark(e) {
     let remarks = this.data.remarks;
 
     this.setData({
@@ -205,7 +205,7 @@ new WXPage({
     });
   },
   // 确定备注框
-  confirmRemark () {
+  confirmRemark() {
     let { remarks, order } = this.data;
     order.remarks = remarks;
 
@@ -218,8 +218,8 @@ new WXPage({
   /**
    * 输入总价
    * 1、防止
-  */
-  inputOfferTotal (e) {
+   */
+  inputOfferTotal(e) {
     let offerTotal = e.detail.value;
 
     // 如果输入非数字 || 输入为''
@@ -241,7 +241,7 @@ new WXPage({
     });
   },
   // 输入数量
-  inputQuantity (e) {
+  inputQuantity(e) {
     let num = e.detail.value;
     let index = e.currentTarget.dataset.index;
     let order = this.data.order;
@@ -253,7 +253,7 @@ new WXPage({
     });
   },
   // 输入单价
-  inputPrice (e) {
+  inputPrice(e) {
     let price = e.detail.value;
     let index = e.currentTarget.dataset.index;
     let order = this.data.order;
@@ -265,7 +265,7 @@ new WXPage({
     });
   },
   // 获取所有支付方式
-  getPayType (id) {
+  getPayType(id) {
     let p = new Promise((resolve, reject) => {
       http.request({
         url: `${api.pay}${id}`
@@ -283,7 +283,7 @@ new WXPage({
     return p;
   },
   // 获取物流方式列表
-  getlogisticList () {
+  getlogisticList() {
     let { order } = this.data;
 
     http.request({
@@ -320,43 +320,43 @@ new WXPage({
     })
   },
   // 选择物流方式
-  bindLogisticChange (e) {
+  bindLogisticChange(e) {
     this.setData({
       logisticIndex: e.detail.value
     })
   },
   // 选择支付方式
-  bindPayTypeChange (e) {
+  bindPayTypeChange(e) {
     this.setData({
       payIndex: e.detail.value
     })
   },
   // 选择交货日期
-  changeDeliveryDate (e) {
+  changeDeliveryDate(e) {
     this.setData({
       deliveryDate: e.detail.value
     })
   },
   // 输入物流单号
-  inputLogisticNum (e) {
+  inputLogisticNum(e) {
     this.setData({
       logisticNum: e.detail.value
     })
   },
   // 输入司机姓名
-  inputDriverName (e) {
+  inputDriverName(e) {
     this.setData({
       driverName: e.detail.value
     })
   },
   // 输入司机手机号
-  inputDriverPhone (e) {
+  inputDriverPhone(e) {
     this.setData({
       driverPhone: e.detail.value
     })
   },
   // 发送模板消息
-  sendTemplateMsg (e) {
+  sendTemplateMsg(e) {
     http.request({
       url: `${api.template_msg}`,
       method: 'POST',
@@ -368,7 +368,7 @@ new WXPage({
     })
   },
   // 业务员取消订单模态框
-  cancelOrderPopup (e) {
+  cancelOrderPopup(e) {
     let id = e.currentTarget.dataset.id;
 
     wx.showModal({
@@ -382,7 +382,7 @@ new WXPage({
     })
   },
   // 业务员退单模态框
-  backOrderPopup (e) {
+  backOrderPopup(e) {
     let { id, type } = e.currentTarget.dataset;
 
     wx.showModal({
@@ -396,7 +396,7 @@ new WXPage({
     })
   },
   // 业务员取消订单
-  cancelOrder (id) {
+  cancelOrder(id) {
     wx.showLoading();
 
     http.request({
@@ -420,7 +420,7 @@ new WXPage({
     })
   },
   // 业务员提交
-  confirmOrder () {
+  confirmOrder() {
     let { order, offerTotal, remarks, payIndex, payType, logisticList, logisticIndex, deliveryDate, isPayLoaded, isLogisticed } = this.data;
 
     try {
@@ -530,7 +530,7 @@ new WXPage({
       }
     })
   },
-  confirmBack (id, type) {
+  confirmBack(id, type) {
     wx.showLoading();
 
     http.request({
@@ -555,7 +555,7 @@ new WXPage({
   },
 
   // 经理拒绝订单模态框
-  rejectOrderPopup (e) {
+  rejectOrderPopup(e) {
     let id = e.currentTarget.dataset.id;
 
     wx.showModal({
@@ -569,7 +569,7 @@ new WXPage({
     })
   },
   // 经理拒绝订单
-  rejectOrder (id) {
+  rejectOrder(id) {
     wx.showLoading();
     http.request({
       url: `${api.manage_put_order}${id}`,
@@ -597,7 +597,7 @@ new WXPage({
     })
   },
   // 经理通过
-  passOrder (e) {
+  passOrder(e) {
     let { id } = e.currentTarget.dataset;
     let { order, offerTotal, remarks, payIndex, payType, logisticList, logisticIndex, deliveryDate, isPayLoaded, isLogisticed } = this.data;
 
@@ -697,7 +697,7 @@ new WXPage({
   },
 
   // 财务拒绝订单模态框
-  financeRejectPopup (e) {
+  financeRejectPopup(e) {
     let id = e.currentTarget.dataset.id;
 
     wx.showModal({
@@ -711,7 +711,7 @@ new WXPage({
     })
   },
   // 财务拒绝订单
-  financeReject (id) {
+  financeReject(id) {
     wx.showLoading();
     http.request({
       url: `${api.finance_put_order}${id}`,
@@ -739,7 +739,7 @@ new WXPage({
     })
   },
   // 财务通过
-  financePass (e) {
+  financePass(e) {
     let { id } = e.currentTarget.dataset;
     let { EXAMINE_ACCOUNTANT, SUBMITTED, order, offerTotal, payIndex, payType, isPayLoaded } = this.data;
 
@@ -845,7 +845,7 @@ new WXPage({
   },
 
   // 仓管通过
-  storePass (e) {
+  storePass(e) {
     let {
       order,
       logisticNum,
@@ -906,12 +906,24 @@ new WXPage({
       }
     })
   },
-  onLoad (params) {
+  getLog(orderId) {
+    http.request({
+      url: api.getLog + orderId,
+      success(res) {
+        console.log(res.data)
+      }
+    })
+  },
+  onLoad(params) {
     // 从消息模版进入则显示返回首页按钮
     getCurrentPages().length == 1 ? this.setData({ isBack: true }) : 0
 
-    // 如果订单id存在，则请求数据
     if (params.id) {
+      // 如果订单id存在，则请求数据
+      this.getData(params.id)
+      this.getLog(params.id)
+
+      // 设置用户登录
       if (app.userInfo) {
         this.setData({
           userInfo: app.userInfo
@@ -944,9 +956,9 @@ new WXPage({
               userInfo: res,
               roleCode: app.roleCode
             });
-          }, () => { });
+          }, () => {});
       }
-      this.getData(params.id);
+
     } else {
       this.toast.error({
         content: '订单id不存在',

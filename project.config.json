@@ -113,6 +113,12 @@
 					"name": "订单详情",
 					"pathName": "pages/order_detail/order_detail",
 					"query": "id=181"
+				},
+				{
+					"id": -1,
+					"name": "订单详情-log",
+					"pathName": "pages/order_log/order_log",
+					"query": ""
 				}
 			]
 		}

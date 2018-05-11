@@ -10,7 +10,7 @@
     <view class="indicators-head-item">开始时间：{{headData.startTime || '暂未设置'}}</view>
     <view class="indicators-head-item">结束时间：{{headData.endTime || '暂未设置'}}</view>
   </view>
-  <view class="indicators-head-item">时间进度：{{headData.timeProgress ? headData.timeProgress + '%' : '暂无数据'}}</view>
+  <view class="indicators-head-item">时间进度：{{headData.timeProgress || '暂无数据'}}</view>
   <progress percent="{{headData.timeProgress}}" activeColor="red" />
   <view class="indicators-head-item">达成进度：{{headData.goalProgress ? headData.goalProgress + '%' : '暂无数据'}}</view>
   <progress percent="{{headData.goalProgress}}" activeColor="green" />

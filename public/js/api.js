@@ -80,6 +80,9 @@ let api = {
   getProcurement: '/api/indicators/procurement/',
   // 创建指标
   indicators: '/api/indicators',
+
+  // 获取订单的操作日志
+  getLog: '/api/order/log/',
 }
 
 for (var attr in api) {
